@@ -15,7 +15,7 @@ import java.util.List;
 @EqualsAndHashCode
 @Builder
 @Entity
-public class Character {
+public class Characterr {
     @NonNull
     @Id
     @Column(nullable = false, unique = true)
@@ -24,8 +24,8 @@ public class Character {
     @JoinColumn(name = "actor_id")
     private Actor actor;
     @OneToOne
-    @JoinColumn
+    @JoinColumn(name = "microphone_id")
     private Microphone microphoneId;
-    @ManyToMany(mappedBy = "scenes", fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "characters", fetch = FetchType.EAGER)
     private List<Scene> scenes = new ArrayList<>();
 }
