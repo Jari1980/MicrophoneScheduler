@@ -32,5 +32,5 @@ public class Scene {
             joinColumns = @JoinColumn(name = "scene_id", referencedColumnName = "sceneId"),
             inverseJoinColumns = @JoinColumn(name = "character_id", referencedColumnName = "characterId")
     )
-    private List<Characterr> characters = new ArrayList<>();
+    private List<Personage> characters = new ArrayList<>();
 }
