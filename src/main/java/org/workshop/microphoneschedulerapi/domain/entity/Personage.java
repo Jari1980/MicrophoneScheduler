@@ -15,7 +15,7 @@ import java.util.List;
 @EqualsAndHashCode
 @Builder
 @Entity
-public class Characterr {
+public class Personage {
     @NonNull
     @Id
     @Column(nullable = false, unique = true)
