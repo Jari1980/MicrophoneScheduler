@@ -16,8 +16,8 @@ public class Actor {
     @NonNull
     @Id
     @Column(nullable = false, unique = true)
-    private String actorId;
+    private int actorId;
     @OneToOne
-    @JoinColumn
+    @JoinColumn(name = "user_id")
     private User user;
 }
