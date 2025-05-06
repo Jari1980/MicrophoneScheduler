@@ -15,7 +15,8 @@ import lombok.*;
 public class Actor {
     @NonNull
     @Id
-    @Column(nullable = false, unique = true)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@Column(nullable = false, unique = true)
     private int actorId;
     @OneToOne
     @JoinColumn(name = "user_id")

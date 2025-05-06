@@ -18,7 +18,8 @@ import java.util.List;
 public class Personage {
     @NonNull
     @Id
-    @Column(nullable = false, unique = true)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@Column(nullable = false, unique = true)
     private int characterId;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "actor_id")
@@ -27,5 +28,6 @@ public class Personage {
     @JoinColumn(name = "microphone_id")
     private Microphone microphoneId;
     @ManyToMany(mappedBy = "characters", fetch = FetchType.EAGER)
-    private List<Scene> scenes = new ArrayList<>();
+    private List<Scene> scenes;// = new ArrayList<>();
+    private String name;
 }
