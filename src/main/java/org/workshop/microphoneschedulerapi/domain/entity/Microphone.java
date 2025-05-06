@@ -1,10 +1,9 @@
 package org.workshop.microphoneschedulerapi.domain.entity;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.boot.autoconfigure.web.WebProperties;
 
 @Getter
 @Setter
@@ -13,10 +12,13 @@ import lombok.*;
 @ToString
 @EqualsAndHashCode
 @Builder
+
 @Entity
 public class Microphone {
     @NonNull
     @Id
-    @Column(nullable = false, unique = true)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@Column(nullable = false, unique = true)
     private int microphoneId;
+    private String name;
 }

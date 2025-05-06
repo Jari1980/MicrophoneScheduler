@@ -1,10 +1,9 @@
 package org.workshop.microphoneschedulerapi.domain.entity;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
 
 @Getter
 @Setter
@@ -15,11 +14,11 @@ import lombok.*;
 @Builder
 @Entity
 public class User {
-    @NonNull
     @Id
-    @Column(nullable = false, unique = true)
-    private int userId;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private String userId;
+    @NonNull
     private String userName;
-    private String role; //Will mostlikely be enum for differebt roles
+    private String role; //Will mostlikely be enum for different roles
     private String password; //This will be hashed to start with, if theres time trying JWT token
 }

@@ -18,6 +18,7 @@ import java.util.List;
 public class Scene {
     @NonNull
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, unique = true)
     private int sceneId;
     @ManyToOne(fetch = FetchType.EAGER)
@@ -26,11 +27,11 @@ public class Scene {
     private int actNumber;
     private int sceneNumber;
     private String sceneName;
-    @ManyToMany(fetch = FetchType.LAZY,cascade = {CascadeType.PERSIST, CascadeType.MERGE}) //fetch = FetchType.LAZY,
+    @ManyToMany(fetch = FetchType.EAGER)//,cascade = {CascadeType.ALL}) //PERSIST, CascadeType.MERGE}) //fetch = FetchType.LAZY,
     @JoinTable(
             name = "scene_character",
             joinColumns = @JoinColumn(name = "scene_id", referencedColumnName = "sceneId"),
             inverseJoinColumns = @JoinColumn(name = "character_id", referencedColumnName = "characterId")
     )
-    private List<Personage> characters = new ArrayList<>();
+    private List<Personage> characters;// = new ArrayList<>();
 }
