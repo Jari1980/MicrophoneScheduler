@@ -19,6 +19,6 @@ public class User {
     private String userId;
     @NonNull
     private String userName;
-    private String role; //Will mostlikely be enum for different roles
+    private String userRole; //Will mostlikely be enum for different roles
     private String password; //This will be hashed to start with, if theres time trying JWT token
 }

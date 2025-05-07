@@ -2,8 +2,11 @@ package org.workshop.microphoneschedulerapi;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.workshop.microphoneschedulerapi.domain.entity.*;
+import org.workshop.microphoneschedulerapi.encoder.CustomPasswordEncoder;
 import org.workshop.microphoneschedulerapi.repository.*;
 
 import java.time.LocalDate;
@@ -32,16 +35,18 @@ public class PlayGround implements CommandLineRunner {
         this.userRepository = userRepository;
     }
 
+    private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
     @Override
     public void run(String... args) throws Exception {
 
         Microphone microphone1 = Microphone.builder()
-                .name("Very first Microphone")
+                .microphoneName("Very first Microphone")
                 .build();
         microphoneRepository.save(microphone1);
 
         Microphone microphone2 = new Microphone();
-        microphone2.setName("Second Microphone");
+        microphone2.setMicrophoneName("Second Microphone");
         microphoneRepository.save(microphone2);
 
         //Ok, microphones created with and without builder
@@ -49,15 +54,15 @@ public class PlayGround implements CommandLineRunner {
 
         User user1 = User.builder()
                 .userName("user1")
-                .password("1234")
-                .role("Super JAVA user")
+                .password(passwordEncoder.encode("1234"))
+                .userRole("Super JAVA user")
                 .build();
         userRepository.save(user1);
 
         User user2 = new User();
         user2.setUserName("user2");
-        user2.setPassword("2222");
-        user2.setRole("Super Maccintosh user");
+        user2.setPassword(passwordEncoder.encode("2222"));
+        user2.setUserRole("Super Maccintosh user");
         userRepository.save(user2);
 
         //Ok
@@ -74,14 +79,14 @@ public class PlayGround implements CommandLineRunner {
         //Ok
 
         Personage personage1 = Personage.builder()
-                .name("JulTomte")
+                .personageName("JulTomte")
                 .actor(actor1)
                 .microphoneId(microphone1)
                 .build();
         personageRepository.save(personage1);
 
         Personage personage2 = new Personage();
-        personage2.setName("SnusMonster");
+        personage2.setPersonageName("SnusMonster");
         personage2.setActor(actor2);
         personage2.setMicrophoneId(microphone2);
         personageRepository.save(personage2);
@@ -114,9 +119,15 @@ public class PlayGround implements CommandLineRunner {
         System.out.println("Looking for all characters in scene1:");
         List<Personage> characters = sceneRepository.findById(1).orElseThrow().getCharacters();
         for (Personage character : characters) {
-            System.out.println(character.getActor());
+            System.out.println(character.getMicrophoneId());
         }
         System.out.println("------------------------");
+        System.out.println("---------Checking encoded password-----------");
+        System.out.println(userRepository.findByUserName("user1").orElseThrow().getPassword());
+        System.out.println("---------Checking if password matches user1:-----------");
+        System.out.println(passwordEncoder.matches("1234", (userRepository.findByUserName("user1").orElseThrow().getPassword())));
+        System.out.println("----------Checking false----------------------");
+        System.out.println(passwordEncoder.matches("2222", (userRepository.findByUserName("user1").orElseThrow().getPassword())));
 
         //Looks ok, next securing the password
     }

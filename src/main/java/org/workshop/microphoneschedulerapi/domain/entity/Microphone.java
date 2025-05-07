@@ -20,5 +20,5 @@ public class Microphone {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     //@Column(nullable = false, unique = true)
     private int microphoneId;
-    private String name;
+    private String microphoneName;
 }

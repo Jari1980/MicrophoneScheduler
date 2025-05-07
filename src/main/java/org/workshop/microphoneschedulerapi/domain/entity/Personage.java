@@ -4,7 +4,6 @@ package org.workshop.microphoneschedulerapi.domain.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -20,7 +19,7 @@ public class Personage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     //@Column(nullable = false, unique = true)
-    private int characterId;
+    private int personageId;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "actor_id")
     private Actor actor;
@@ -29,5 +28,5 @@ public class Personage {
     private Microphone microphoneId;
     @ManyToMany(mappedBy = "characters", fetch = FetchType.EAGER)
     private List<Scene> scenes;// = new ArrayList<>();
-    private String name;
+    private String personageName;
 }
