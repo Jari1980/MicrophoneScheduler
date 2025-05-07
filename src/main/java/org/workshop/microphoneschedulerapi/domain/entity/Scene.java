@@ -31,7 +31,7 @@ public class Scene {
     @JoinTable(
             name = "scene_character",
             joinColumns = @JoinColumn(name = "scene_id", referencedColumnName = "sceneId"),
-            inverseJoinColumns = @JoinColumn(name = "character_id", referencedColumnName = "characterId")
+            inverseJoinColumns = @JoinColumn(name = "personage_id", referencedColumnName = "personageId")
     )
     private List<Personage> characters;// = new ArrayList<>();
 }
