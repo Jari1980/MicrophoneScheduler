@@ -6,6 +6,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.workshop.microphoneschedulerapi.domain.entity.*;
+import org.workshop.microphoneschedulerapi.domain.model.UserRole;
 import org.workshop.microphoneschedulerapi.encoder.CustomPasswordEncoder;
 import org.workshop.microphoneschedulerapi.repository.*;
 
@@ -55,14 +56,14 @@ public class PlayGround implements CommandLineRunner {
         User user1 = User.builder()
                 .userName("user1")
                 .password(passwordEncoder.encode("1234"))
-                .userRole("Super JAVA user")
+                .userRole(UserRole.ACTOR)
                 .build();
         userRepository.save(user1);
 
         User user2 = new User();
         user2.setUserName("user2");
         user2.setPassword(passwordEncoder.encode("2222"));
-        user2.setUserRole("Super Maccintosh user");
+        user2.setUserRole(UserRole.ADMINISTRATOR);
         userRepository.save(user2);
 
         //Ok

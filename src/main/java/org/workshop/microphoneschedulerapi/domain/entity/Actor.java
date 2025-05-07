@@ -21,4 +21,6 @@ public class Actor {
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+
 }

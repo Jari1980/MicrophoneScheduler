@@ -4,6 +4,7 @@ package org.workshop.microphoneschedulerapi.domain.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
+import org.workshop.microphoneschedulerapi.domain.model.UserRole;
 
 @Getter
 @Setter
@@ -19,6 +20,6 @@ public class User {
     private String userId;
     @NonNull
     private String userName;
-    private String userRole; //Will mostlikely be enum for different roles
+    private UserRole userRole;
     private String password; //This will be hashed to start with, if theres time trying JWT token
 }
