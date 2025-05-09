@@ -4,9 +4,9 @@ import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.workshop.microphoneschedulerapi.domain.dto.MicrophonesInSceneDTOForm;
+import org.workshop.microphoneschedulerapi.domain.entity.Microphone;
 import org.workshop.microphoneschedulerapi.domain.entity.Scene;
 import org.workshop.microphoneschedulerapi.service.SceneService;
 
@@ -24,11 +24,22 @@ public class SceneController {
         this.sceneService = sceneService;
     }
 
-    @GetMapping("/play{title}")
-    public ResponseEntity<List<Scene>> getPlay(@PathParam("title") String title) {
+    @GetMapping("/completePlay{title}")
+    public ResponseEntity<List<Scene>> getCompletePlay(@PathParam("title") String title) {
         List<Scene> scenes = sceneService.getAllScenes(title);
 
         return new ResponseEntity<>(scenes, HttpStatus.OK);
+    }
+
+    @GetMapping("/microphonesInScene{id}")
+    public ResponseEntity<List<Microphone>> getMicrophonesInScene(@PathParam("sceneId") int sceneId) {
+        try{
+            List<Microphone> microphones = sceneService.getAllMicrophones(sceneId);
+            return new ResponseEntity<>(microphones, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
     }
 
     @GetMapping("/hello")
