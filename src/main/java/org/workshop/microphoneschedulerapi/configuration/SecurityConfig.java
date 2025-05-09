@@ -28,13 +28,13 @@ public class SecurityConfig {
 
                  */
                 .authorizeHttpRequests(registry ->{
-                    registry.requestMatchers("/api/v1/project/scenes",  //Not using this, but maybe Ill try to add later
-                            "/api/v1/project/hello",
-                            "/api/v1/project/completePlay",
-                            "/api/v1/project/microphonesInScene",
-                            "/api/v1/project/createMicrophone",
-                            "/api/v1/project/deleteMicrophone",
-                            "/api/v1/project/updateMicrophone").permitAll();
+                    registry.requestMatchers("/api/v1/scene/scenes",  //Not using this, but maybe Ill try to add later
+                            "/api/v1/scene/hello",
+                            "/api/v1/scene/completePlay",
+                            "/api/v1/scene/microphonesInScene",
+                            "/api/v1/microphone/createMicrophone",
+                            "/api/v1/microphone/deleteMicrophone",
+                            "/api/v1/microphone/updateMicrophone").permitAll();
                 })
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
                         .anyRequest().authenticated())
