@@ -30,7 +30,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(registry ->{
                     registry.requestMatchers("/api/v1/project/scenes",  //Not using this, but maybe Ill try to add later
                             "/api/v1/project/hello",
-                            "/api/v1/project/play").permitAll();
+                            "/api/v1/project/completePlay",
+                            "/api/v1/project/microphonesInScene").permitAll();
                 })
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
                         .anyRequest().authenticated())
