@@ -18,7 +18,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .cors(Customizer.withDefaults()) // //This is needed for me to add in order to resolve Cors issue after adding Spring security also adding WebConfig
-                //.csrf(AbstractHttpConfigurer::disable)
+                .csrf(AbstractHttpConfigurer::disable) //Enabling this to get post request working, should maybe be otherwise later?
                 /*.formLogin(httpSecurityFormLoginConfigurer -> {
                     httpSecurityFormLoginConfigurer.loginProcessingUrl("/api/v1/project/login").permitAll(); //Not using this, but maybe Ill try to add later
                 })
@@ -31,7 +31,10 @@ public class SecurityConfig {
                     registry.requestMatchers("/api/v1/project/scenes",  //Not using this, but maybe Ill try to add later
                             "/api/v1/project/hello",
                             "/api/v1/project/completePlay",
-                            "/api/v1/project/microphonesInScene").permitAll();
+                            "/api/v1/project/microphonesInScene",
+                            "/api/v1/project/createMicrophone",
+                            "/api/v1/project/deleteMicrophone",
+                            "/api/v1/project/updateMicrophone").permitAll();
                 })
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
                         .anyRequest().authenticated())
