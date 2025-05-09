@@ -15,17 +15,15 @@ import org.workshop.microphoneschedulerapi.service.SceneService;
 import java.util.ArrayList;
 import java.util.List;
 
-@RequestMapping("/api/v1/project")
+@RequestMapping("/api/v1/scene")
 @RestController
 public class SceneController {
 
     SceneService sceneService;
-    MicrophoneService microphoneService;
 
     @Autowired
     public SceneController(SceneService sceneService, MicrophoneService microphoneService) {
         this.sceneService = sceneService;
-        this.microphoneService = microphoneService;
     }
 
     @GetMapping("/completePlay{title}")
@@ -45,37 +43,6 @@ public class SceneController {
         }
     }
 
-    //Add following three Microphone functionalities to a new "MicrophoneController"
-    @PostMapping("/createMicrophone{microphoneName}")
-    public ResponseEntity<Void> createMicrophone(@PathParam("microphoneName") String microphoneName) {
-        try{
-            microphoneService.createMicrophone(microphoneName);
-            return new ResponseEntity<>(HttpStatus.CREATED);
-
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-    }
-    @DeleteMapping("/deleteMicrophone{microphoneName}")
-    public ResponseEntity<Void> deleteMicrophone(@PathParam("microphoneName") String microphoneName) {
-        try{
-            microphoneService.deleteMicrophone(microphoneName);
-            return new ResponseEntity<>(HttpStatus.GONE);
-
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-    }
-    @PutMapping("/updateMicrophone")
-    public ResponseEntity<Void> updateMicrophone(@RequestBody MicrophoneUpdateDTOForm form) {
-        try{
-            microphoneService.updateMicrophone(form.microphoneId(), form.microphoneName());
-            return new ResponseEntity<>(HttpStatus.OK);
-
-        } catch (RuntimeException e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-    }
 
     @GetMapping("/hello")
     public String hello() {
