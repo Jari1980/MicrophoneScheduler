@@ -5,8 +5,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Component
-public class CustomPasswordEncoder implements PasswordEncoder {
-
+public class CustomPasswordEncoder {//implements PasswordEncoder {
+    //Disabled this since there was a conflict with Jwt, instead using Springs PasswordEncoder
+/*
     private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @Override
@@ -18,4 +19,6 @@ public class CustomPasswordEncoder implements PasswordEncoder {
     public boolean matches(CharSequence rawPassword, String encodedPassword) {
         return passwordEncoder.matches(rawPassword, encodedPassword);
     }
+
+ */
 }

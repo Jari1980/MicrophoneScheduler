@@ -23,7 +23,7 @@ public class Personage {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "actor_id")
     private Actor actor;
-    @OneToOne
+    @OneToOne()
     @JoinColumn(name = "microphone_id")
     private Microphone microphoneId;
     @ManyToMany(mappedBy = "characters", fetch = FetchType.EAGER)

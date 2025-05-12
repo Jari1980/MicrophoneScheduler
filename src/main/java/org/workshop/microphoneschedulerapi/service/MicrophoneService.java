@@ -4,15 +4,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.workshop.microphoneschedulerapi.domain.entity.Microphone;
 import org.workshop.microphoneschedulerapi.repository.MicrophoneRepository;
+import org.workshop.microphoneschedulerapi.repository.PersonageRepository;
 
 @Service
 public class MicrophoneService {
 
     MicrophoneRepository microphoneRepository;
+    PersonageRepository personageRepository;
 
     @Autowired
-    public MicrophoneService(MicrophoneRepository microphoneRepository) {
+    public MicrophoneService(MicrophoneRepository microphoneRepository, PersonageRepository personageRepository) {
         this.microphoneRepository = microphoneRepository;
+        this.personageRepository = personageRepository;
     }
 
     public void createMicrophone(String microphoneName){

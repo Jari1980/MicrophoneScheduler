@@ -1,18 +1,51 @@
 package org.workshop.microphoneschedulerapi.configuration;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.workshop.microphoneschedulerapi.service.CustomUserDetailService;
 
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfig {
+
+    private CustomUserDetailService customUserDetailService;
+    private AuthEntryPointJwt authEntryPointJwt;
+
+    @Autowired
+    public SecurityConfig(final CustomUserDetailService customUserDetailService, AuthEntryPointJwt authEntryPointJwt) {
+        this.customUserDetailService = customUserDetailService;
+        this.authEntryPointJwt = authEntryPointJwt;
+    }
+
+    @Bean
+    public AuthTokenFilter authenticationJwtTokenFilter() {
+        return new AuthTokenFilter();
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager(
+            AuthenticationConfiguration authenticationConfiguration
+    ) throws Exception {
+        return authenticationConfiguration.getAuthenticationManager();
+    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -28,17 +61,20 @@ public class SecurityConfig {
 
                  */
                 .authorizeHttpRequests(registry ->{
-                    registry.requestMatchers("/api/v1/scene/scenes",  //Not using this, but maybe Ill try to add later
+                    registry.requestMatchers("/api/v1/scene/scenes",
                             "/api/v1/scene/hello",
                             "/api/v1/scene/completePlay",
                             "/api/v1/scene/microphonesInScene",
                             "/api/v1/microphone/createMicrophone",
                             "/api/v1/microphone/deleteMicrophone",
-                            "/api/v1/microphone/updateMicrophone").permitAll();
+                            "/api/v1/microphone/updateMicrophone",
+                            "/api/v1/user/register",
+                            "/api/v1/user/login").permitAll();
                 })
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
                         .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults())
+                .addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 

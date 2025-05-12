@@ -1,14 +1,17 @@
 package org.workshop.microphoneschedulerapi;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import org.workshop.microphoneschedulerapi.configuration.JwtUtil;
 import org.workshop.microphoneschedulerapi.domain.entity.*;
 import org.workshop.microphoneschedulerapi.domain.model.UserRole;
 import org.workshop.microphoneschedulerapi.encoder.CustomPasswordEncoder;
 import org.workshop.microphoneschedulerapi.repository.*;
+import org.workshop.microphoneschedulerapi.service.CustomUserDetailService;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -23,17 +26,22 @@ public class PlayGround implements CommandLineRunner {
     private PlayRepository playRepository;
     private SceneRepository sceneRepository;
     private UserRepository userRepository;
+    private JwtUtil jwtUtil;
+    private PasswordEncoder customPasswordEncoder;
 
     @Autowired
     public PlayGround(ActorRepository actorRepository, MicrophoneRepository microphoneRepository,
                       PersonageRepository personageRepository, PlayRepository playRepository,
-                      SceneRepository sceneRepository, UserRepository userRepository) {
+                      SceneRepository sceneRepository, UserRepository userRepository, JwtUtil jwtUtil,
+                      PasswordEncoder customPasswordEncoder) {
         this.actorRepository = actorRepository;
         this.microphoneRepository = microphoneRepository;
         this.personageRepository = personageRepository;
         this.playRepository = playRepository;
         this.sceneRepository = sceneRepository;
         this.userRepository = userRepository;
+        this.jwtUtil = jwtUtil;
+        this.customPasswordEncoder = customPasswordEncoder;
     }
 
     private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
@@ -55,14 +63,14 @@ public class PlayGround implements CommandLineRunner {
 
         User user1 = User.builder()
                 .userName("user1")
-                .password(passwordEncoder.encode("1234"))
+                .password(customPasswordEncoder.encode("1234"))
                 .userRole(UserRole.ACTOR)
                 .build();
         userRepository.save(user1);
 
         User user2 = new User();
         user2.setUserName("user2");
-        user2.setPassword(passwordEncoder.encode("2222"));
+        user2.setPassword(customPasswordEncoder.encode("2222"));
         user2.setUserRole(UserRole.ADMINISTRATOR);
         userRepository.save(user2);
 
@@ -131,5 +139,10 @@ public class PlayGround implements CommandLineRunner {
         System.out.println(passwordEncoder.matches("2222", (userRepository.findByUserName("user1").orElseThrow().getPassword())));
 
         //Looks ok, next securing the password
+
+        String token = jwtUtil.generateToken("Test token");
+        System.out.println(token);
+
+
     }
 }

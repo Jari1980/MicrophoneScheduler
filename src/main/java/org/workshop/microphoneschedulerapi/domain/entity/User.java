@@ -16,9 +16,10 @@ import org.workshop.microphoneschedulerapi.domain.model.UserRole;
 @Entity
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private String userId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long userId;
     @NonNull
+    @Column(unique = true)
     private String userName;
     private UserRole userRole;
     private String password; //This will be hashed to start with, if theres time trying JWT token

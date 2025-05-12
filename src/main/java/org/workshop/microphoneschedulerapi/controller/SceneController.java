@@ -19,7 +19,7 @@ import java.util.List;
 @RestController
 public class SceneController {
 
-    SceneService sceneService;
+    private SceneService sceneService;
 
     @Autowired
     public SceneController(SceneService sceneService, MicrophoneService microphoneService) {
