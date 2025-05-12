@@ -21,4 +21,6 @@ public class Microphone {
     //@Column(nullable = false, unique = true)
     private int microphoneId;
     private String microphoneName;
+    @OneToOne()
+    private Personage personage;
 }
