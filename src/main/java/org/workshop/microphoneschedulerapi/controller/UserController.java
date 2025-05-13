@@ -37,11 +37,11 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody User user) {
-        if (userRepository.existsByUserName(user.getUserName())) {
+        if (userRepository.existsByUserName(user.getUsername())) {
             return ResponseEntity.badRequest().body("Username already exists");
         }
         User newUser = User.builder()
-                .userName(user.getUserName())
+                .userName(user.getUsername())
                 .password(passwordEncoder.encode(user.getPassword()))
                 .build();
         userRepository.save(newUser);
@@ -52,7 +52,7 @@ public class UserController {
     public ResponseEntity<String> login(@RequestBody User user) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        user.getUserName(),
+                        user.getUsername(),
                         user.getPassword()
                 )
         );

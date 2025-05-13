@@ -16,6 +16,10 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.workshop.microphoneschedulerapi.service.CustomUserDetailService;
 
+import static org.workshop.microphoneschedulerapi.domain.model.UserRole.ADMINISTRATOR;
+import static org.workshop.microphoneschedulerapi.domain.model.UserRole.DIRECTOR;
+import static org.workshop.microphoneschedulerapi.domain.model.UserRole.ACTOR;
+
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
@@ -71,6 +75,10 @@ public class SecurityConfig {
                             "/api/v1/user/register",
                             "/api/v1/user/login").permitAll();
                 })
+                .authorizeHttpRequests(registry ->
+                        registry.requestMatchers(
+                                "/api/v1/admin/hello"
+                        ).hasRole(ADMINISTRATOR.name()))
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
                         .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults())

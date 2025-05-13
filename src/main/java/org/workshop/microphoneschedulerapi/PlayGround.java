@@ -68,6 +68,7 @@ public class PlayGround implements CommandLineRunner {
                 .build();
         userRepository.save(user1);
 
+
         User user2 = new User();
         user2.setUserName("user2");
         user2.setPassword(customPasswordEncoder.encode("2222"));

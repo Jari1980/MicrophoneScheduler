@@ -11,6 +11,7 @@ import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
+import static com.fasterxml.jackson.databind.type.LogicalType.Map;
 import static io.jsonwebtoken.Jwts.*;
 
 @Component
