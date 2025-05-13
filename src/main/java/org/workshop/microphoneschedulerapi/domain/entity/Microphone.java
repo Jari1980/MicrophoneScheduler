@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.boot.autoconfigure.web.WebProperties;
 
+import java.util.List;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -20,7 +22,6 @@ public class Microphone {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     //@Column(nullable = false, unique = true)
     private int microphoneId;
+    @Column(unique = true)
     private String microphoneName;
-    @OneToOne()
-    private Personage personage;
 }

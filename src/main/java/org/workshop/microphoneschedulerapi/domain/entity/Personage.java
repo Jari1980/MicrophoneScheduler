@@ -3,6 +3,8 @@ package org.workshop.microphoneschedulerapi.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.List;
 
@@ -23,7 +25,8 @@ public class Personage {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "actor_id")
     private Actor actor;
-    @OneToOne()
+    @ManyToOne()
+    @OnDelete(action = OnDeleteAction.SET_NULL)
     @JoinColumn(name = "microphone_id")
     private Microphone microphoneId;
     @ManyToMany(mappedBy = "characters", fetch = FetchType.EAGER)
