@@ -29,7 +29,7 @@ public class Personage {
     @OnDelete(action = OnDeleteAction.SET_NULL)
     @JoinColumn(name = "microphone_id")
     private Microphone microphoneId;
-    @ManyToMany(mappedBy = "characters", fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "characters", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Scene> scenes;// = new ArrayList<>();
     private String personageName;
 }

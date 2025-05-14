@@ -8,6 +8,7 @@ import org.workshop.microphoneschedulerapi.domain.entity.Microphone;
 import org.workshop.microphoneschedulerapi.domain.entity.Personage;
 
 @Repository
+@Transactional
 public interface PersonageRepository extends JpaRepository<Personage, Integer> {
 
 
