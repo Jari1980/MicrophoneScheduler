@@ -77,7 +77,11 @@ public class SecurityConfig {
                 })
                 .authorizeHttpRequests(registry ->
                         registry.requestMatchers(
-                                "/api/v1/admin/hello"
+                                "/api/v1/admin/hello",
+                                "/api/v1/admin/listAllPlay",
+                                "api/v1/admin/createPlay",
+                                "api/v1/admin/deletePlay",
+                                "api/v1/admin/updatePlay"
                         ).hasRole(ADMINISTRATOR.name()))
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
                         .anyRequest().authenticated())

@@ -1,5 +1,6 @@
 package org.workshop.microphoneschedulerapi.repository;
 
+import jakarta.transaction.Transactional;
 import lombok.NonNull;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
+@Transactional
 public interface SceneRepository extends JpaRepository<Scene, Integer> {
 
     Optional<List<Scene>> findScenesByPlay(Play play);
@@ -21,6 +23,9 @@ public interface SceneRepository extends JpaRepository<Scene, Integer> {
     @Query(value="select u.characters from Scene u where u.sceneId = :sceneId")
     List<Personage> getCharactersBySceneId(int sceneId);
 
+    void deleteAllByPlay(Play play);
+
+    List<Scene> findAllByPlay(Play play);
 }
 
 
