@@ -4,7 +4,9 @@ import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.workshop.microphoneschedulerapi.domain.dto.SceneCustomListDTO;
 import org.workshop.microphoneschedulerapi.domain.entity.Play;
+import org.workshop.microphoneschedulerapi.domain.entity.Scene;
 import org.workshop.microphoneschedulerapi.service.AdminService;
 
 import java.util.ArrayList;
@@ -54,4 +56,16 @@ public class AdminController {
 
         return ResponseEntity.ok().build();
     }
+
+
+    @GetMapping("/allScenesInPlay")
+    public ResponseEntity<SceneCustomListDTO> allScenesInPlay(@PathParam("playName") String playName) {
+        SceneCustomListDTO customSceneList = adminService.getAllScenesInPlay(playName);
+
+        return ResponseEntity.ok(customSceneList);
+    }
+
+
+
+
 }

@@ -26,6 +26,15 @@ public interface SceneRepository extends JpaRepository<Scene, Integer> {
     void deleteAllByPlay(Play play);
 
     List<Scene> findAllByPlay(Play play);
+
+    @Query(value="select s.sceneId from Scene s where s.play.playName = :playName")
+    List<Integer> findSceneIdsByPlayName(@NonNull String playName);
+
+    //@Query(value="select s from Scene where s.sceneId = :sceneId")
+    Scene findSceneBySceneId(int sceneId);
+
+
+
 }
 
 

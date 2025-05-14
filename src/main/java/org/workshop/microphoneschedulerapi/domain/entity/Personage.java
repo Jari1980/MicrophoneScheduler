@@ -1,6 +1,7 @@
 package org.workshop.microphoneschedulerapi.domain.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.OnDelete;
@@ -29,7 +30,7 @@ public class Personage {
     @OnDelete(action = OnDeleteAction.SET_NULL)
     @JoinColumn(name = "microphone_id")
     private Microphone microphoneId;
-    @ManyToMany(mappedBy = "characters", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "characters", fetch = FetchType.EAGER) //, cascade = CascadeType.ALL)
     private List<Scene> scenes;// = new ArrayList<>();
     private String personageName;
 }
