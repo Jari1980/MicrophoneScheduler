@@ -66,7 +66,6 @@ public class SecurityConfig {
                  */
                 .authorizeHttpRequests(registry ->{
                     registry.requestMatchers("/api/v1/scene/scenes",
-                            "/api/v1/scene/hello",
                             "/api/v1/scene/completePlay",
                             "/api/v1/scene/microphonesInScene",
                             "/api/v1/microphone/createMicrophone",
@@ -81,7 +80,8 @@ public class SecurityConfig {
                                 "/api/v1/admin/listAllPlay",
                                 "api/v1/admin/createPlay",
                                 "api/v1/admin/deletePlay",
-                                "api/v1/admin/updatePlay"
+                                "api/v1/admin/updatePlay",
+                                "api/v1/admin/allScenesInPlay"
                         ).hasRole(ADMINISTRATOR.name()))
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
                         .anyRequest().authenticated())
