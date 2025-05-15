@@ -1,6 +1,7 @@
 package org.workshop.microphoneschedulerapi.service;
 
 import jakarta.persistence.EntityManager;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.info.ProjectInfoProperties;
 import org.springframework.stereotype.Service;
@@ -87,5 +88,21 @@ public class AdminService {
 
     public void deleteScene(int sceneId) {
         sceneRepository.deleteById(sceneId);
+    }
+
+    @Transactional
+    public void addPersonageToScene(int sceneId, int personageId) {
+        Scene scene = sceneRepository.findSceneBySceneId(sceneId);
+        List<Personage> characters = scene.getCharacters();
+        characters.add(personageRepository.findById(personageId).orElseThrow());
+        scene.setCharacters(characters);
+    }
+
+    @Transactional
+    public void removePersonageFromScene(int sceneId, int personageId) {
+        Scene scene = sceneRepository.findSceneBySceneId(sceneId);
+        List<Personage> characters = scene.getCharacters();
+        characters.remove(personageRepository.findById(personageId).orElseThrow());
+        scene.setCharacters(characters);
     }
 }

@@ -84,7 +84,9 @@ public class SecurityConfig {
                                 "api/v1/admin/allScenesInPlay",
                                 "api/v1/admin/createScene",
                                 "api/v1/admin/editScene",
-                                "api/v1/admin/deleteScene"
+                                "api/v1/admin/deleteScene",
+                                "api/v1/admin/addPersonageToScene",
+                                "api/v1/admin/removePersonageFromScene"
                         ).hasRole(ADMINISTRATOR.name()))
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
                         .anyRequest().authenticated())

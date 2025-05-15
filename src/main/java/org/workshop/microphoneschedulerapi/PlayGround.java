@@ -102,6 +102,13 @@ public class PlayGround implements CommandLineRunner {
         personage2.setMicrophoneId(microphone2);
         personageRepository.save(personage2);
 
+        Personage personage3 = Personage.builder()
+                .personageName("TestPersonage")
+                .actor(actor1)
+                .microphoneId(microphone1)
+                .build();
+        personageRepository.save(personage3);
+
 
         Play play1 = Play.builder()
                 .playName("SnusDrömmar")
