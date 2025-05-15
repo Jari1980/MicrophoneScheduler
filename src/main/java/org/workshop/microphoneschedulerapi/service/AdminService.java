@@ -11,6 +11,7 @@ import org.workshop.microphoneschedulerapi.domain.dto.UpdateSceneDTOForm;
 import org.workshop.microphoneschedulerapi.domain.entity.Personage;
 import org.workshop.microphoneschedulerapi.domain.entity.Play;
 import org.workshop.microphoneschedulerapi.domain.entity.Scene;
+import org.workshop.microphoneschedulerapi.repository.ActorRepository;
 import org.workshop.microphoneschedulerapi.repository.PersonageRepository;
 import org.workshop.microphoneschedulerapi.repository.PlayRepository;
 import org.workshop.microphoneschedulerapi.repository.SceneRepository;
@@ -25,13 +26,15 @@ public class AdminService {
     private PlayRepository playRepository;
     private PersonageRepository personageRepository;
     private SceneRepository sceneRepository;
+    private ActorRepository actorRepository;
 
 
     @Autowired
-    public AdminService(PlayRepository playRepository, PersonageRepository personageRepository, SceneRepository sceneRepository) {
+    public AdminService(PlayRepository playRepository, PersonageRepository personageRepository, SceneRepository sceneRepository, ActorRepository actorRepository) {
         this.playRepository = playRepository;
         this.personageRepository = personageRepository;
         this.sceneRepository = sceneRepository;
+        this.actorRepository = actorRepository;
     }
 
     public List<Play> getAllPlays() {
@@ -104,5 +107,16 @@ public class AdminService {
         List<Personage> characters = scene.getCharacters();
         characters.remove(personageRepository.findById(personageId).orElseThrow());
         scene.setCharacters(characters);
+    }
+
+    @Transactional
+    public void assignActorToPersonage(int actorId, int personageId) {
+        Personage personage = personageRepository.findById(personageId).orElseThrow();
+        try{
+            personage.setActor(actorRepository.findById(actorId).orElseThrow());
+        }catch (Exception e){
+            personage.setActor(null);
+        }
+
     }
 }

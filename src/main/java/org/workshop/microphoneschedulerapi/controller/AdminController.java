@@ -4,10 +4,7 @@ import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.workshop.microphoneschedulerapi.domain.dto.CreateSceneDTOForm;
-import org.workshop.microphoneschedulerapi.domain.dto.ManagePersonageToScene;
-import org.workshop.microphoneschedulerapi.domain.dto.SceneCustomListDTO;
-import org.workshop.microphoneschedulerapi.domain.dto.UpdateSceneDTOForm;
+import org.workshop.microphoneschedulerapi.domain.dto.*;
 import org.workshop.microphoneschedulerapi.domain.entity.Play;
 import org.workshop.microphoneschedulerapi.domain.entity.Scene;
 import org.workshop.microphoneschedulerapi.service.AdminService;
@@ -128,6 +125,17 @@ public class AdminController {
         }catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
+    }
+
+    @PutMapping("/assignActorToPersonage")
+    public ResponseEntity<Void> assignActorToPersonage(@RequestBody ManageActorToPersonage form){
+        try{
+            adminService.assignActorToPersonage(form.actorId(), form.personageId());
+            return ResponseEntity.ok().build();
+        }catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+
     }
 
 }
