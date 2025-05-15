@@ -38,6 +38,8 @@ public interface SceneRepository extends JpaRepository<Scene, Integer> {
     @Query("UPDATE Scene s SET s.sceneName = :newSceneName, s.actNumber = :newAct, s.sceneNumber = :newSceneNumber WHERE s.sceneId = :id")
     void updateScene(int id, String newSceneName, int newAct, int newSceneNumber);
 
+
+
 }
 
 

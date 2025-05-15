@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.workshop.microphoneschedulerapi.domain.dto.CreateSceneDTOForm;
+import org.workshop.microphoneschedulerapi.domain.dto.ManagePersonageToScene;
 import org.workshop.microphoneschedulerapi.domain.dto.SceneCustomListDTO;
 import org.workshop.microphoneschedulerapi.domain.dto.UpdateSceneDTOForm;
 import org.workshop.microphoneschedulerapi.domain.entity.Play;
@@ -100,12 +101,32 @@ public class AdminController {
     }
 
     @DeleteMapping("/deleteScene")
-    public ResponseEntity<Void> deleteScene(@PathParam("playId") int playId) {
+    public ResponseEntity<Void> deleteScene(@PathParam("sceneId") int sceneId) {
         try{
-            adminService.deleteScene(playId);
+            adminService.deleteScene(sceneId);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
           return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @PutMapping("/addPersonageToScene")
+    public ResponseEntity<Void> addPersonageToScene(@RequestBody ManagePersonageToScene form){
+        try{
+            adminService.addPersonageToScene(form.sceneId(), form.personageId());
+            return ResponseEntity.ok().build();
+        }catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @PutMapping("/removePersonageFromScene")
+    public ResponseEntity<Void> removePersonageFromScene(@RequestBody ManagePersonageToScene form){
+        try{
+            adminService.removePersonageFromScene(form.sceneId(), form.personageId());
+            return ResponseEntity.ok().build();
+        }catch (Exception e) {
+            return ResponseEntity.badRequest().build();
         }
     }
 
