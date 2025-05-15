@@ -81,7 +81,10 @@ public class SecurityConfig {
                                 "api/v1/admin/createPlay",
                                 "api/v1/admin/deletePlay",
                                 "api/v1/admin/updatePlay",
-                                "api/v1/admin/allScenesInPlay"
+                                "api/v1/admin/allScenesInPlay",
+                                "api/v1/admin/createScene",
+                                "api/v1/admin/editScene",
+                                "api/v1/admin/deleteScene"
                         ).hasRole(ADMINISTRATOR.name()))
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
                         .anyRequest().authenticated())

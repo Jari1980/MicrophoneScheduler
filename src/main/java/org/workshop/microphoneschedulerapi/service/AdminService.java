@@ -4,7 +4,9 @@ import jakarta.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.info.ProjectInfoProperties;
 import org.springframework.stereotype.Service;
+import org.workshop.microphoneschedulerapi.domain.dto.CreateSceneDTOForm;
 import org.workshop.microphoneschedulerapi.domain.dto.SceneCustomListDTO;
+import org.workshop.microphoneschedulerapi.domain.dto.UpdateSceneDTOForm;
 import org.workshop.microphoneschedulerapi.domain.entity.Personage;
 import org.workshop.microphoneschedulerapi.domain.entity.Play;
 import org.workshop.microphoneschedulerapi.domain.entity.Scene;
@@ -67,5 +69,23 @@ public class AdminService {
         }
         sceneCustomListDTO.setScenes(scenesInPlay);
         return sceneCustomListDTO;
+    }
+
+    public void createScene(CreateSceneDTOForm form) {
+        Scene newScene = Scene.builder()
+                .play(playRepository.getReferenceById(form.playName()))
+                .actNumber(form.actNumber())
+                .sceneName(form.sceneName())
+                .sceneNumber(form.sceneNumber())
+                .build();
+        sceneRepository.save(newScene);
+    }
+
+    public void updateScene(UpdateSceneDTOForm form) {
+        sceneRepository.updateScene(form.sceneId(), form.sceneName(), form.actNumber(), form.sceneNumber());
+    }
+
+    public void deleteScene(int sceneId) {
+        sceneRepository.deleteById(sceneId);
     }
 }
