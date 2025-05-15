@@ -3,6 +3,7 @@ package org.workshop.microphoneschedulerapi.repository;
 import jakarta.transaction.Transactional;
 import lombok.NonNull;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -33,7 +34,9 @@ public interface SceneRepository extends JpaRepository<Scene, Integer> {
     //@Query(value="select s from Scene where s.sceneId = :sceneId")
     Scene findSceneBySceneId(int sceneId);
 
-
+    @Modifying
+    @Query("UPDATE Scene s SET s.sceneName = :newSceneName, s.actNumber = :newAct, s.sceneNumber = :newSceneNumber WHERE s.sceneId = :id")
+    void updateScene(int id, String newSceneName, int newAct, int newSceneNumber);
 
 }
 
