@@ -11,6 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.workshop.microphoneschedulerapi.configuration.JwtUtil;
 import org.workshop.microphoneschedulerapi.domain.entity.User;
+import org.workshop.microphoneschedulerapi.domain.model.UserRole;
 import org.workshop.microphoneschedulerapi.repository.UserRepository;
 import org.workshop.microphoneschedulerapi.service.CustomUserDetailService;
 
@@ -43,6 +44,7 @@ public class UserController {
         User newUser = User.builder()
                 .userName(user.getUsername())
                 .password(passwordEncoder.encode(user.getPassword()))
+                .userRole(UserRole.ACTOR)
                 .build();
         userRepository.save(newUser);
         return ResponseEntity.ok("User registered successfully");
