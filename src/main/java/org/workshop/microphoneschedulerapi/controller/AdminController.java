@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.workshop.microphoneschedulerapi.domain.dto.*;
+import org.workshop.microphoneschedulerapi.domain.entity.Personage;
 import org.workshop.microphoneschedulerapi.domain.entity.Play;
 import org.workshop.microphoneschedulerapi.domain.entity.Scene;
 import org.workshop.microphoneschedulerapi.service.AdminService;
@@ -135,7 +136,26 @@ public class AdminController {
         }catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
-
     }
 
+    @PostMapping("/createPersonage")
+    public ResponseEntity<Void>  createPersonage(@RequestBody CreatePersonageDTOForm form){
+        try{
+            adminService.createPersonage(form);
+            return ResponseEntity.ok().build();
+        }catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    //most likely need queries for all personage in, scenes and unassigned aswell
+    @GetMapping("/getAllPersonageInPlay")
+    public ResponseEntity<PersonageInPlayCustomDTO> getAllPersonageInPlay(@PathParam("playName") String playName) {
+        try{
+            PersonageInPlayCustomDTO personages = adminService.getAllPersonagesInPlay(playName);
+            return ResponseEntity.ok(personages);
+        }catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
 }

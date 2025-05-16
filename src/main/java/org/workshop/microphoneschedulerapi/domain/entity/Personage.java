@@ -32,5 +32,6 @@ public class Personage {
     private Microphone microphoneId;
     @ManyToMany(mappedBy = "characters", fetch = FetchType.EAGER) //, cascade = CascadeType.ALL)
     private List<Scene> scenes;// = new ArrayList<>();
+    @Column(unique = true)
     private String personageName;
 }

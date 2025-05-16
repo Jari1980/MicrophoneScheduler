@@ -5,9 +5,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.info.ProjectInfoProperties;
 import org.springframework.stereotype.Service;
-import org.workshop.microphoneschedulerapi.domain.dto.CreateSceneDTOForm;
-import org.workshop.microphoneschedulerapi.domain.dto.SceneCustomListDTO;
-import org.workshop.microphoneschedulerapi.domain.dto.UpdateSceneDTOForm;
+import org.workshop.microphoneschedulerapi.domain.dto.*;
 import org.workshop.microphoneschedulerapi.domain.entity.Personage;
 import org.workshop.microphoneschedulerapi.domain.entity.Play;
 import org.workshop.microphoneschedulerapi.domain.entity.Scene;
@@ -117,6 +115,32 @@ public class AdminService {
         }catch (Exception e){
             personage.setActor(null);
         }
+    }
 
+    public void createPersonage(CreatePersonageDTOForm form) {
+        Personage newPersonage = Personage.builder()
+                .personageName(form.personageName())
+                .build();
+        personageRepository.save(newPersonage);
+    }
+
+    public PersonageInPlayCustomDTO getAllPersonagesInPlay(String playName) {
+        List<Scene> scenes = sceneRepository.findAllByPlay(playRepository.getReferenceById(playName));
+        PersonageInPlayCustomDTO personageInPlayCustomDTO = new PersonageInPlayCustomDTO();
+        List <Personage> personagesOneScene = new ArrayList<>();
+        List<Personage> personagesInPlay = new ArrayList<>();
+        for (Scene scene : scenes) {
+            List<Personage> personagesInScene = scene.getCharacters();
+            for (Personage personage : personagesInScene) {
+                Personage persona = Personage.builder()
+                        .personageId(personage.getPersonageId())
+                        .personageName(personage.getPersonageName())
+                        .build();
+                personagesOneScene.add(persona);
+            }
+            personagesInPlay.addAll(personagesOneScene);
+        }
+        personageInPlayCustomDTO.setPersonages(personagesInPlay);
+        return personageInPlayCustomDTO;
     }
 }
