@@ -26,12 +26,18 @@ public class Personage {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "actor_id")
     private Actor actor;
+    /*
     @ManyToOne()
     @OnDelete(action = OnDeleteAction.SET_NULL)
     @JoinColumn(name = "microphone_id")
     private Microphone microphoneId;
+     */
+    /*
     @ManyToMany(mappedBy = "characters", fetch = FetchType.EAGER) //, cascade = CascadeType.ALL)
     private List<Scene> scenes;// = new ArrayList<>();
+     */
+    @OneToMany(mappedBy = "personage", fetch = FetchType.EAGER)
+    private List<Scene_character> scene_characters;
     @Column(unique = true)
     private String personageName;
 }
