@@ -31,6 +31,7 @@ public class SceneService {
         return sceneRepository.findScenesByPlay(playRepository.findById(title).orElseThrow()).orElseThrow();
     }
 
+    /*
     public List<Microphone> getAllMicrophones(int sceneId) {
         List<Personage> tempList = sceneRepository.getCharactersBySceneId(sceneId);
         if (tempList.isEmpty()) {
@@ -43,4 +44,5 @@ public class SceneService {
         }
         return microphones;
     }
+     */
 }

@@ -33,6 +33,7 @@ public class SceneController {
         return new ResponseEntity<>(scenes, HttpStatus.OK);
     }
 
+    /*
     @GetMapping("/microphonesInScene{id}")
     public ResponseEntity<List<Microphone>> getMicrophonesInScene(@PathParam("sceneId") int sceneId) {
         try{
@@ -42,6 +43,7 @@ public class SceneController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
+     */
 
 
 }

@@ -43,6 +43,7 @@ public class AdminService {
         return playRepository.save(play);
     }
 
+    /*
     public void deletePlay(String playName) {
         List<Scene> scenesToBeRemoved = sceneRepository.findAllByPlay(playRepository.getReferenceById(playName));
         for (Scene scene : scenesToBeRemoved) {
@@ -51,6 +52,7 @@ public class AdminService {
         sceneRepository.deleteAllByPlay(playRepository.getReferenceById(playName));
         playRepository.delete(playRepository.getReferenceById(playName));
     }
+     */
 
     public void updatePlay(String playName, LocalDate date, String description) {
         playRepository.updatePlay(playName, date, description);
@@ -91,6 +93,7 @@ public class AdminService {
         sceneRepository.deleteById(sceneId);
     }
 
+    /*
     @Transactional
     public void addPersonageToScene(int sceneId, int personageId) {
         Scene scene = sceneRepository.findSceneBySceneId(sceneId);
@@ -98,7 +101,9 @@ public class AdminService {
         characters.add(personageRepository.findById(personageId).orElseThrow());
         scene.setCharacters(characters);
     }
+     */
 
+    /*
     @Transactional
     public void removePersonageFromScene(int sceneId, int personageId) {
         Scene scene = sceneRepository.findSceneBySceneId(sceneId);
@@ -106,6 +111,7 @@ public class AdminService {
         characters.remove(personageRepository.findById(personageId).orElseThrow());
         scene.setCharacters(characters);
     }
+     */
 
     @Transactional
     public void assignActorToPersonage(int actorId, int personageId) {
@@ -124,6 +130,7 @@ public class AdminService {
         personageRepository.save(newPersonage);
     }
 
+    /*
     public PersonageInPlayCustomDTO getAllPersonagesInPlay(String playName) {
         List<Scene> scenes = sceneRepository.findAllByPlay(playRepository.getReferenceById(playName));
         PersonageInPlayCustomDTO personageInPlayCustomDTO = new PersonageInPlayCustomDTO();
@@ -143,4 +150,5 @@ public class AdminService {
         personageInPlayCustomDTO.setPersonages(personagesInPlay);
         return personageInPlayCustomDTO;
     }
+     */
 }

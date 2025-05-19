@@ -29,6 +29,7 @@ public class Scene {
     private int actNumber;
     private int sceneNumber;
     private String sceneName;
+    /*
     @ManyToMany(fetch = FetchType.EAGER)//,cascade = {CascadeType.ALL}) //PERSIST, CascadeType.MERGE}) //fetch = FetchType.LAZY,
     @JoinTable(
             name = "scene_character",
@@ -36,4 +37,7 @@ public class Scene {
             inverseJoinColumns = @JoinColumn(name = "personage_id", referencedColumnName = "personageId")
     )
     private List<Personage> characters;// = new ArrayList<>();
+     */
+    @OneToMany(mappedBy = "scene") //, fetch = FetchType.EAGER)
+    private List<Scene_character> scene_characters;
 }

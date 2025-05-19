@@ -21,8 +21,10 @@ public interface SceneRepository extends JpaRepository<Scene, Integer> {
 
     Optional<List<Scene>> findScenesByPlay(Play play);
 
+    /*
     @Query(value="select u.characters from Scene u where u.sceneId = :sceneId")
     List<Personage> getCharactersBySceneId(int sceneId);
+     */
 
     void deleteAllByPlay(Play play);
 

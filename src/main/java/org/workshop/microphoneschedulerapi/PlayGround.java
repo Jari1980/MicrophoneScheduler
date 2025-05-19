@@ -28,12 +28,13 @@ public class PlayGround implements CommandLineRunner {
     private UserRepository userRepository;
     private JwtUtil jwtUtil;
     private PasswordEncoder customPasswordEncoder;
+    private Scene_characterRepository scene_characterRepository;
 
     @Autowired
     public PlayGround(ActorRepository actorRepository, MicrophoneRepository microphoneRepository,
                       PersonageRepository personageRepository, PlayRepository playRepository,
                       SceneRepository sceneRepository, UserRepository userRepository, JwtUtil jwtUtil,
-                      PasswordEncoder customPasswordEncoder) {
+                      PasswordEncoder customPasswordEncoder, Scene_characterRepository scene_characterRepository) {
         this.actorRepository = actorRepository;
         this.microphoneRepository = microphoneRepository;
         this.personageRepository = personageRepository;
@@ -42,6 +43,7 @@ public class PlayGround implements CommandLineRunner {
         this.userRepository = userRepository;
         this.jwtUtil = jwtUtil;
         this.customPasswordEncoder = customPasswordEncoder;
+        this.scene_characterRepository = scene_characterRepository;
     }
 
     private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
@@ -92,20 +94,20 @@ public class PlayGround implements CommandLineRunner {
         Personage personage1 = Personage.builder()
                 .personageName("JulTomte")
                 .actor(actor1)
-                .microphoneId(microphone1)
+                //.microphoneId(microphone1)
                 .build();
         personageRepository.save(personage1);
 
         Personage personage2 = new Personage();
         personage2.setPersonageName("SnusMonster");
         personage2.setActor(actor2);
-        personage2.setMicrophoneId(microphone2);
+        //personage2.setMicrophoneId(microphone2);
         personageRepository.save(personage2);
 
         Personage personage3 = Personage.builder()
                 .personageName("TestPersonage")
                 .actor(actor1)
-                .microphoneId(microphone1)
+                //.microphoneId(microphone1)
                 .build();
         personageRepository.save(personage3);
 
@@ -130,15 +132,17 @@ public class PlayGround implements CommandLineRunner {
                 .actNumber(1)
                 .sceneNumber(1)
                 .sceneName("Test scene 1")
-                .characters(charactersScene1)
+                //.characters(charactersScene1)
                 .build();
         sceneRepository.save(scene1);
         System.out.println("-----------------------");
+        /*
         System.out.println("Looking for all characters in scene1:");
         List<Personage> characters = sceneRepository.findById(1).orElseThrow().getCharacters();
         for (Personage character : characters) {
             System.out.println(character.getMicrophoneId());
         }
+         */
         System.out.println("------------------------");
         System.out.println("---------Checking encoded password-----------");
         System.out.println(userRepository.findByUserName("user1").orElseThrow().getPassword());
@@ -152,6 +156,12 @@ public class PlayGround implements CommandLineRunner {
         String token = jwtUtil.generateToken("Test token");
         System.out.println(token);
 
+        Scene_character test = Scene_character.builder()
+                .scene(scene1)
+                .personage(personage1)
+                .microphone(microphone1)
+                .build();
+        scene_characterRepository.save(test);
 
     }
 }

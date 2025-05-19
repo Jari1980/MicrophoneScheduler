@@ -47,6 +47,7 @@ public class AdminController {
         }
     }
 
+    /*
     @DeleteMapping("/deletePlay")
     public ResponseEntity<Void> deletePlay(@PathParam("playName") String playName) {
         try {
@@ -56,6 +57,7 @@ public class AdminController {
             return ResponseEntity.notFound().build();
         }
     }
+     */
 
     @PutMapping("/updatePlay")
     public ResponseEntity<Void> updatePlay(@RequestBody Play play) {
@@ -108,6 +110,7 @@ public class AdminController {
         }
     }
 
+    /*
     @PutMapping("/addPersonageToScene")
     public ResponseEntity<Void> addPersonageToScene(@RequestBody ManagePersonageToScene form){
         try{
@@ -117,7 +120,9 @@ public class AdminController {
             return ResponseEntity.badRequest().build();
         }
     }
+     */
 
+    /*
     @PutMapping("/removePersonageFromScene")
     public ResponseEntity<Void> removePersonageFromScene(@RequestBody ManagePersonageToScene form){
         try{
@@ -127,6 +132,7 @@ public class AdminController {
             return ResponseEntity.badRequest().build();
         }
     }
+     */
 
     @PutMapping("/assignActorToPersonage")
     public ResponseEntity<Void> assignActorToPersonage(@RequestBody ManageActorToPersonage form){
@@ -148,6 +154,7 @@ public class AdminController {
         }
     }
 
+    /*
     //most likely need queries for all personage in, scenes and unassigned aswell
     @GetMapping("/getAllPersonageInPlay")
     public ResponseEntity<PersonageInPlayCustomDTO> getAllPersonageInPlay(@PathParam("playName") String playName) {
@@ -158,4 +165,5 @@ public class AdminController {
             return ResponseEntity.badRequest().build();
         }
     }
+     */
 }
