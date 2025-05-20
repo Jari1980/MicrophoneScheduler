@@ -118,7 +118,6 @@ public class AdminController {
         }
     }
 
-    /*
     @PutMapping("/removePersonageFromScene")
     public ResponseEntity<Void> removePersonageFromScene(@RequestBody ManagePersonageToScene form){
         try{
@@ -128,7 +127,6 @@ public class AdminController {
             return ResponseEntity.badRequest().build();
         }
     }
-     */
 
     @PutMapping("/assignActorToPersonage")
     public ResponseEntity<Void> assignActorToPersonage(@RequestBody ManageActorToPersonage form){

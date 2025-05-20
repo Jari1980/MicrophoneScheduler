@@ -132,15 +132,17 @@ public class AdminService {
 
     }
 
-    /*
     @Transactional
     public void removePersonageFromScene(int sceneId, int personageId) {
         Scene scene = sceneRepository.findSceneBySceneId(sceneId);
-        List<Personage> characters = scene.getCharacters();
-        characters.remove(personageRepository.findById(personageId).orElseThrow());
-        scene.setCharacters(characters);
+        List<Scene_character> sceneCharacters = scene.getScene_characters();
+        Scene_character scene_characterToBeRemoved = sceneCharacters.stream()
+                .filter(s -> s.getPersonage().getPersonageId() == personageId)
+                        .findFirst().get();
+
+        sceneCharacters.remove(scene_characterToBeRemoved);
+        scene_characterRepository.delete(scene_characterToBeRemoved);
     }
-     */
 
     @Transactional
     public void assignActorToPersonage(int actorId, int personageId) {
