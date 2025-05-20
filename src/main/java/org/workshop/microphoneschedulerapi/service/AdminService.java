@@ -9,10 +9,8 @@ import org.workshop.microphoneschedulerapi.domain.dto.*;
 import org.workshop.microphoneschedulerapi.domain.entity.Personage;
 import org.workshop.microphoneschedulerapi.domain.entity.Play;
 import org.workshop.microphoneschedulerapi.domain.entity.Scene;
-import org.workshop.microphoneschedulerapi.repository.ActorRepository;
-import org.workshop.microphoneschedulerapi.repository.PersonageRepository;
-import org.workshop.microphoneschedulerapi.repository.PlayRepository;
-import org.workshop.microphoneschedulerapi.repository.SceneRepository;
+import org.workshop.microphoneschedulerapi.domain.entity.Scene_character;
+import org.workshop.microphoneschedulerapi.repository.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -25,14 +23,18 @@ public class AdminService {
     private PersonageRepository personageRepository;
     private SceneRepository sceneRepository;
     private ActorRepository actorRepository;
+    private Scene_characterRepository scene_characterRepository;
 
 
     @Autowired
-    public AdminService(PlayRepository playRepository, PersonageRepository personageRepository, SceneRepository sceneRepository, ActorRepository actorRepository) {
+    public AdminService(PlayRepository playRepository, PersonageRepository personageRepository,
+                        SceneRepository sceneRepository, ActorRepository actorRepository,
+                        Scene_characterRepository scene_characterRepository) {
         this.playRepository = playRepository;
         this.personageRepository = personageRepository;
         this.sceneRepository = sceneRepository;
         this.actorRepository = actorRepository;
+        this.scene_characterRepository = scene_characterRepository;
     }
 
     public List<Play> getAllPlays() {
@@ -43,16 +45,23 @@ public class AdminService {
         return playRepository.save(play);
     }
 
-    /*
+
+    @Transactional
     public void deletePlay(String playName) {
         List<Scene> scenesToBeRemoved = sceneRepository.findAllByPlay(playRepository.getReferenceById(playName));
         for (Scene scene : scenesToBeRemoved) {
-            personageRepository.deleteAll(sceneRepository.getCharactersBySceneId(scene.getSceneId()));
+            var toBeRemoved = scene.getScene_characters();
+            for (Scene_character scene_character : toBeRemoved) {
+                personageRepository.delete(scene_character.getPersonage());
+                scene_character.setPersonage(null);
+                scene_character.setScene(null);
+                scene_character.setMicrophone(null);
+            }
+            scene.setScene_characters(null);
         }
         sceneRepository.deleteAllByPlay(playRepository.getReferenceById(playName));
         playRepository.delete(playRepository.getReferenceById(playName));
     }
-     */
 
     public void updatePlay(String playName, LocalDate date, String description) {
         playRepository.updatePlay(playName, date, description);

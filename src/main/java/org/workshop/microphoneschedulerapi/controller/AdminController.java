@@ -47,7 +47,6 @@ public class AdminController {
         }
     }
 
-    /*
     @DeleteMapping("/deletePlay")
     public ResponseEntity<Void> deletePlay(@PathParam("playName") String playName) {
         try {
@@ -57,7 +56,6 @@ public class AdminController {
             return ResponseEntity.notFound().build();
         }
     }
-     */
 
     @PutMapping("/updatePlay")
     public ResponseEntity<Void> updatePlay(@RequestBody Play play) {
