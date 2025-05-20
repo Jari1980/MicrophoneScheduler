@@ -108,7 +108,6 @@ public class AdminController {
         }
     }
 
-    /*
     @PutMapping("/addPersonageToScene")
     public ResponseEntity<Void> addPersonageToScene(@RequestBody ManagePersonageToScene form){
         try{
@@ -118,7 +117,6 @@ public class AdminController {
             return ResponseEntity.badRequest().build();
         }
     }
-     */
 
     /*
     @PutMapping("/removePersonageFromScene")

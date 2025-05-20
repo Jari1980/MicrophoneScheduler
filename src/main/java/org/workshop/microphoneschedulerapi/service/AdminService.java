@@ -102,15 +102,35 @@ public class AdminService {
         sceneRepository.deleteById(sceneId);
     }
 
-    /*
     @Transactional
     public void addPersonageToScene(int sceneId, int personageId) {
         Scene scene = sceneRepository.findSceneBySceneId(sceneId);
-        List<Personage> characters = scene.getCharacters();
-        characters.add(personageRepository.findById(personageId).orElseThrow());
-        scene.setCharacters(characters);
+        List<Scene_character> sceneCharacters = scene.getScene_characters();
+
+        Scene_character scene_character = Scene_character.builder()
+                .scene(scene)
+                .personage(personageRepository.findById(personageId).orElseThrow())
+                .build();
+
+        sceneCharacters.add(scene_character);
+        scene.setScene_characters(sceneCharacters);
+        scene_characterRepository.save(scene_character);
+
+        /*
+        Personage personage = personageRepository.findById(personageId).orElseThrow();
+        List<Scene_character> sceneCharacters2 = personage.getScene_characters();
+
+        Scene_character scene_character2 = Scene_character.builder()
+                .scene(scene)
+                .personage(personageRepository.findById(personageId).orElseThrow())
+                //.personage(personageRepository.getReferenceById(personageId))
+                .build();
+
+        sceneCharacters2.add(scene_character2);
+        personage.setScene_characters(sceneCharacters2);
+         */
+
     }
-     */
 
     /*
     @Transactional
