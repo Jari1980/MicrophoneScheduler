@@ -169,4 +169,14 @@ public class AdminController {
         }
     }
 
+    @GetMapping("getAllPersonageInScene")
+    public ResponseEntity<PersonageInDbCustomDTO> getAllPersonageInScene(@PathParam("sceneId") int sceneId) {
+        try{
+            PersonageInDbCustomDTO personages = adminService.getAllPersonagesInScene(sceneId);
+            return ResponseEntity.ok(personages);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
 }

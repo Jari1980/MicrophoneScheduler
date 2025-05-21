@@ -167,13 +167,24 @@ public class AdminService {
         List<PersonageCustom> customList = new ArrayList<>();
         List<Personage> personages = personageRepository.findAll();
         for(Personage personage : personages) {
+            List<Scene> customScenes = new ArrayList<>();
 
+            for(Scene_character scene_character : personage.getScene_characters()) {
+                Scene customScene = Scene.builder()
+                        .sceneId(scene_character.getScene().getSceneId())
+                        .actNumber(scene_character.getScene().getActNumber())
+                        .sceneNumber(scene_character.getScene().getSceneNumber())
+                        .sceneName(scene_character.getScene().getSceneName())
+                        .build();
+                customScenes.add(customScene);
+            }
             if(scene_characterRepository.existsScene_charactersByPersonage(personage)) {
             PersonageCustom customPerson = PersonageCustom.builder()
                     .personageId(personage.getPersonageId())
                     .personageName(personage.getPersonageName())
                     .playName(personage.getScene_characters().get(0).getScene().getPlay().getPlayName())
                     .actorName(actorRepository.findById(personage.getActor().getActorId()).orElseThrow().getUser().getUsername())
+                    .scenes(customScenes)
                     .build();
             customList.add(customPerson);
             }
@@ -182,6 +193,7 @@ public class AdminService {
                         .personageId(personage.getPersonageId())
                         .personageName(personage.getPersonageName())
                         .actorName(actorRepository.findById(personage.getActor().getActorId()).orElseThrow().getUser().getUsername())
+                        .scenes(customScenes)
                         .build();
                 customList.add(customPerson);
             }
@@ -199,6 +211,23 @@ public class AdminService {
         for(PersonageCustom personageCustom : allPersonagesinDb.getPersonages()) {
             if(personageCustom.getPlayName() != null && personageCustom.getPlayName().equals(playName)) {
                 customList.add(personageCustom);
+            }
+        }
+        personageInDbCustomDTO.setPersonages(customList);
+
+        return personageInDbCustomDTO;
+    }
+
+    public PersonageInDbCustomDTO getAllPersonagesInScene(int sceneId) {
+        PersonageInDbCustomDTO personageInDbCustomDTO = new PersonageInDbCustomDTO();
+        List<PersonageCustom> customList = new ArrayList<>();
+        PersonageInDbCustomDTO allPersonagesinDb = getAllPersonages();
+
+        for(PersonageCustom personageCustom : allPersonagesinDb.getPersonages()) {
+            for(Scene scene : personageCustom.getScenes()) {
+                if(scene.getSceneName() != null && scene.getSceneId() == sceneId) {
+                    customList.add(personageCustom);
+                }
             }
         }
         personageInDbCustomDTO.setPersonages(customList);
