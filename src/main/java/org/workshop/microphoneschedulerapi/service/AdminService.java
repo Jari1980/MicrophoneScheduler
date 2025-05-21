@@ -185,34 +185,25 @@ public class AdminService {
                         .build();
                 customList.add(customPerson);
             }
-
-
         }
         personageInDbCustomDTO.setPersonages(customList);
-
 
         return personageInDbCustomDTO;
     }
 
-    /*
-    public PersonageInPlayCustomDTO getAllPersonagesInPlay(String playName) {
-        List<Scene> scenes = sceneRepository.findAllByPlay(playRepository.getReferenceById(playName));
-        PersonageInPlayCustomDTO personageInPlayCustomDTO = new PersonageInPlayCustomDTO();
-        List <Personage> personagesOneScene = new ArrayList<>();
-        List<Personage> personagesInPlay = new ArrayList<>();
-        for (Scene scene : scenes) {
-            List<Personage> personagesInScene = scene.getCharacters();
-            for (Personage personage : personagesInScene) {
-                Personage persona = Personage.builder()
-                        .personageId(personage.getPersonageId())
-                        .personageName(personage.getPersonageName())
-                        .build();
-                personagesOneScene.add(persona);
+    public PersonageInDbCustomDTO getAllPersonagesInPlay(String playName) {
+        PersonageInDbCustomDTO personageInDbCustomDTO = new PersonageInDbCustomDTO();
+        List<PersonageCustom> customList = new ArrayList<>();
+        PersonageInDbCustomDTO allPersonagesinDb = getAllPersonages();
+
+        for(PersonageCustom personageCustom : allPersonagesinDb.getPersonages()) {
+            if(personageCustom.getPlayName() != null && personageCustom.getPlayName().equals(playName)) {
+                customList.add(personageCustom);
             }
-            personagesInPlay.addAll(personagesOneScene);
         }
-        personageInPlayCustomDTO.setPersonages(personagesInPlay);
-        return personageInPlayCustomDTO;
+        personageInDbCustomDTO.setPersonages(customList);
+
+        return personageInDbCustomDTO;
     }
-     */
+
 }

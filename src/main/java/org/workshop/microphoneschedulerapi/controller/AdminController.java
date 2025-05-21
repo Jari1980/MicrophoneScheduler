@@ -159,15 +159,14 @@ public class AdminController {
         }
     }
 
-    /*
     @GetMapping("/getAllPersonageInPlay")
-    public ResponseEntity<PersonageInPlayCustomDTO> getAllPersonageInPlay(@PathParam("playName") String playName) {
+    public ResponseEntity<PersonageInDbCustomDTO> getAllPersonageInPlay(@PathParam("playName") String playName) {
         try{
-            PersonageInPlayCustomDTO personages = adminService.getAllPersonagesInPlay(playName);
+            PersonageInDbCustomDTO personages = adminService.getAllPersonagesInPlay(playName);
             return ResponseEntity.ok(personages);
         }catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
     }
-     */
+
 }
