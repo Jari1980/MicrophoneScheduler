@@ -89,7 +89,8 @@ public class SecurityConfig {
                                 "api/v1/admin/removePersonageFromScene",
                                 "api/v1/admin/assignActorToPersonage",
                                 "api/v1/admin/createPersonage",
-                                "api/v1/admin/getAllPersonageInPlay"
+                                "api/v1/admin/getAllPersonageInPlay",
+                                "api/v1/admin/getAllPersonageInDb"
                         ).hasRole(ADMINISTRATOR.name()))
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
                         .anyRequest().authenticated())

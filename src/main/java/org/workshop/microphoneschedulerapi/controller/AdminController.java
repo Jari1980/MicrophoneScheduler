@@ -148,8 +148,18 @@ public class AdminController {
         }
     }
 
+    @GetMapping("getAllPersonageInDb")
+    public ResponseEntity<PersonageInDbCustomDTO> getAllPersonageInDb() {
+        try{
+            PersonageInDbCustomDTO personages = adminService.getAllPersonages();
+            return ResponseEntity.ok(personages);
+
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
     /*
-    //most likely need queries for all personage in, scenes and unassigned aswell
     @GetMapping("/getAllPersonageInPlay")
     public ResponseEntity<PersonageInPlayCustomDTO> getAllPersonageInPlay(@PathParam("playName") String playName) {
         try{

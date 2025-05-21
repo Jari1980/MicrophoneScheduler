@@ -13,4 +13,8 @@ public interface Scene_characterRepository extends JpaRepository<Scene_character
 
     //Scene_character findScene_characterByscene_id(int sceneId);
 
+    List<Scene_character> findScene_charactersByPersonage(Personage personage);
+
+    boolean existsScene_charactersByPersonage(Personage personage);
+
 }

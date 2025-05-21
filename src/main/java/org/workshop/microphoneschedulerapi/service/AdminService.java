@@ -10,6 +10,7 @@ import org.workshop.microphoneschedulerapi.domain.entity.Personage;
 import org.workshop.microphoneschedulerapi.domain.entity.Play;
 import org.workshop.microphoneschedulerapi.domain.entity.Scene;
 import org.workshop.microphoneschedulerapi.domain.entity.Scene_character;
+import org.workshop.microphoneschedulerapi.domain.model.PersonageCustom;
 import org.workshop.microphoneschedulerapi.repository.*;
 
 import java.time.LocalDate;
@@ -159,6 +160,38 @@ public class AdminService {
                 .personageName(form.personageName())
                 .build();
         personageRepository.save(newPersonage);
+    }
+
+    public PersonageInDbCustomDTO getAllPersonages() {
+        PersonageInDbCustomDTO personageInDbCustomDTO = new PersonageInDbCustomDTO();
+        List<PersonageCustom> customList = new ArrayList<>();
+        List<Personage> personages = personageRepository.findAll();
+        for(Personage personage : personages) {
+
+            if(scene_characterRepository.existsScene_charactersByPersonage(personage)) {
+            PersonageCustom customPerson = PersonageCustom.builder()
+                    .personageId(personage.getPersonageId())
+                    .personageName(personage.getPersonageName())
+                    .playName(personage.getScene_characters().get(0).getScene().getPlay().getPlayName())
+                    .actorName(actorRepository.findById(personage.getActor().getActorId()).orElseThrow().getUser().getUsername())
+                    .build();
+            customList.add(customPerson);
+            }
+            else{
+                PersonageCustom customPerson = PersonageCustom.builder()
+                        .personageId(personage.getPersonageId())
+                        .personageName(personage.getPersonageName())
+                        .actorName(actorRepository.findById(personage.getActor().getActorId()).orElseThrow().getUser().getUsername())
+                        .build();
+                customList.add(customPerson);
+            }
+
+
+        }
+        personageInDbCustomDTO.setPersonages(customList);
+
+
+        return personageInDbCustomDTO;
     }
 
     /*
