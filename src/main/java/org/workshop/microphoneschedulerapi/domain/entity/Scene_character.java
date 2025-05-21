@@ -1,6 +1,7 @@
 package org.workshop.microphoneschedulerapi.domain.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.OnDelete;
@@ -11,7 +12,7 @@ import org.hibernate.annotations.OnDeleteAction;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@EqualsAndHashCode
+//@EqualsAndHashCode
 @Builder
 @Entity
 public class Scene_character {
@@ -21,11 +22,13 @@ public class Scene_character {
     @Column(nullable = false, unique = true)
     private Long scene_character_id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @JsonBackReference
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "scene_id")
     private Scene scene;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @JsonBackReference
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "personage_id")
     private Personage personage;
 

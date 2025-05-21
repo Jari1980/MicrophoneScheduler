@@ -1,6 +1,7 @@
 package org.workshop.microphoneschedulerapi.domain.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
@@ -14,7 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@EqualsAndHashCode
+//@EqualsAndHashCode
 @Builder
 @Entity
 public class Personage {
@@ -36,6 +37,8 @@ public class Personage {
     @ManyToMany(mappedBy = "characters", fetch = FetchType.EAGER) //, cascade = CascadeType.ALL)
     private List<Scene> scenes;// = new ArrayList<>();
      */
+    //@JsonIgnore
+    @JsonManagedReference
     @OneToMany(mappedBy = "personage", fetch = FetchType.EAGER)
     private List<Scene_character> scene_characters;
     @Column(unique = true)

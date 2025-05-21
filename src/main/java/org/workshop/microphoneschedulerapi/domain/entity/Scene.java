@@ -14,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@EqualsAndHashCode
+//@EqualsAndHashCode
 @Builder
 @Entity
 public class Scene {
@@ -38,6 +38,8 @@ public class Scene {
     )
     private List<Personage> characters;// = new ArrayList<>();
      */
+    //@JsonIgnore
+    @JsonManagedReference
     @OneToMany(mappedBy = "scene") //, fetch = FetchType.EAGER)
     private List<Scene_character> scene_characters;
 }
