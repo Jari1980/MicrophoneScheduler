@@ -111,6 +111,13 @@ public class PlayGround implements CommandLineRunner {
                 .build();
         personageRepository.save(personage3);
 
+        Personage personage4 = Personage.builder()
+                .personageName("KaffeTomte")
+                .actor(actor1)
+                //.microphoneId(microphone1)
+                .build();
+        personageRepository.save(personage4);
+
 
         Play play1 = Play.builder()
                 .playName("SnusDrömmar")
@@ -135,6 +142,39 @@ public class PlayGround implements CommandLineRunner {
                 //.characters(charactersScene1)
                 .build();
         sceneRepository.save(scene1);
+
+        Scene scene2 = Scene.builder()
+                .play(play1)
+                .actNumber(1)
+                .sceneNumber(2)
+                .sceneName("Test scene 2")
+                .build();
+        sceneRepository.save(scene2);
+
+        Scene scene3 = Scene.builder()
+                .play(play1)
+                .actNumber(1)
+                .sceneNumber(3)
+                .sceneName("Test scene 3")
+                .build();
+        sceneRepository.save(scene3);
+
+        Scene scene4 = Scene.builder()
+                .play(play1)
+                .actNumber(2)
+                .sceneNumber(1)
+                .sceneName("Test scene 4")
+                .build();
+        sceneRepository.save(scene4);
+
+        Scene scene5 = Scene.builder()
+                .play(play1)
+                .actNumber(2)
+                .sceneNumber(2)
+                .sceneName("Test scene 5")
+                .build();
+        sceneRepository.save(scene5);
+
         System.out.println("-----------------------");
         /*
         System.out.println("Looking for all characters in scene1:");
@@ -159,9 +199,37 @@ public class PlayGround implements CommandLineRunner {
         Scene_character test = Scene_character.builder()
                 .scene(scene1)
                 .personage(personage1)
-                .microphone(microphone1)
+                //.microphone(microphone1)
                 .build();
         scene_characterRepository.save(test);
+
+        Scene_character test2 = Scene_character.builder()
+                .scene(scene2)
+                .personage(personage1)
+                //.microphone(microphone1)
+                .build();
+        scene_characterRepository.save(test2);
+
+        Scene_character test3 = Scene_character.builder()
+                .scene(scene2)
+                .personage(personage2)
+                //.microphone(microphone2)
+                .build();
+        scene_characterRepository.save(test3);
+
+        Scene_character test4 = Scene_character.builder()
+                .scene(scene3)
+                .personage(personage1)
+                //.microphone(microphone1)
+                .build();
+        scene_characterRepository.save(test4);
+
+        Scene_character test5 = Scene_character.builder()
+                .scene(scene4)
+                .personage(personage1)
+                //.microphone(microphone1)
+                .build();
+        scene_characterRepository.save(test4);
 
     }
 }
