@@ -31,18 +31,16 @@ public class ActorController {
     @GetMapping("/actorScenes")
     public ResponseEntity<ActorOwnSceneCustomListDTO> getActorScenes(@PathParam("playName") String playName) {
         try{
-            String login =
-                    SecurityContextHolder.getContext().getAuthentication().getName();
+            String login = SecurityContextHolder.getContext().getAuthentication().getName();
             if (login != null && !login.equals("anonymousUser")) {
-                Optional<User> optionalUsers = userRepository.findByUserName(login);
-                //return optionalUsers.orElse(null);
-                ActorOwnSceneCustomListDTO actorOwnSceneCustomListDTO = actorService.getActorOwnSceneCustomListDTO(optionalUsers.orElseThrow(), playName);
+                Optional<User> loggedUser = userRepository.findByUserName(login);
+                ActorOwnSceneCustomListDTO actorOwnSceneCustomListDTO = actorService.getActorOwnSceneCustomListDTO(loggedUser.orElseThrow(), playName);
 
                 return new ResponseEntity<>(actorOwnSceneCustomListDTO, HttpStatus.OK);
             }
-            return null;//ResponseEntity.ok(actorOwnSceneCustomListDTO);
+            return null;
         } catch (Exception e) {
-            return null;//ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().build();
         }
 
     }
