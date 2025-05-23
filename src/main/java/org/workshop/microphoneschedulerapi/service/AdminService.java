@@ -6,16 +6,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.info.ProjectInfoProperties;
 import org.springframework.stereotype.Service;
 import org.workshop.microphoneschedulerapi.domain.dto.*;
-import org.workshop.microphoneschedulerapi.domain.entity.Personage;
-import org.workshop.microphoneschedulerapi.domain.entity.Play;
-import org.workshop.microphoneschedulerapi.domain.entity.Scene;
-import org.workshop.microphoneschedulerapi.domain.entity.Scene_character;
+import org.workshop.microphoneschedulerapi.domain.entity.*;
 import org.workshop.microphoneschedulerapi.domain.model.PersonageCustom;
+import org.workshop.microphoneschedulerapi.domain.model.ScenePersonageMicrophoneCustom;
 import org.workshop.microphoneschedulerapi.repository.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class AdminService {
@@ -233,6 +233,65 @@ public class AdminService {
         personageInDbCustomDTO.setPersonages(customList);
 
         return personageInDbCustomDTO;
+    }
+
+    public MicrophoneScheduleSuggestedDTO suggestMicrophoneSchedule(String playName){
+
+        List<Scene> allScenesInPlay = sceneRepository.findAllByPlay(playRepository.getReferenceById(playName));
+
+        List<Scene_character> scene_charactersInPlay = new ArrayList<>();
+        for(Scene scene : allScenesInPlay) {
+            scene_charactersInPlay.addAll(scene.getScene_characters());
+        }
+        scene_charactersInPlay.sort(Comparator.comparing(sceneCharacter -> sceneCharacter.getScene().getActNumber()));
+        //scene_charactersInPlay.sort(Comparator.comparing(sceneCharacter -> sceneCharacter.getScene().getSceneNumber()));
+
+        List<Integer> personageIds = scene_charactersInPlay.stream().map(p -> p.getPersonage().getPersonageId()).toList();
+        List<Integer> distictPersonges = personageIds.stream().distinct().toList();
+        int maxNeededMicrophonesInPlay = distictPersonges.size();
+
+        List<Integer> actNumbers = scene_charactersInPlay.stream().map(s -> s.getScene().getActNumber()).toList();
+        List<Integer> distinctActNumbers = actNumbers.stream().distinct().toList();
+
+        List<Microphone> suggestedMicrophones = new ArrayList<>();
+        MicrophoneScheduleSuggestedDTO microphoneScheduleSuggestedDTO = new MicrophoneScheduleSuggestedDTO();
+        int previousSceneNumber = 1;
+        int previousActNumber = 1;
+        int actIndex = 1;
+        int actsInPlay = distinctActNumbers.size();
+
+        for(Scene_character scene_character : scene_charactersInPlay) {
+            if(scene_character.getScene().getSceneNumber() == previousSceneNumber) {
+
+            }
+        }
+
+        for(int i = 0; i < scene_charactersInPlay.size(); i++) {
+            if(suggestedMicrophones.isEmpty()){
+                Microphone microphone = Microphone.builder()
+                        .microphoneName("Microphone " + i + 1)
+                        .build();
+                suggestedMicrophones.add(microphone);
+                ScenePersonageMicrophoneCustom scenePersonageMicrophoneCustom = ScenePersonageMicrophoneCustom.builder()
+                        .microphoneId(microphone.getMicrophoneId())
+                        .userId(scene_charactersInPlay.get(i).getPersonage().getActor().getUser().getUserId())
+                        .userName(scene_charactersInPlay.get(i).getPersonage().getActor().getUser().getUsername())
+                        .sceneId(scene_charactersInPlay.get(i).getScene().getSceneId())
+                        .sceneNumber(scene_charactersInPlay.get(i).getScene().getSceneNumber())
+                        .sceneName(scene_charactersInPlay.get(i).getScene().getSceneName())
+                        .actNumber(scene_charactersInPlay.get(i).getScene().getActNumber())
+                        .personageName(scene_charactersInPlay.get(i).getPersonage().getPersonageName())
+                        .build();
+                microphoneScheduleSuggestedDTO.getMicrophoneList().add(scenePersonageMicrophoneCustom);
+            }
+            else{
+                if(scene_charactersInPlay.get(i).getScene().getSceneNumber() == scene_charactersInPlay.get(i - 1).getScene().getSceneNumber()){ //We are in same scene
+
+                }
+            }
+        }
+
+        return null;
     }
 
 }
