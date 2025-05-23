@@ -169,7 +169,7 @@ public class AdminController {
         }
     }
 
-    @GetMapping("getAllPersonageInScene")
+    @GetMapping("/getAllPersonageInScene")
     public ResponseEntity<PersonageInDbCustomDTO> getAllPersonageInScene(@PathParam("sceneId") int sceneId) {
         try{
             PersonageInDbCustomDTO personages = adminService.getAllPersonagesInScene(sceneId);
@@ -179,4 +179,14 @@ public class AdminController {
         }
     }
 
+    @GetMapping("/suggestMicrophoneSchedule")
+    public ResponseEntity<MicrophoneScheduleSuggestedDTO> suggestMicrophoneSchedule(@PathParam("playName") String playName){
+        try{
+            MicrophoneScheduleSuggestedDTO microphoneScheduleSuggestedDTO = adminService.suggestMicrophoneSchedule(playName);
+
+            return null;
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
 }
