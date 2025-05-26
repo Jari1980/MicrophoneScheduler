@@ -229,7 +229,7 @@ public class PlayGround implements CommandLineRunner {
                 .personage(personage1)
                 //.microphone(microphone1)
                 .build();
-        scene_characterRepository.save(test4);
+        scene_characterRepository.save(test5);
 
     }
 }
