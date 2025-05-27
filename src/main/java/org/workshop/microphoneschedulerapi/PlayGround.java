@@ -63,18 +63,24 @@ public class PlayGround implements CommandLineRunner {
 
         //Ok, microphones created with and without builder
 
-
         User user1 = User.builder()
                 .userName("user1")
                 .password(customPasswordEncoder.encode("1234"))
-                .userRole(UserRole.ACTOR)
+                .userRole(UserRole.DIRECTOR)
                 .build();
         userRepository.save(user1);
+
+        User user3 = User.builder()
+                .userName("user3")
+                .password(customPasswordEncoder.encode("1234"))
+                .userRole(UserRole.ACTOR)
+                .build();
+        userRepository.save(user3);
 
 
         User user2 = new User();
         user2.setUserName("user2");
-        user2.setPassword(customPasswordEncoder.encode("2222"));
+        user2.setPassword(customPasswordEncoder.encode("1234"));
         user2.setUserRole(UserRole.ADMINISTRATOR);
         userRepository.save(user2);
 
