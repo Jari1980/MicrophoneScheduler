@@ -98,6 +98,15 @@ public class SecurityConfig {
                                 "api/v1/admin/getAllPersonageInScene",
                                 "api/v1/admin/suggestMicrophoneSchedule"
                         ).hasRole(ADMINISTRATOR.name()))
+
+
+                .authorizeHttpRequests(registry ->
+                        registry.requestMatchers(
+                                "/api/v1/director/getoverview"
+                        ).hasRole(DIRECTOR.name()))
+
+
+
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
                         .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults())
