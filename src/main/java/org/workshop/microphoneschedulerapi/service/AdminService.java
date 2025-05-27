@@ -137,7 +137,7 @@ public class AdminService {
         List<Scene_character> sceneCharacters = scene.getScene_characters();
         Scene_character scene_characterToBeRemoved = sceneCharacters.stream()
                 .filter(s -> s.getPersonage().getPersonageId() == personageId)
-                        .findFirst().get();
+                .findFirst().get();
 
         sceneCharacters.remove(scene_characterToBeRemoved);
         scene_characterRepository.delete(scene_characterToBeRemoved);
@@ -146,9 +146,9 @@ public class AdminService {
     @Transactional
     public void assignActorToPersonage(int actorId, int personageId) {
         Personage personage = personageRepository.findById(personageId).orElseThrow();
-        try{
+        try {
             personage.setActor(actorRepository.findById(actorId).orElseThrow());
-        }catch (Exception e){
+        } catch (Exception e) {
             personage.setActor(null);
         }
     }
@@ -164,10 +164,10 @@ public class AdminService {
         PersonageInDbCustomDTO personageInDbCustomDTO = new PersonageInDbCustomDTO();
         List<PersonageCustom> customList = new ArrayList<>();
         List<Personage> personages = personageRepository.findAll();
-        for(Personage personage : personages) {
+        for (Personage personage : personages) {
             List<Scene> customScenes = new ArrayList<>();
 
-            for(Scene_character scene_character : personage.getScene_characters()) {
+            for (Scene_character scene_character : personage.getScene_characters()) {
                 Scene customScene = Scene.builder()
                         .sceneId(scene_character.getScene().getSceneId())
                         .actNumber(scene_character.getScene().getActNumber())
@@ -176,17 +176,16 @@ public class AdminService {
                         .build();
                 customScenes.add(customScene);
             }
-            if(scene_characterRepository.existsScene_charactersByPersonage(personage)) {
-            PersonageCustom customPerson = PersonageCustom.builder()
-                    .personageId(personage.getPersonageId())
-                    .personageName(personage.getPersonageName())
-                    .playName(personage.getScene_characters().get(0).getScene().getPlay().getPlayName())
-                    .actorName(actorRepository.findById(personage.getActor().getActorId()).orElseThrow().getUser().getUsername())
-                    .scenes(customScenes)
-                    .build();
-            customList.add(customPerson);
-            }
-            else{
+            if (scene_characterRepository.existsScene_charactersByPersonage(personage)) {
+                PersonageCustom customPerson = PersonageCustom.builder()
+                        .personageId(personage.getPersonageId())
+                        .personageName(personage.getPersonageName())
+                        .playName(personage.getScene_characters().get(0).getScene().getPlay().getPlayName())
+                        .actorName(actorRepository.findById(personage.getActor().getActorId()).orElseThrow().getUser().getUsername())
+                        .scenes(customScenes)
+                        .build();
+                customList.add(customPerson);
+            } else {
                 PersonageCustom customPerson = PersonageCustom.builder()
                         .personageId(personage.getPersonageId())
                         .personageName(personage.getPersonageName())
@@ -206,8 +205,8 @@ public class AdminService {
         List<PersonageCustom> customList = new ArrayList<>();
         PersonageInDbCustomDTO allPersonagesinDb = getAllPersonages();
 
-        for(PersonageCustom personageCustom : allPersonagesinDb.getPersonages()) {
-            if(personageCustom.getPlayName() != null && personageCustom.getPlayName().equals(playName)) {
+        for (PersonageCustom personageCustom : allPersonagesinDb.getPersonages()) {
+            if (personageCustom.getPlayName() != null && personageCustom.getPlayName().equals(playName)) {
                 customList.add(personageCustom);
             }
         }
@@ -221,9 +220,9 @@ public class AdminService {
         List<PersonageCustom> customList = new ArrayList<>();
         PersonageInDbCustomDTO allPersonagesinDb = getAllPersonages();
 
-        for(PersonageCustom personageCustom : allPersonagesinDb.getPersonages()) {
-            for(Scene scene : personageCustom.getScenes()) {
-                if(scene.getSceneName() != null && scene.getSceneId() == sceneId) {
+        for (PersonageCustom personageCustom : allPersonagesinDb.getPersonages()) {
+            for (Scene scene : personageCustom.getScenes()) {
+                if (scene.getSceneName() != null && scene.getSceneId() == sceneId) {
                     customList.add(personageCustom);
                 }
             }
@@ -233,13 +232,13 @@ public class AdminService {
         return personageInDbCustomDTO;
     }
 
-    public MicrophoneScheduleSuggestedDTO suggestMicrophoneSchedule(String playName){
+    public MicrophoneScheduleSuggestedDTO suggestMicrophoneSchedule(String playName) {
 
         List<Scene> allScenesInPlay = sceneRepository.findAllByPlay(playRepository.getReferenceById(playName));
 
         List<Scene_character> scene_charactersInPlay = new ArrayList<>();
-        for(Scene scene : allScenesInPlay) {
-            for(Scene_character scene_character : scene.getScene_characters()) {
+        for (Scene scene : allScenesInPlay) {
+            for (Scene_character scene_character : scene.getScene_characters()) {
                 scene_charactersInPlay.add(scene_character);
             }
         }
@@ -248,139 +247,87 @@ public class AdminService {
 
         List<Integer> personageIds = scene_charactersInPlay.stream().map(p -> p.getPersonage().getPersonageId()).toList();
         List<Integer> distictPersonges = personageIds.stream().distinct().toList();
-        int maxNeededMicrophonesInPlay = distictPersonges.size();
+        int maxNeededMicrophonesInPlay = distictPersonges.size(); //When testing with larger Play's if this is exceeded all actors should have their own microphone.
 
         List<Integer> actNumbers = scene_charactersInPlay.stream().map(s -> s.getScene().getActNumber()).toList();
         List<Integer> distinctActNumbers = actNumbers.stream().distinct().toList();
 
         List<ScenePersonageMicrophoneCustom> customList = new ArrayList<>();
 
-        for(Scene_character scene_character : scene_charactersInPlay) {
-                ScenePersonageMicrophoneCustom scenePersonageMicrophoneCustom = ScenePersonageMicrophoneCustom.builder()
-                        .userId(scene_character.getPersonage().getActor().getUser().getUserId())
-                        .userName(scene_character.getPersonage().getActor().getUser().getUsername())
-                        .sceneId(scene_character.getScene().getSceneId())
-                        .sceneNumber(scene_character.getScene().getSceneNumber())
-                        .sceneName(scene_character.getScene().getSceneName())
-                        .actNumber(scene_character.getScene().getActNumber())
-                        .personageName(scene_character.getPersonage().getPersonageName())
-                        .build();
-                customList.add(scenePersonageMicrophoneCustom);
+        for (Scene_character scene_character : scene_charactersInPlay) {
+            ScenePersonageMicrophoneCustom scenePersonageMicrophoneCustom = ScenePersonageMicrophoneCustom.builder()
+                    .userId(scene_character.getPersonage().getActor().getUser().getUserId())
+                    .userName(scene_character.getPersonage().getActor().getUser().getUsername())
+                    .sceneId(scene_character.getScene().getSceneId())
+                    .sceneNumber(scene_character.getScene().getSceneNumber())
+                    .sceneName(scene_character.getScene().getSceneName())
+                    .actNumber(scene_character.getScene().getActNumber())
+                    .personageName(scene_character.getPersonage().getPersonageName())
+                    .build();
+            customList.add(scenePersonageMicrophoneCustom);
         }
-
         customList.sort(Comparator.comparing(ScenePersonageMicrophoneCustom::getActNumber));
-
 
         List<Microphone> suggestedMicrophones = new ArrayList<>();
         MicrophoneScheduleSuggestedDTO microphoneScheduleSuggestedDTO = new MicrophoneScheduleSuggestedDTO();
-        int previousSceneNumber = 1;
-        //int previousActNumber = 1;
-        int actIndex = 1;
-        int actsInPlay = distinctActNumbers.size();
-        int customListLength = customList.size();
         int counter = 0;
-        int sceneInActCounter = 1;
         int sceneNumber = 1;
-        //int lastMicrophone = 0;
-        //List<Integer> lastMicrophone = new ArrayList<>();
-        Dictionary<String, Integer> lastMicrophone = new Hashtable<>();
+        Dictionary<String, Integer> userMicrophones = new Hashtable<>();
+        int microphoneCounter = 1;
 
+        for (ScenePersonageMicrophoneCustom scenePersonageMicrophoneCustom : customList) {
 
-        //List<ScenePersonageMicrophoneCustom> customListWithMicrophones = new ArrayList<>();
-        for(ScenePersonageMicrophoneCustom scenePersonageMicrophoneCustom : customList) {
-            if(scenePersonageMicrophoneCustom.getActNumber() == 1) {
-                if(counter == 0){ //Very first element
-                    customList.get(counter).setMicrophoneId(counter + 1);
-                    lastMicrophone.put(scenePersonageMicrophoneCustom.getUserName(), counter);
-                }
-                else{
-                    sceneNumber = 1;
-                    while(true){
-                        //if((counter - sceneNumber >= 0) && customList.get(counter).getSceneNumber() != customList.get(counter-sceneNumber).getSceneNumber()){
-                        //    sceneNumber++;
-
-                        //}
-                        if(counter - sceneNumber < 0){
-                            customList.get(counter).setMicrophoneId(lastMicrophone.get(scenePersonageMicrophoneCustom.getUserName()));
-                            break;
-                        }
-                        if(sceneNumber > 10){
-                            customList.get(counter).setMicrophoneId(counter + 1);
-                            lastMicrophone.put(scenePersonageMicrophoneCustom.getUserName(), counter);
-                            sceneNumber++;
-                            break;
-                        }
-                        sceneNumber++;
-                    }
-                }
-
-                if(customListLength > counter){
-                    counter++;
-                    sceneInActCounter++;
-                    if(scenePersonageMicrophoneCustom.getActNumber() == actIndex + 1) {
-                        actIndex++;
-                        sceneNumber = 1;
-                    }
-                }
-            }
-            //New act
-            else {
+            if (scenePersonageMicrophoneCustom.getActNumber() == 1 && counter == 0) { //Very first element
+                customList.get(counter).setMicrophoneId(microphoneCounter);
+                userMicrophones.put(scenePersonageMicrophoneCustom.getUserName(), microphoneCounter);
+                microphoneCounter++;
+                counter++;
+            } else {
+                String currentUser = customList.get(counter).getUserName();
+                int currentScene = customList.get(counter).getSceneNumber();
+                int currentAct = customList.get(counter).getActNumber();
                 sceneNumber = 1;
                 while (true) {
-                    if((counter - sceneNumber >= 0) && customList.get(counter).getSceneNumber() != customList.get(counter-sceneNumber).getSceneNumber()){
-                        sceneNumber++;
-
-                    } else {
-                        customList.get(counter).setMicrophoneId(counter + 1);
-                        sceneNumber++;
-                        break;
-                    }
-                    if (sceneNumber == customList.get(counter).getSceneNumber()) {
+                    if (currentAct == 1 && currentScene == 1) {
                         customList.get(counter).setMicrophoneId(customList.get(counter).getMicrophoneId());
+                        userMicrophones.put(scenePersonageMicrophoneCustom.getUserName(), microphoneCounter);
+                        microphoneCounter++;
+                        counter++;
                         break;
+                    } else {
+                        int indexOfUser = 0;
+                        //Checking if user was same as in previous scenes
+                        int finalCounter = counter;
+                        int amountScenes = customList.stream().filter(sc ->
+                                        sc.getSceneNumber() == customList.get(finalCounter - 1).getSceneNumber() &&
+                                                sc.getActNumber() == customList.get(finalCounter - 1).getActNumber())
+                                .collect(Collectors.toList()).size();
+                        boolean sameUser = false;
+                        for (int i = 0; i < amountScenes; i++) {
+                            if (currentUser.equals(customList.get(counter - i - 1).getUserName())) {
+                                sameUser = true;
+                                indexOfUser = counter - i - 1;
+                            }
+                        }
+                        if (sameUser) {
+                            customList.get(counter).setMicrophoneId(customList.get(indexOfUser).getMicrophoneId());
+                            userMicrophones.put(scenePersonageMicrophoneCustom.getUserName(), indexOfUser);
+                            counter++;
+                            break;
+                        } else {
+                            customList.get(counter).setMicrophoneId(microphoneCounter);
+                            userMicrophones.put(scenePersonageMicrophoneCustom.getUserName(), counter);
+                            microphoneCounter++;
+                            counter++;
+                            break;
+                        }
                     }
                 }
-                if(customListLength > counter){
-                    counter++;
-                    sceneInActCounter++;
-                    if(scenePersonageMicrophoneCustom.getActNumber() == actIndex + 1) {
-                        actIndex++;
-                        sceneNumber = 1;
-                    }
-                }
-            }
-
-        }
-
-        /*
-        for(int i = 0; i < scene_charactersInPlay.size(); i++) {
-            if(suggestedMicrophones.isEmpty()){
-                Microphone microphone = Microphone.builder()
-                        .microphoneName("Microphone " + i + 1)
-                        .build();
-                suggestedMicrophones.add(microphone);
-                ScenePersonageMicrophoneCustom scenePersonageMicrophoneCustom = ScenePersonageMicrophoneCustom.builder()
-                        .microphoneId(microphone.getMicrophoneId())
-                        .userId(scene_charactersInPlay.get(i).getPersonage().getActor().getUser().getUserId())
-                        .userName(scene_charactersInPlay.get(i).getPersonage().getActor().getUser().getUsername())
-                        .sceneId(scene_charactersInPlay.get(i).getScene().getSceneId())
-                        .sceneNumber(scene_charactersInPlay.get(i).getScene().getSceneNumber())
-                        .sceneName(scene_charactersInPlay.get(i).getScene().getSceneName())
-                        .actNumber(scene_charactersInPlay.get(i).getScene().getActNumber())
-                        .personageName(scene_charactersInPlay.get(i).getPersonage().getPersonageName())
-                        .build();
-                microphoneScheduleSuggestedDTO.getMicrophoneList().add(scenePersonageMicrophoneCustom);
-            }
-            else{
-                if(scene_charactersInPlay.get(i).getScene().getSceneNumber() == scene_charactersInPlay.get(i - 1).getScene().getSceneNumber()){ //We are in same scene
-
-                }
+                sceneNumber++;
             }
         }
 
-         */
-
-        return null;
+        microphoneScheduleSuggestedDTO.setMicrophoneList(customList);
+        return microphoneScheduleSuggestedDTO;
     }
-
 }

@@ -184,7 +184,7 @@ public class AdminController {
         try{
             MicrophoneScheduleSuggestedDTO microphoneScheduleSuggestedDTO = adminService.suggestMicrophoneSchedule(playName);
 
-            return null;
+            return ResponseEntity.ok(microphoneScheduleSuggestedDTO);
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
