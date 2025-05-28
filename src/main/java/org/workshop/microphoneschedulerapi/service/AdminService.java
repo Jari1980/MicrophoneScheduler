@@ -9,6 +9,7 @@ import org.workshop.microphoneschedulerapi.domain.dto.*;
 import org.workshop.microphoneschedulerapi.domain.entity.*;
 import org.workshop.microphoneschedulerapi.domain.model.PersonageCustom;
 import org.workshop.microphoneschedulerapi.domain.model.ScenePersonageMicrophoneCustom;
+import org.workshop.microphoneschedulerapi.domain.model.UserRole;
 import org.workshop.microphoneschedulerapi.repository.*;
 
 import java.time.LocalDate;
@@ -347,4 +348,12 @@ public class AdminService {
 
         return list;
     }
+
+    @Transactional
+    public void setUserRole(long userId, UserRole userRole) {
+        User user = userRepository.getReferenceById(userId);
+        user.setUserRole(userRole);
+        userRepository.save(user);
+    }
+
 }

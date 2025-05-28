@@ -199,4 +199,15 @@ public class AdminController {
             return ResponseEntity.badRequest().build();
         }
     }
+
+    @PostMapping("/setuserrole")
+    public ResponseEntity<Void> setUserRole(@RequestBody SetUserRoleDTOForm form){
+        try{
+            adminService.setUserRole(form.userId(), form.userRole());
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
 }
