@@ -98,7 +98,8 @@ public class SecurityConfig {
                                 "api/v1/admin/getAllPersonageInScene",
                                 "api/v1/admin/suggestMicrophoneSchedule",
                                 "api/v1/admin/getusersandroles",
-                                "api/v1/admin/setuserrole"
+                                "api/v1/admin/setuserrole",
+                                "api/v1/admin/deleteuser"
                         ).hasRole(ADMINISTRATOR.name()))
 
 

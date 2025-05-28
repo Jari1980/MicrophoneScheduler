@@ -356,4 +356,9 @@ public class AdminService {
         userRepository.save(user);
     }
 
+    public void deleteUser(long userId) {
+        User user = userRepository.getReferenceById(userId);
+        userRepository.delete(user);
+    }
+
 }
