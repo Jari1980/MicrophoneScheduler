@@ -96,7 +96,8 @@ public class SecurityConfig {
                                 "api/v1/admin/getAllPersonageInPlay",
                                 "api/v1/admin/getAllPersonageInDb",
                                 "api/v1/admin/getAllPersonageInScene",
-                                "api/v1/admin/suggestMicrophoneSchedule"
+                                "api/v1/admin/suggestMicrophoneSchedule",
+                                "api/v1/admin/getusersandroles"
                         ).hasRole(ADMINISTRATOR.name()))
 
 
