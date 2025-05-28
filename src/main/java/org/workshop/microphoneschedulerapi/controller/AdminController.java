@@ -210,4 +210,14 @@ public class AdminController {
         }
     }
 
+    @DeleteMapping("/deleteuser")
+    public ResponseEntity<Void> deleteUser(@PathParam("userId") Long userId){
+        try{
+            adminService.deleteUser(userId);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
 }
