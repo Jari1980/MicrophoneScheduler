@@ -23,17 +23,19 @@ public class AdminService {
     private SceneRepository sceneRepository;
     private ActorRepository actorRepository;
     private Scene_characterRepository scene_characterRepository;
+    private UserRepository userRepository;
 
 
     @Autowired
     public AdminService(PlayRepository playRepository, PersonageRepository personageRepository,
                         SceneRepository sceneRepository, ActorRepository actorRepository,
-                        Scene_characterRepository scene_characterRepository) {
+                        Scene_characterRepository scene_characterRepository, UserRepository userRepository) {
         this.playRepository = playRepository;
         this.personageRepository = personageRepository;
         this.sceneRepository = sceneRepository;
         this.actorRepository = actorRepository;
         this.scene_characterRepository = scene_characterRepository;
+        this.userRepository = userRepository;
     }
 
     public List<Play> getAllPlays() {
@@ -329,5 +331,20 @@ public class AdminService {
 
         microphoneScheduleSuggestedDTO.setMicrophoneList(customList);
         return microphoneScheduleSuggestedDTO;
+    }
+
+    public List<UsersAndRolesDTO> getUsersAndRoles() {
+        List<User> users = userRepository.findAll();
+        List<UsersAndRolesDTO> list = new ArrayList<>();
+        for (User user : users) {
+            UsersAndRolesDTO usersAndRolesDTO = UsersAndRolesDTO.builder()
+                    .userId(user.getUserId())
+                    .userName(user.getUsername())
+                    .role(user.getUserRole())
+                    .build();
+            list.add(usersAndRolesDTO);
+        }
+
+        return list;
     }
 }

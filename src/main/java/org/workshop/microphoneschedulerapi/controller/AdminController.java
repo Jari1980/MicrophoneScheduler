@@ -189,4 +189,14 @@ public class AdminController {
             return ResponseEntity.badRequest().build();
         }
     }
+
+    @GetMapping("/getusersandroles")
+    public ResponseEntity<List<UsersAndRolesDTO>> getUsersAndRoles(){
+        try{
+            List<UsersAndRolesDTO> usersAndRoles = adminService.getUsersAndRoles();
+            return ResponseEntity.ok(usersAndRoles);
+        }catch(Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
 }
