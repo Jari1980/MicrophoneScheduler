@@ -15,6 +15,7 @@ import org.workshop.microphoneschedulerapi.service.SceneService;
 import java.util.ArrayList;
 import java.util.List;
 
+@CrossOrigin(origins = "*", allowedHeaders = "*", allowCredentials = "", allowPrivateNetwork = "")
 @RequestMapping("/api/v1/scene")
 @RestController
 public class SceneController {

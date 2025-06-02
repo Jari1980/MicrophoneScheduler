@@ -13,6 +13,7 @@ import org.workshop.microphoneschedulerapi.service.AdminService;
 import java.util.ArrayList;
 import java.util.List;
 
+@CrossOrigin(origins = "*", allowedHeaders = "*", allowCredentials = "", allowPrivateNetwork = "")
 @RequestMapping("/api/v1/admin")
 @RestController
 public class AdminController {

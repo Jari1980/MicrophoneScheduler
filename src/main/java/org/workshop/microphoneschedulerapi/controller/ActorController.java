@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,6 +16,7 @@ import org.workshop.microphoneschedulerapi.service.ActorService;
 
 import java.util.Optional;
 
+@CrossOrigin(origins = "*", allowedHeaders = "*", allowCredentials = "", allowPrivateNetwork = "")
 @RequestMapping("/api/v1/actor")
 @RestController
 public class ActorController {
@@ -32,6 +34,7 @@ public class ActorController {
     public ResponseEntity<ActorOwnSceneCustomListDTO> getActorScenes(@PathParam("playName") String playName) {
         try{
             String login = SecurityContextHolder.getContext().getAuthentication().getName();
+
             if (login != null && !login.equals("anonymousUser")) {
                 Optional<User> loggedUser = userRepository.findByUserName(login);
                 ActorOwnSceneCustomListDTO actorOwnSceneCustomListDTO = actorService.getActorOwnSceneCustomListDTO(loggedUser.orElseThrow(), playName);

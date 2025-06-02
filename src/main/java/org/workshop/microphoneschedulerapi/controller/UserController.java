@@ -6,15 +6,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.workshop.microphoneschedulerapi.configuration.JwtUtil;
+import org.workshop.microphoneschedulerapi.domain.dto.UserLoginDTO;
 import org.workshop.microphoneschedulerapi.domain.entity.User;
 import org.workshop.microphoneschedulerapi.domain.model.UserRole;
 import org.workshop.microphoneschedulerapi.repository.UserRepository;
 import org.workshop.microphoneschedulerapi.service.CustomUserDetailService;
 
+@CrossOrigin(origins = "*", allowedHeaders = "*", allowCredentials = "", allowPrivateNetwork = "")
 @RequestMapping("/api/v1/user")
 @RestController
 public class UserController {
@@ -50,8 +53,16 @@ public class UserController {
         return ResponseEntity.ok("User registered successfully");
     }
 
+
+    /**
+     * Login method authenticates the user with given credentials, if authenticated the method will return a valid
+     * Jwt token, userName and userRole. If authentication fails the method will return unauthorized.
+     *
+     * @param user
+     * @return
+     */
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody User user) {
+    public ResponseEntity<UserLoginDTO> login(@RequestBody User user) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         user.getUsername(),
@@ -59,7 +70,12 @@ public class UserController {
                 )
         );
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        return ResponseEntity.ok(jwtUtil.generateToken(userDetails.getUsername()));
+        UserLoginDTO loginData = UserLoginDTO.builder()
+                .jwtToken(jwtUtil.generateToken(userDetails.getUsername()))
+                .userName(authentication.getName())
+                .userRole(authentication.getAuthorities().iterator().next().getAuthority())
+                .build();
+        return ResponseEntity.ok(loginData);
     }
 
     //In order to reach this endpoint user needs to be authenticated with bearer token (Jwt token) working
