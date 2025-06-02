@@ -11,6 +11,7 @@ import org.workshop.microphoneschedulerapi.domain.dto.MicrophoneUpdateDTOForm;
 import org.workshop.microphoneschedulerapi.domain.entity.Microphone;
 import org.workshop.microphoneschedulerapi.service.MicrophoneService;
 
+@CrossOrigin(origins = "*", allowedHeaders = "*", allowCredentials = "", allowPrivateNetwork = "")
 @RequestMapping("/api/v1/microphone")
 @RestController
 public class MicrophoneController {
