@@ -81,7 +81,6 @@ public class SecurityConfig {
                 .authorizeHttpRequests(registry ->
                         registry.requestMatchers(
                                 "/api/v1/admin/hello",
-                                "/api/v1/admin/listAllPlay",
                                 "api/v1/admin/createPlay",
                                 "api/v1/admin/deletePlay",
                                 "api/v1/admin/updatePlay",
@@ -101,6 +100,11 @@ public class SecurityConfig {
                                 "api/v1/admin/setuserrole",
                                 "api/v1/admin/deleteuser"
                         ).hasRole(ADMINISTRATOR.name()))
+
+                .authorizeHttpRequests(registry ->
+                        registry.requestMatchers(
+                                "/api/v1/admin/listAllPlay"
+                        ).hasAnyRole(ADMINISTRATOR.name(), DIRECTOR.name()))
 
 
                 .authorizeHttpRequests(registry ->
