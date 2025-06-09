@@ -3,6 +3,7 @@ package org.workshop.microphoneschedulerapi.controller;
 import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.workshop.microphoneschedulerapi.domain.dto.*;
 import org.workshop.microphoneschedulerapi.domain.entity.Personage;
