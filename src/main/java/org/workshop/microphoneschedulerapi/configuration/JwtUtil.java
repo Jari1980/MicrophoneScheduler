@@ -19,7 +19,7 @@ public class JwtUtil {
 
     @Value("${JWT_SECRET}")
     private String jwtSecret;
-    private int jwtExpiration = 1000*60*30;
+    private int jwtExpiration = 1000*60*60*12; //Token valid for 12 hours
     private SecretKey secretKey;
 
     @PostConstruct

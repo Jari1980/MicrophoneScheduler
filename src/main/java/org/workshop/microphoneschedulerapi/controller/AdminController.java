@@ -150,6 +150,26 @@ public class AdminController {
         }
     }
 
+    @PutMapping("/editPersonage")
+    public ResponseEntity<Void> editPersonage(@RequestBody EditPersonageDTO form){
+        try{
+            adminService.editPersonage(form);
+            return ResponseEntity.ok().build();
+        }catch(Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @DeleteMapping("/deletePersonage")
+    public ResponseEntity<Void> deletePersonage(@PathParam("personageId") int personageId) {
+        try{
+            adminService.deletePersonage(personageId);
+            return ResponseEntity.ok().build();
+        }catch(Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
     @GetMapping("getAllPersonageInDb")
     public ResponseEntity<PersonageInDbCustomDTO> getAllPersonageInDb() {
         try{

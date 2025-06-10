@@ -29,6 +29,7 @@ public class Scene_character {
     private Scene scene;
 
     @JsonBackReference
+    @OnDelete(action = OnDeleteAction.SET_NULL)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "personage_id")
     private Personage personage;

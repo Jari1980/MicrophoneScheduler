@@ -98,7 +98,9 @@ public class SecurityConfig {
                                 "api/v1/admin/suggestMicrophoneSchedule",
                                 "api/v1/admin/getusersandroles",
                                 "api/v1/admin/setuserrole",
-                                "api/v1/admin/deleteuser"
+                                "api/v1/admin/deleteuser",
+                                "api/v1/admin/editPersonage",
+                                "api/v1/admin/deletePersonage"
                         ).hasRole(ADMINISTRATOR.name()))
 
                 .authorizeHttpRequests(registry ->

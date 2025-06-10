@@ -163,6 +163,28 @@ public class AdminService {
         personageRepository.save(newPersonage);
     }
 
+    @Transactional
+    public void editPersonage(EditPersonageDTO form) {
+        Personage personage = personageRepository.findById(form.personageId()).orElseThrow();
+        personage.setPersonageName(form.personageName());
+        personage.setActor(actorRepository.getReferenceById(form.actorId()));
+
+        personageRepository.save(personage);
+    }
+
+    @Transactional
+    public void deletePersonage(int personageId) {
+        Personage personage = personageRepository.findById(personageId).orElseThrow();
+        scene_characterRepository.findScene_charactersByPersonage(personage).forEach(scene_character -> {
+            scene_characterRepository.delete(scene_character);
+        });
+        personageRepository.findById(personageId).orElseThrow().setScene_characters(null);
+        personageRepository.findById(personageId).orElseThrow().setActor(null);
+        Personage personage2 = personageRepository.findById(personageId).orElseThrow();
+
+        personageRepository.delete(personage2);
+    }
+
     public PersonageInDbCustomDTO getAllPersonages() {
         PersonageInDbCustomDTO personageInDbCustomDTO = new PersonageInDbCustomDTO();
         List<PersonageCustom> customList = new ArrayList<>();
