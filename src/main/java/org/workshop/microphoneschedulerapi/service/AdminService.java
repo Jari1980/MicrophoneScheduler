@@ -420,4 +420,31 @@ public class AdminService {
         return actorsConnectedToUsersDTO;
     }
 
+    public List<CustomScenePersonageDTO> getCustomScenePersonages(String playName) {
+        List<Scene> scenes = sceneRepository.findAllByPlay(playRepository.getReferenceById(playName));
+        List<CustomScenePersonageDTO> customScenePersonageDTOs = new ArrayList<>();
+        for (Scene scene : scenes) {
+            List<Personage> personages = new ArrayList<>();
+            for (Scene_character scene_character : scene.getScene_characters()) {
+                Personage personage = Personage.builder()
+                        .personageId(scene_character.getPersonage().getPersonageId())
+                        .personageName(scene_character.getPersonage().getPersonageName())
+                        .actor(scene_character.getPersonage().getActor())
+                        .build();
+                personages.add(personage);
+            }
+
+            CustomScenePersonageDTO customScenePersonageDTO = CustomScenePersonageDTO.builder()
+                    .sceneId(scene.getSceneId())
+                    .sceneName(scene.getSceneName())
+                    .sceneNumber(scene.getSceneNumber())
+                    .actNumber(scene.getActNumber())
+                    .personages(personages)
+                    .build();
+            customScenePersonageDTOs.add(customScenePersonageDTO);
+        }
+
+        return customScenePersonageDTOs;
+    }
+
 }
