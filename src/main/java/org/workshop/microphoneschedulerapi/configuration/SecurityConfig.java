@@ -101,7 +101,8 @@ public class SecurityConfig {
                                 "api/v1/admin/deleteuser",
                                 "api/v1/admin/editPersonage",
                                 "api/v1/admin/deletePersonage",
-                                "api/v1/aadmin/getActorsConnectedToUsers"
+                                "api/v1/admin/getActorsConnectedToUsers",
+                                "api/v1/admin/getCustomSceneList"
                         ).hasRole(ADMINISTRATOR.name()))
 
                 .authorizeHttpRequests(registry ->

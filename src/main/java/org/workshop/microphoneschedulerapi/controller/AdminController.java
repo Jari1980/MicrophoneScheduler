@@ -253,4 +253,14 @@ public class AdminController {
         }
     }
 
+    @GetMapping("/getCustomSceneList")
+    public ResponseEntity<List<CustomScenePersonageDTO>> getCustomSceneList(@PathParam("playName") String playName){
+        try{
+            List<CustomScenePersonageDTO> list = adminService.getCustomScenePersonages(playName);
+            return ResponseEntity.ok(list);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
 }
