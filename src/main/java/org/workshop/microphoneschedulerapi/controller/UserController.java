@@ -12,8 +12,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.workshop.microphoneschedulerapi.configuration.JwtUtil;
 import org.workshop.microphoneschedulerapi.domain.dto.UserLoginDTO;
+import org.workshop.microphoneschedulerapi.domain.entity.Actor;
 import org.workshop.microphoneschedulerapi.domain.entity.User;
 import org.workshop.microphoneschedulerapi.domain.model.UserRole;
+import org.workshop.microphoneschedulerapi.repository.ActorRepository;
 import org.workshop.microphoneschedulerapi.repository.UserRepository;
 import org.workshop.microphoneschedulerapi.service.CustomUserDetailService;
 
@@ -27,18 +29,26 @@ public class UserController {
     private JwtUtil jwtUtil;
     private AuthenticationManager authenticationManager;
     private CustomUserDetailService customUserDetailService;
+    private ActorRepository actorRepository;
 
     @Autowired
     public UserController(UserRepository userRepository, PasswordEncoder passwordEncoder,
                           JwtUtil jwtUtil, AuthenticationManager authenticationManager,
-                          CustomUserDetailService customUserDetailService) {
+                          CustomUserDetailService customUserDetailService,
+                          ActorRepository actorRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.jwtUtil = jwtUtil;
         this.authenticationManager = authenticationManager;
         this.customUserDetailService = customUserDetailService;
+        this.actorRepository = actorRepository;
     }
 
+    /**
+     * When user registers, actor is created and user is assigned to this
+     * @param user
+     * @return
+     */
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody User user) {
         if (userRepository.existsByUserName(user.getUsername())) {
@@ -50,6 +60,12 @@ public class UserController {
                 .userRole(UserRole.ACTOR)
                 .build();
         userRepository.save(newUser);
+
+        Actor actor = Actor.builder()
+                .user(newUser)
+                .build();
+        actorRepository.save(actor);
+
         return ResponseEntity.ok("User registered successfully");
     }
 
