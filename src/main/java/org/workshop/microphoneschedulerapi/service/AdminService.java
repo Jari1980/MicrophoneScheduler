@@ -383,4 +383,18 @@ public class AdminService {
         userRepository.delete(user);
     }
 
+    public List<ActorsConnectedToUsersDTO> getActorsConnectedToUsers() {
+        List<Actor> actors = actorRepository.findAll();
+        List<ActorsConnectedToUsersDTO> actorsConnectedToUsersDTO = new ArrayList<>();
+        for (Actor actor : actors) {
+            ActorsConnectedToUsersDTO actorUserCustom = ActorsConnectedToUsersDTO.builder()
+                    .actorId(actor.getActorId())
+                    .userId(actor.getUser().getUserId())
+                    .userName(actor.getUser().getUsername())
+                    .build();
+            actorsConnectedToUsersDTO.add(actorUserCustom);
+        }
+        return actorsConnectedToUsersDTO;
+    }
+
 }

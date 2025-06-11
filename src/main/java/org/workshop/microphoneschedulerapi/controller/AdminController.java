@@ -242,4 +242,15 @@ public class AdminController {
         }
     }
 
+    @GetMapping("/getActorsConnectedToUsers")
+    public ResponseEntity<List<ActorsConnectedToUsersDTO>> getActorsConnectedToUsers() {
+        try{
+            List<ActorsConnectedToUsersDTO> list = adminService.getActorsConnectedToUsers();
+            return ResponseEntity.ok(list);
+
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
 }
