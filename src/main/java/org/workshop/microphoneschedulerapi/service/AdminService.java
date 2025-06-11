@@ -201,24 +201,47 @@ public class AdminService {
                         .build();
                 customScenes.add(customScene);
             }
-            if (scene_characterRepository.existsScene_charactersByPersonage(personage)) {
-                PersonageCustom customPerson = PersonageCustom.builder()
-                        .personageId(personage.getPersonageId())
-                        .personageName(personage.getPersonageName())
-                        .playName(personage.getScene_characters().get(0).getScene().getPlay().getPlayName())
-                        .actorName(actorRepository.findById(personage.getActor().getActorId()).orElseThrow().getUser().getUsername())
-                        .scenes(customScenes)
-                        .build();
-                customList.add(customPerson);
-            } else {
-                PersonageCustom customPerson = PersonageCustom.builder()
-                        .personageId(personage.getPersonageId())
-                        .personageName(personage.getPersonageName())
-                        .actorName(actorRepository.findById(personage.getActor().getActorId()).orElseThrow().getUser().getUsername())
-                        .scenes(customScenes)
-                        .build();
-                customList.add(customPerson);
+            if(personage.getActor() != null) {
+                if (scene_characterRepository.existsScene_charactersByPersonage(personage)) {
+                    PersonageCustom customPerson = PersonageCustom.builder()
+                            .personageId(personage.getPersonageId())
+                            .personageName(personage.getPersonageName())
+                            .playName(personage.getScene_characters().get(0).getScene().getPlay().getPlayName())
+                            .actorName(actorRepository.findById(personage.getActor().getActorId()).orElseThrow().getUser().getUsername())
+                            .scenes(customScenes)
+                            .build();
+                    customList.add(customPerson);
+                } else {
+                    PersonageCustom customPerson = PersonageCustom.builder()
+                            .personageId(personage.getPersonageId())
+                            .personageName(personage.getPersonageName())
+                            .actorName(actorRepository.findById(personage.getActor().getActorId()).orElseThrow().getUser().getUsername())
+                            .scenes(customScenes)
+                            .build();
+                    customList.add(customPerson);
+                }
             }
+            else{
+                if (scene_characterRepository.existsScene_charactersByPersonage(personage)) {
+                    PersonageCustom customPerson = PersonageCustom.builder()
+                            .personageId(personage.getPersonageId())
+                            .personageName(personage.getPersonageName())
+                            .playName(personage.getScene_characters().get(0).getScene().getPlay().getPlayName())
+                            .actorName(null)
+                            .scenes(customScenes)
+                            .build();
+                    customList.add(customPerson);
+                } else {
+                    PersonageCustom customPerson = PersonageCustom.builder()
+                            .personageId(personage.getPersonageId())
+                            .personageName(personage.getPersonageName())
+                            .actorName(null)
+                            .scenes(customScenes)
+                            .build();
+                    customList.add(customPerson);
+                }
+            }
+
         }
         personageInDbCustomDTO.setPersonages(customList);
 
