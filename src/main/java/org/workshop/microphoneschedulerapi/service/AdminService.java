@@ -136,14 +136,14 @@ public class AdminService {
 
     @Transactional
     public void removePersonageFromScene(int sceneId, int personageId) {
-        Scene scene = sceneRepository.findSceneBySceneId(sceneId);
-        List<Scene_character> sceneCharacters = scene.getScene_characters();
-        Scene_character scene_characterToBeRemoved = sceneCharacters.stream()
-                .filter(s -> s.getPersonage().getPersonageId() == personageId)
-                .findFirst().get();
-
-        sceneCharacters.remove(scene_characterToBeRemoved);
-        scene_characterRepository.delete(scene_characterToBeRemoved);
+        List<Scene_character> scene_characters = scene_characterRepository.findScene_charactersByPersonage(personageRepository.getReferenceById(personageId));
+        for (Scene_character scene_character : scene_characters) {
+            if(scene_character.getScene().getSceneId() == sceneId) {
+                scene_character.setPersonage(null);
+                scene_character.setMicrophone(null);
+                scene_characterRepository.save(scene_character);
+            }
+        }
     }
 
     @Transactional
@@ -426,12 +426,15 @@ public class AdminService {
         for (Scene scene : scenes) {
             List<Personage> personages = new ArrayList<>();
             for (Scene_character scene_character : scene.getScene_characters()) {
-                Personage personage = Personage.builder()
-                        .personageId(scene_character.getPersonage().getPersonageId())
-                        .personageName(scene_character.getPersonage().getPersonageName())
-                        .actor(scene_character.getPersonage().getActor())
-                        .build();
-                personages.add(personage);
+                if(scene_character.getPersonage() != null) {
+                    Personage personage = Personage.builder()
+                            .personageId(scene_character.getPersonage().getPersonageId())
+                            .personageName(scene_character.getPersonage().getPersonageName())
+                            .actor(scene_character.getPersonage().getActor())
+                            .build();
+                    personages.add(personage);
+                }
+
             }
 
             CustomScenePersonageDTO customScenePersonageDTO = CustomScenePersonageDTO.builder()
