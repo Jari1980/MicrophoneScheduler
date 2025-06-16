@@ -463,4 +463,62 @@ public class AdminService {
         }
     }
 
+    public List<CustomMicrophoneListDTO> getCustomMicrophoneList(String playName) {
+        Play play = playRepository.getReferenceById(playName);
+        List<CustomMicrophoneListDTO> customMicrophoneListDTOs = new ArrayList<>();
+        List<Scene_character> sceneCharacters = scene_characterRepository.findAll();
+
+        for(Scene_character scene_character : sceneCharacters) {
+           if(scene_character.getScene().getPlay().equals(play)) {
+               if (scene_character.getPersonage() != null) {
+                   if (scene_character.getMicrophone() != null) {
+                       CustomMicrophoneListDTO customMicrophoneListDTO = CustomMicrophoneListDTO.builder()
+                               .sceneId(scene_character.getScene().getSceneId())
+                               .sceneName(scene_character.getScene().getSceneName())
+                               .personageId(scene_character.getPersonage().getPersonageId())
+                               .personageName(scene_character.getPersonage().getPersonageName())
+                               .microphoneId(scene_character.getMicrophone().getMicrophoneId())
+                               .microphoneName(scene_character.getMicrophone().getMicrophoneName())
+                               .build();
+                       customMicrophoneListDTOs.add(customMicrophoneListDTO);
+                   } else {
+                       CustomMicrophoneListDTO customMicrophoneListDTO = CustomMicrophoneListDTO.builder()
+                               .sceneId(scene_character.getScene().getSceneId())
+                               .sceneName(scene_character.getScene().getSceneName())
+                               .personageId(scene_character.getPersonage().getPersonageId())
+                               .personageName(scene_character.getPersonage().getPersonageName())
+                               .microphoneId(null)
+                               .microphoneName(null)
+                               .build();
+                       customMicrophoneListDTOs.add(customMicrophoneListDTO);
+                   }
+               } else{
+                   if (scene_character.getMicrophone() != null) {
+                       CustomMicrophoneListDTO customMicrophoneListDTO = CustomMicrophoneListDTO.builder()
+                               .sceneId(scene_character.getScene().getSceneId())
+                               .sceneName(scene_character.getScene().getSceneName())
+                               .personageId(null)
+                               .personageName(null)
+                               .microphoneId(scene_character.getMicrophone().getMicrophoneId())
+                               .microphoneName(scene_character.getMicrophone().getMicrophoneName())
+                               .build();
+                       customMicrophoneListDTOs.add(customMicrophoneListDTO);
+                   } else{
+                       CustomMicrophoneListDTO customMicrophoneListDTO = CustomMicrophoneListDTO.builder()
+                               .sceneId(scene_character.getScene().getSceneId())
+                               .sceneName(scene_character.getScene().getSceneName())
+                               .personageId(null)
+                               .personageName(null)
+                               .microphoneId(null)
+                               .microphoneName(null)
+                               .build();
+                       customMicrophoneListDTOs.add(customMicrophoneListDTO);
+                   }
+               }
+
+           }
+        }
+
+        return customMicrophoneListDTOs;
+    }
 }
