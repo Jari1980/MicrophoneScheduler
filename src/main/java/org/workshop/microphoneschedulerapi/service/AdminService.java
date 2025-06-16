@@ -450,4 +450,17 @@ public class AdminService {
         return customScenePersonageDTOs;
     }
 
+    public void addAct(String playName, int act, int scenes){
+        Play play = playRepository.getReferenceById(playName);
+        for(int i = 0; i < scenes; i++){
+            Scene scene = Scene.builder()
+                    .play(play)
+                    .actNumber(act)
+                    .sceneNumber(i + 1)
+                    .sceneName("Act" + act + " / Scene" + (i + 1))
+                    .build();
+            sceneRepository.save(scene);
+        }
+    }
+
 }

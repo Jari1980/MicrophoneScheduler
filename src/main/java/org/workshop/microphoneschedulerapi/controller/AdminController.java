@@ -263,4 +263,14 @@ public class AdminController {
         }
     }
 
+    @PostMapping("/addAct")
+    public ResponseEntity<Void> addAct(@RequestBody addActDTOForm form){
+        try{
+            adminService.addAct(form.playName(), form.act(), form.scenes());
+            return ResponseEntity.ok().build();
+        }catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
 }
