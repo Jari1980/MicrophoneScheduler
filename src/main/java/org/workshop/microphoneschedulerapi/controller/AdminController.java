@@ -273,4 +273,13 @@ public class AdminController {
         }
     }
 
+    @GetMapping("/getCustomMicrophoneList")
+    public ResponseEntity<List<CustomMicrophoneListDTO>> getCustomMicrophoneList(@PathParam("playName") String playName){
+        try{
+            List<CustomMicrophoneListDTO> list = adminService.getCustomMicrophoneList(playName);
+            return ResponseEntity.ok(list);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
 }
