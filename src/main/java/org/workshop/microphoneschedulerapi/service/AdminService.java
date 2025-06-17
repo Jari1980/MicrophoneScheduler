@@ -472,25 +472,61 @@ public class AdminService {
            if(scene_character.getScene().getPlay().equals(play)) {
                if (scene_character.getPersonage() != null) {
                    if (scene_character.getMicrophone() != null) {
-                       CustomMicrophoneListDTO customMicrophoneListDTO = CustomMicrophoneListDTO.builder()
-                               .sceneId(scene_character.getScene().getSceneId())
-                               .sceneName(scene_character.getScene().getSceneName())
-                               .personageId(scene_character.getPersonage().getPersonageId())
-                               .personageName(scene_character.getPersonage().getPersonageName())
-                               .microphoneId(scene_character.getMicrophone().getMicrophoneId())
-                               .microphoneName(scene_character.getMicrophone().getMicrophoneName())
-                               .build();
-                       customMicrophoneListDTOs.add(customMicrophoneListDTO);
+                       if(scene_character.getPersonage().getActor().getUser() != null) {
+                           CustomMicrophoneListDTO customMicrophoneListDTO = CustomMicrophoneListDTO.builder()
+                                   .sceneId(scene_character.getScene().getSceneId())
+                                   .sceneName(scene_character.getScene().getSceneName())
+                                   .personageId(scene_character.getPersonage().getPersonageId())
+                                   .personageName(scene_character.getPersonage().getPersonageName())
+                                   .microphoneId(scene_character.getMicrophone().getMicrophoneId())
+                                   .microphoneName(scene_character.getMicrophone().getMicrophoneName())
+                                   .userId(scene_character.getPersonage().getActor().getUser().getUserId())
+                                   .userName(scene_character.getPersonage().getActor().getUser().getUsername())
+                                   .build();
+                           customMicrophoneListDTOs.add(customMicrophoneListDTO);
+                       }
+                       else{
+                           CustomMicrophoneListDTO customMicrophoneListDTO = CustomMicrophoneListDTO.builder()
+                                   .sceneId(scene_character.getScene().getSceneId())
+                                   .sceneName(scene_character.getScene().getSceneName())
+                                   .personageId(scene_character.getPersonage().getPersonageId())
+                                   .personageName(scene_character.getPersonage().getPersonageName())
+                                   .microphoneId(scene_character.getMicrophone().getMicrophoneId())
+                                   .microphoneName(scene_character.getMicrophone().getMicrophoneName())
+                                   .userId(null)
+                                   .userName(null)
+                                   .build();
+                           customMicrophoneListDTOs.add(customMicrophoneListDTO);
+                       }
+
                    } else {
-                       CustomMicrophoneListDTO customMicrophoneListDTO = CustomMicrophoneListDTO.builder()
-                               .sceneId(scene_character.getScene().getSceneId())
-                               .sceneName(scene_character.getScene().getSceneName())
-                               .personageId(scene_character.getPersonage().getPersonageId())
-                               .personageName(scene_character.getPersonage().getPersonageName())
-                               .microphoneId(null)
-                               .microphoneName(null)
-                               .build();
-                       customMicrophoneListDTOs.add(customMicrophoneListDTO);
+                       if(scene_character.getPersonage().getActor().getUser() != null) {
+                           CustomMicrophoneListDTO customMicrophoneListDTO = CustomMicrophoneListDTO.builder()
+                                   .sceneId(scene_character.getScene().getSceneId())
+                                   .sceneName(scene_character.getScene().getSceneName())
+                                   .personageId(scene_character.getPersonage().getPersonageId())
+                                   .personageName(scene_character.getPersonage().getPersonageName())
+                                   .microphoneId(null)
+                                   .microphoneName(null)
+                                   .userId(scene_character.getPersonage().getActor().getUser().getUserId())
+                                   .userName(scene_character.getPersonage().getActor().getUser().getUsername())
+                                   .build();
+                           customMicrophoneListDTOs.add(customMicrophoneListDTO);
+                       }
+                       else{
+                           CustomMicrophoneListDTO customMicrophoneListDTO = CustomMicrophoneListDTO.builder()
+                                   .sceneId(scene_character.getScene().getSceneId())
+                                   .sceneName(scene_character.getScene().getSceneName())
+                                   .personageId(scene_character.getPersonage().getPersonageId())
+                                   .personageName(scene_character.getPersonage().getPersonageName())
+                                   .microphoneId(null)
+                                   .microphoneName(null)
+                                   .userId(null)
+                                   .userName(null)
+                                   .build();
+                           customMicrophoneListDTOs.add(customMicrophoneListDTO);
+                       }
+
                    }
                } else{
                    if (scene_character.getMicrophone() != null) {
@@ -501,6 +537,8 @@ public class AdminService {
                                .personageName(null)
                                .microphoneId(scene_character.getMicrophone().getMicrophoneId())
                                .microphoneName(scene_character.getMicrophone().getMicrophoneName())
+                               .userId(null)
+                               .userName(null)
                                .build();
                        customMicrophoneListDTOs.add(customMicrophoneListDTO);
                    } else{
@@ -511,6 +549,8 @@ public class AdminService {
                                .personageName(null)
                                .microphoneId(null)
                                .microphoneName(null)
+                               .userId(null)
+                               .userName(null)
                                .build();
                        customMicrophoneListDTOs.add(customMicrophoneListDTO);
                    }
