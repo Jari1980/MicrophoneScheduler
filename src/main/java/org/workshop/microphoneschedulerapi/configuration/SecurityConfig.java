@@ -102,6 +102,7 @@ public class SecurityConfig {
                                 "api/v1/admin/getCustomSceneList",
                                 "api/v1/admin/addAct",
                                 "api/v1/admin/getCustomMicrophoneList",
+                                "api/v1/microphone/createMicrophone",
                                 "api/v1/microphone/*"             //All microphone endpoints are accessible for admins
                         ).hasRole(ADMINISTRATOR.name()))
 

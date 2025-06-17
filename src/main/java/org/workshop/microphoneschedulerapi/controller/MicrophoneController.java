@@ -25,8 +25,8 @@ public class MicrophoneController {
         this.microphoneService = microphoneService;
     }
 
-    @PostMapping("/createMicrophone{microphoneName}")
-    public ResponseEntity<Void> createMicrophone(@PathParam("microphoneName") String microphoneName) {
+    @PostMapping("/createMicrophone")
+    public ResponseEntity<Void> createMicrophone(String microphoneName) {
         if(microphoneName.isEmpty()|| microphoneName.isBlank()){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
