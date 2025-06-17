@@ -6,6 +6,8 @@ import org.workshop.microphoneschedulerapi.domain.entity.Microphone;
 import org.workshop.microphoneschedulerapi.repository.MicrophoneRepository;
 import org.workshop.microphoneschedulerapi.repository.PersonageRepository;
 
+import java.util.List;
+
 @Service
 public class MicrophoneService {
 
@@ -31,5 +33,9 @@ public class MicrophoneService {
 
     public void updateMicrophone(int microphoneId, String newMicrophoneName){
         microphoneRepository.updateMicrophone(microphoneId, newMicrophoneName);
+    }
+
+    public List<Microphone> getAllMicrophones() {
+        return microphoneRepository.findAll();
     }
 }

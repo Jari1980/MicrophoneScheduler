@@ -71,9 +71,6 @@ public class SecurityConfig {
                     registry.requestMatchers("/api/v1/scene/scenes",
                             "/api/v1/scene/completePlay",
                             "/api/v1/scene/microphonesInScene",
-                            "/api/v1/microphone/createMicrophone",
-                            "/api/v1/microphone/deleteMicrophone",
-                            "/api/v1/microphone/updateMicrophone",
                             "/api/v1/user/register",
                             "/api/v1/user/login",
                             "api/v1/actor/actorScenes").permitAll();
@@ -104,7 +101,8 @@ public class SecurityConfig {
                                 "api/v1/admin/getActorsConnectedToUsers",
                                 "api/v1/admin/getCustomSceneList",
                                 "api/v1/admin/addAct",
-                                "api/v1/admin/getCustomMicrophoneList"
+                                "api/v1/admin/getCustomMicrophoneList",
+                                "api/v1/microphone/*"             //All microphone endpoints are accessible for admins
                         ).hasRole(ADMINISTRATOR.name()))
 
                 .authorizeHttpRequests(registry ->
