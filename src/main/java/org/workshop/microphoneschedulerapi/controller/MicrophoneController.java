@@ -11,6 +11,8 @@ import org.workshop.microphoneschedulerapi.domain.dto.MicrophoneUpdateDTOForm;
 import org.workshop.microphoneschedulerapi.domain.entity.Microphone;
 import org.workshop.microphoneschedulerapi.service.MicrophoneService;
 
+import java.util.List;
+
 @CrossOrigin(origins = "*", allowedHeaders = "*", allowCredentials = "", allowPrivateNetwork = "")
 @RequestMapping("/api/v1/microphone")
 @RestController
@@ -51,6 +53,16 @@ public class MicrophoneController {
         try{
             microphoneService.updateMicrophone(form.microphoneId(), form.microphoneName());
             return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/getMicrophones")
+    public ResponseEntity<List<Microphone>> getMicrophones() {
+        try{
+            List<Microphone> list = microphoneService.getAllMicrophones();
+            return new ResponseEntity<>(list, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
