@@ -477,6 +477,7 @@ public class AdminService {
                    if (scene_character.getMicrophone() != null) {
                        if(scene_character.getPersonage().getActor().getUser() != null) {
                            CustomMicrophoneListDTO customMicrophoneListDTO = CustomMicrophoneListDTO.builder()
+                                   .scene_characterId(scene_character.getScene_character_id())
                                    .sceneId(scene_character.getScene().getSceneId())
                                    .sceneName(scene_character.getScene().getSceneName())
                                    .personageId(scene_character.getPersonage().getPersonageId())
@@ -490,6 +491,7 @@ public class AdminService {
                        }
                        else{
                            CustomMicrophoneListDTO customMicrophoneListDTO = CustomMicrophoneListDTO.builder()
+                                   .scene_characterId(scene_character.getScene_character_id())
                                    .sceneId(scene_character.getScene().getSceneId())
                                    .sceneName(scene_character.getScene().getSceneName())
                                    .personageId(scene_character.getPersonage().getPersonageId())
@@ -505,6 +507,7 @@ public class AdminService {
                    } else {
                        if(scene_character.getPersonage().getActor().getUser() != null) {
                            CustomMicrophoneListDTO customMicrophoneListDTO = CustomMicrophoneListDTO.builder()
+                                   .scene_characterId(scene_character.getScene_character_id())
                                    .sceneId(scene_character.getScene().getSceneId())
                                    .sceneName(scene_character.getScene().getSceneName())
                                    .personageId(scene_character.getPersonage().getPersonageId())
@@ -518,6 +521,7 @@ public class AdminService {
                        }
                        else{
                            CustomMicrophoneListDTO customMicrophoneListDTO = CustomMicrophoneListDTO.builder()
+                                   .scene_characterId(scene_character.getScene_character_id())
                                    .sceneId(scene_character.getScene().getSceneId())
                                    .sceneName(scene_character.getScene().getSceneName())
                                    .personageId(scene_character.getPersonage().getPersonageId())
@@ -534,6 +538,7 @@ public class AdminService {
                } else{
                    if (scene_character.getMicrophone() != null) {
                        CustomMicrophoneListDTO customMicrophoneListDTO = CustomMicrophoneListDTO.builder()
+                               .scene_characterId(scene_character.getScene_character_id())
                                .sceneId(scene_character.getScene().getSceneId())
                                .sceneName(scene_character.getScene().getSceneName())
                                .personageId(null)
@@ -546,6 +551,7 @@ public class AdminService {
                        customMicrophoneListDTOs.add(customMicrophoneListDTO);
                    } else{
                        CustomMicrophoneListDTO customMicrophoneListDTO = CustomMicrophoneListDTO.builder()
+                               .scene_characterId(scene_character.getScene_character_id())
                                .sceneId(scene_character.getScene().getSceneId())
                                .sceneName(scene_character.getScene().getSceneName())
                                .personageId(null)
