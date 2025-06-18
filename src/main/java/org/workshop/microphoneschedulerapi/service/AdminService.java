@@ -25,18 +25,21 @@ public class AdminService {
     private ActorRepository actorRepository;
     private Scene_characterRepository scene_characterRepository;
     private UserRepository userRepository;
+    private MicrophoneRepository microphoneRepository;
 
 
     @Autowired
     public AdminService(PlayRepository playRepository, PersonageRepository personageRepository,
                         SceneRepository sceneRepository, ActorRepository actorRepository,
-                        Scene_characterRepository scene_characterRepository, UserRepository userRepository) {
+                        Scene_characterRepository scene_characterRepository, UserRepository userRepository,
+                        MicrophoneRepository microphoneRepository) {
         this.playRepository = playRepository;
         this.personageRepository = personageRepository;
         this.sceneRepository = sceneRepository;
         this.actorRepository = actorRepository;
         this.scene_characterRepository = scene_characterRepository;
         this.userRepository = userRepository;
+        this.microphoneRepository = microphoneRepository;
     }
 
     public List<Play> getAllPlays() {
@@ -560,5 +563,19 @@ public class AdminService {
         }
 
         return customMicrophoneListDTOs;
+    }
+
+    @Transactional
+    public void addMicrophone(AddMicrophoneDTOForm form){
+        Scene_character scene_character = scene_characterRepository.getReferenceById(form.scene_characterId());
+        scene_character.setMicrophone(microphoneRepository.getReferenceById(form.microphoneId()));
+        scene_characterRepository.save(scene_character);
+    }
+
+    @Transactional
+    public void removeMicrophone(Long scene_characterId){
+        Scene_character scene_character = scene_characterRepository.getReferenceById(scene_characterId);
+        scene_character.setMicrophone(null);
+        scene_characterRepository.save(scene_character);
     }
 }

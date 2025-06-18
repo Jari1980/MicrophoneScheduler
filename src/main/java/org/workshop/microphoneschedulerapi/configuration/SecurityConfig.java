@@ -103,7 +103,10 @@ public class SecurityConfig {
                                 "api/v1/admin/addAct",
                                 "api/v1/admin/getCustomMicrophoneList",
                                 "api/v1/microphone/createMicrophone",
-                                "api/v1/microphone/*"             //All microphone endpoints are accessible for admins
+                                "api/v1/microphone/*",             //All microphone endpoints are accessible for admins
+                                "api/v1/admin/addMicrophone",
+                               // "api/v1/admin/removeMicrophone",
+                                "api/v1/admin/removeMicrophone"
                         ).hasRole(ADMINISTRATOR.name()))
 
                 .authorizeHttpRequests(registry ->

@@ -282,4 +282,24 @@ public class AdminController {
             return ResponseEntity.badRequest().build();
         }
     }
+
+    @PutMapping("/addMicrophone")
+    public ResponseEntity<Void> addMicrophone(@RequestBody AddMicrophoneDTOForm form){
+        try{
+            adminService.addMicrophone(form);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @PutMapping("/removeMicrophone{scene_characterId}")
+    public ResponseEntity<Void> removeMicrophone(@PathParam("scene_characterId") Long scene_characterId){
+        try{
+            adminService.removeMicrophone(scene_characterId);
+            return ResponseEntity.ok().build();
+        }catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
 }
