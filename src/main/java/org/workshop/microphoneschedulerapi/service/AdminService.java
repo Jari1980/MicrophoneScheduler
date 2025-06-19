@@ -51,18 +51,24 @@ public class AdminService {
     }
 
 
+    /**
+     * This method will delete play and all related scenes and scene_characters Character (personages) and
+     * microphones used in play will still be in database in case they are used in other production.
+     * @param playName
+     */
     @Transactional
     public void deletePlay(String playName) {
         List<Scene> scenesToBeRemoved = sceneRepository.findAllByPlay(playRepository.getReferenceById(playName));
         for (Scene scene : scenesToBeRemoved) {
             var toBeRemoved = scene.getScene_characters();
             for (Scene_character scene_character : toBeRemoved) {
-                personageRepository.delete(scene_character.getPersonage());
-                scene_character.setPersonage(null);
-                scene_character.setScene(null);
-                scene_character.setMicrophone(null);
+                //personageRepository.delete(scene_character.getPersonage());
+                //scene_character.setPersonage(null);
+                //scene_character.setScene(null);
+                //scene_character.setMicrophone(null);
+                scene_characterRepository.delete(scene_character);
             }
-            scene.setScene_characters(null);
+            //scene.setScene_characters(null);
         }
         sceneRepository.deleteAllByPlay(playRepository.getReferenceById(playName));
         playRepository.delete(playRepository.getReferenceById(playName));
