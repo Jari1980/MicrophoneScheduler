@@ -12,10 +12,10 @@ import lombok.*;
 @Builder
 public class ScenePersonageMicrophoneCustom {
 
+    private int id;
     private int microphoneId;
     private int sceneId;
     private int actNumber;
-    private int sceneNumber;
     private String sceneName;
     private String personageName;
     private Long userId;

@@ -310,29 +310,130 @@ public class AdminService {
         List<Integer> distinctActNumbers = actNumbers.stream().distinct().toList();
 
         List<ScenePersonageMicrophoneCustom> customList = new ArrayList<>();
+        int id= 1;
 
         for (Scene_character scene_character : scene_charactersInPlay) {
             ScenePersonageMicrophoneCustom scenePersonageMicrophoneCustom = ScenePersonageMicrophoneCustom.builder()
+                    .id(id)
                     .userId(scene_character.getPersonage().getActor().getUser().getUserId())
                     .userName(scene_character.getPersonage().getActor().getUser().getUsername())
                     .sceneId(scene_character.getScene().getSceneId())
-                    .sceneNumber(scene_character.getScene().getSceneNumber())
                     .sceneName(scene_character.getScene().getSceneName())
                     .actNumber(scene_character.getScene().getActNumber())
                     .personageName(scene_character.getPersonage().getPersonageName())
                     .build();
             customList.add(scenePersonageMicrophoneCustom);
+            id++;
         }
         customList.sort(Comparator.comparing(ScenePersonageMicrophoneCustom::getActNumber));
 
-        List<Microphone> suggestedMicrophones = new ArrayList<>();
+        //List<Microphone> suggestedMicrophones = new ArrayList<>();
         MicrophoneScheduleSuggestedDTO microphoneScheduleSuggestedDTO = new MicrophoneScheduleSuggestedDTO();
         int counter = 0;
         int sceneNumber = 1;
         Dictionary<String, Integer> userMicrophones = new Hashtable<>();
         int microphoneCounter = 1;
+        boolean newAct = true;
+        int actCounter = 1;
+        int numScenesPrevious = 0;
+        boolean found = false;
+        int foundIndex = 0;
 
-        for (ScenePersonageMicrophoneCustom scenePersonageMicrophoneCustom : customList) {
+        // Rework
+
+        List<Integer> acts = new ArrayList<>();
+        for(ScenePersonageMicrophoneCustom scenePersonageMicrophoneCustom : customList) {
+            acts.add(scenePersonageMicrophoneCustom.getActNumber());
+        }
+        int numberOfActs = acts.stream().distinct().toList().size();
+
+        for(int act = 1; act <= numberOfActs; act++) {
+            List<Integer> char_scenes = new ArrayList<>();
+            for (ScenePersonageMicrophoneCustom scenePersonageMicrophoneCustom1 : customList) {
+                if (scenePersonageMicrophoneCustom1.getActNumber() == actCounter) {
+                    char_scenes.add(scenePersonageMicrophoneCustom1.getId());
+                }
+            }
+            int numberOfChar_scenes = char_scenes.size(); //char_scenes.stream().distinct().toList().size();
+
+            for (int scene = 1; scene <= numberOfChar_scenes; scene++) {
+                if (microphoneCounter == 1) {
+                    customList.get(counter).setMicrophoneId(microphoneCounter);
+                    found = true;
+                    microphoneCounter++;
+                    counter++;
+                } else {
+                    if(numScenesPrevious != 0){
+                        for(int i = 1; i < scene; i++){
+                            if(!found){
+                                if(customList.get(counter - i).getPersonageName().equals(customList.get(counter).getPersonageName())){
+                                    found = true;
+                                    customList.get(counter).setMicrophoneId(customList.get(counter - i).getMicrophoneId());
+                                    counter++;
+                                    break;
+                                }
+                            }
+
+                            if(!found){
+                                for(int j = 1; j < numScenesPrevious; j++){
+                                    if(customList.get(counter - scene - numScenesPrevious + j).getPersonageName().equals(customList.get(counter).getPersonageName())){
+                                        found = true;
+                                        customList.get(counter).setMicrophoneId(customList.get(counter - scene - numScenesPrevious + j).getMicrophoneId());
+                                        counter++;
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    else{
+                        for(int i = 1; i < scene; i++) {
+                            if (customList.get(counter - i).getPersonageName().equals(customList.get(counter).getPersonageName())) {
+                                found = true;
+                                customList.get(counter).setMicrophoneId(customList.get(counter - i).getMicrophoneId());
+                                counter++;
+                                break;
+                            }
+                        }
+                    }
+                }
+                if(!found){
+                    customList.get(counter).setMicrophoneId(microphoneCounter);
+                    microphoneCounter++;
+                    counter++;
+                }
+                found = false;
+            }
+                numScenesPrevious = numberOfChar_scenes;
+                microphoneCounter = 1;
+                actCounter++;
+
+
+        }
+
+        //for (ScenePersonageMicrophoneCustom scenePersonageMicrophoneCustom : customList) {
+        //    List<ScenePersonageMicrophoneCustom> scenePersonageMicrophonesScenes = new ArrayList<>();
+        //    for(ScenePersonageMicrophoneCustom scenePersonageMicrophoneCustom1 : customList) {
+        //        if(scenePersonageMicrophoneCustom1.getActNumber() == actCounter){
+        //            scenePersonageMicrophonesScenes.add(scenePersonageMicrophoneCustom1);
+        //        }
+        //    }
+        //    int numberOfScenes = scenePersonageMicrophonesScenes.size();
+         //   if(newAct && counter == 0){
+         //       customList.get(counter).setMicrophoneId(microphoneCounter);
+         //       microphoneCounter++;
+         //       counter++;
+         //       sceneNumber++;
+         //       newAct = false;
+         //   }
+         //   else if()
+         //   if(sceneNumber == numberOfScenes) {
+         //       newAct = true;
+         //       sceneNumber = 1;
+          //  }
+
+
+            /* //Redoing this
 
             if (scenePersonageMicrophoneCustom.getActNumber() == 1 && counter == 0) { //Very first element
                 customList.get(counter).setMicrophoneId(microphoneCounter);
@@ -382,7 +483,9 @@ public class AdminService {
                 }
                 sceneNumber++;
             }
-        }
+
+             */
+        //}
 
         microphoneScheduleSuggestedDTO.setMicrophoneList(customList);
         return microphoneScheduleSuggestedDTO;
@@ -496,6 +599,7 @@ public class AdminService {
                            customMicrophoneListDTOs.add(customMicrophoneListDTO);
                        }
                        else{
+                           /*
                            CustomMicrophoneListDTO customMicrophoneListDTO = CustomMicrophoneListDTO.builder()
                                    .scene_characterId(scene_character.getScene_character_id())
                                    .sceneId(scene_character.getScene().getSceneId())
@@ -508,6 +612,8 @@ public class AdminService {
                                    .userName(null)
                                    .build();
                            customMicrophoneListDTOs.add(customMicrophoneListDTO);
+
+                            */
                        }
 
                    } else {
@@ -526,6 +632,7 @@ public class AdminService {
                            customMicrophoneListDTOs.add(customMicrophoneListDTO);
                        }
                        else{
+                           /*
                            CustomMicrophoneListDTO customMicrophoneListDTO = CustomMicrophoneListDTO.builder()
                                    .scene_characterId(scene_character.getScene_character_id())
                                    .sceneId(scene_character.getScene().getSceneId())
@@ -538,11 +645,14 @@ public class AdminService {
                                    .userName(null)
                                    .build();
                            customMicrophoneListDTOs.add(customMicrophoneListDTO);
+
+                            */
                        }
 
                    }
                } else{
                    if (scene_character.getMicrophone() != null) {
+                       /*
                        CustomMicrophoneListDTO customMicrophoneListDTO = CustomMicrophoneListDTO.builder()
                                .scene_characterId(scene_character.getScene_character_id())
                                .sceneId(scene_character.getScene().getSceneId())
@@ -555,7 +665,10 @@ public class AdminService {
                                .userName(null)
                                .build();
                        customMicrophoneListDTOs.add(customMicrophoneListDTO);
+
+                        */
                    } else{
+                       /*
                        CustomMicrophoneListDTO customMicrophoneListDTO = CustomMicrophoneListDTO.builder()
                                .scene_characterId(scene_character.getScene_character_id())
                                .sceneId(scene_character.getScene().getSceneId())
@@ -568,6 +681,8 @@ public class AdminService {
                                .userName(null)
                                .build();
                        customMicrophoneListDTOs.add(customMicrophoneListDTO);
+
+                        */
                    }
                }
 
