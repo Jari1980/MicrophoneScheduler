@@ -296,7 +296,9 @@ public class AdminService {
         List<Scene_character> scene_charactersInPlay = new ArrayList<>();
         for (Scene scene : allScenesInPlay) {
             for (Scene_character scene_character : scene.getScene_characters()) {
-                scene_charactersInPlay.add(scene_character);
+                if(scene_character.getPersonage() != null){
+                    scene_charactersInPlay.add(scene_character);
+                }
             }
         }
 
