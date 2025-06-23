@@ -21,6 +21,6 @@ public class Play {
     @Id
     @Column(nullable = false, unique = true)
     private String playName;
-    private LocalDate dateCreated;
+    private LocalDate premiereDate;
     private String description;
 }
