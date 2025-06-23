@@ -3,15 +3,11 @@ package org.workshop.microphoneschedulerapi.controller;
 import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.workshop.microphoneschedulerapi.domain.dto.*;
-import org.workshop.microphoneschedulerapi.domain.entity.Personage;
 import org.workshop.microphoneschedulerapi.domain.entity.Play;
-import org.workshop.microphoneschedulerapi.domain.entity.Scene;
 import org.workshop.microphoneschedulerapi.service.AdminService;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*", allowCredentials = "", allowPrivateNetwork = "")
@@ -62,7 +58,7 @@ public class AdminController {
     @PutMapping("/updatePlay")
     public ResponseEntity<Void> updatePlay(@RequestBody Play play) {
         try {
-            adminService.updatePlay(play.getPlayName(), play.getDateCreated(), play.getDescription());
+            adminService.updatePlay(play.getPlayName(), play.getPremiereDate(), play.getDescription());
             return ResponseEntity.ok().build();
         }catch (Exception e) {
             return ResponseEntity.badRequest().build();

@@ -127,7 +127,7 @@ public class PlayGround implements CommandLineRunner {
 
         Play play1 = Play.builder()
                 .playName("SnusDrömmar")
-                .dateCreated(LocalDate.now())
+                .premiereDate(LocalDate.now())
                 .description("Test play")
                 .build();
         playRepository.save(play1);
