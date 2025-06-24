@@ -110,6 +110,12 @@ public class AdminService {
     }
 
     public void deleteScene(int sceneId) {
+        List<Scene_character> sceneCharacters = scene_characterRepository.findAll();
+        for (Scene_character scene_character : sceneCharacters) {
+            if(scene_character.getScene().getSceneId() == sceneId) {
+                scene_characterRepository.delete(scene_character);
+            }
+        }
         sceneRepository.deleteById(sceneId);
     }
 
