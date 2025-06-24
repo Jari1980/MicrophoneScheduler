@@ -55,7 +55,7 @@ public class ActorService {
         List<ActorOwnSceneCustom> customList = new ArrayList<>();
         for(Personage personage : allMatchingPersonage) {
             for(Scene_character scene_character : allSceneCharacter) {
-                if(scene_character.getPersonage().getPersonageId() == personage.getPersonageId()) {
+                if(scene_character.getPersonage().getPersonageId() == personage.getPersonageId() && scene_character.getScene().getPlay().getPlayName().equals(playName)) {
                     if(scene_character.getMicrophone() != null) {
                         ActorOwnSceneCustom actorOwnSceneCustom = ActorOwnSceneCustom.builder()
                                 .sceneId(scene_character.getScene().getSceneId())
