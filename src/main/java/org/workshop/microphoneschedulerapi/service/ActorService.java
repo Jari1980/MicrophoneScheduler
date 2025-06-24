@@ -59,8 +59,9 @@ public class ActorService {
                     if(scene_character.getMicrophone() != null) {
                         ActorOwnSceneCustom actorOwnSceneCustom = ActorOwnSceneCustom.builder()
                                 .sceneId(scene_character.getScene().getSceneId())
-                                .actNumber(scene_character.getScene().getSceneNumber())
+                                .actNumber(scene_character.getScene().getActNumber())
                                 .sceneNumber(scene_character.getScene().getSceneNumber())
+                                .sceneName(scene_character.getScene().getSceneName())
                                 .personageName(scene_character.getPersonage().getPersonageName())
                                 .microphoneId(scene_character.getMicrophone().getMicrophoneId())
                                 .microphoneName(scene_character.getMicrophone().getMicrophoneName())
@@ -70,8 +71,9 @@ public class ActorService {
                     else{
                         ActorOwnSceneCustom actorOwnSceneCustom = ActorOwnSceneCustom.builder()
                                 .sceneId(scene_character.getScene().getSceneId())
-                                .actNumber(scene_character.getScene().getSceneNumber())
+                                .actNumber(scene_character.getScene().getActNumber())
                                 .sceneNumber(scene_character.getScene().getSceneNumber())
+                                .sceneName(scene_character.getScene().getSceneName())
                                 .personageName(scene_character.getPersonage().getPersonageName())
                                 //.microphoneId(scene_character.getMicrophone().getMicrophoneId())
                                 //.microphoneName(scene_character.getMicrophone().getMicrophoneName())
