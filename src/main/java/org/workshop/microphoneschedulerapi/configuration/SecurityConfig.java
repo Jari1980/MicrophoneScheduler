@@ -112,7 +112,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(registry ->
                         registry.requestMatchers(
                                 "/api/v1/admin/listAllPlay",
-                                "/api/v1/actor/getUsers"
+                                "/api/v1/actor/getUsers",
+                                "/api/v1/actor/otherActorScenes"
                         ).hasAnyRole(ADMINISTRATOR.name(), DIRECTOR.name(), ACTOR.name()))
 
 

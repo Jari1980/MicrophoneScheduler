@@ -5,12 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.workshop.microphoneschedulerapi.domain.dto.ActorOwnSceneCustomListDTO;
 import org.workshop.microphoneschedulerapi.domain.dto.CustomUser;
+import org.workshop.microphoneschedulerapi.domain.dto.GetOtherActorsScenesDTOForm;
 import org.workshop.microphoneschedulerapi.domain.entity.User;
 import org.workshop.microphoneschedulerapi.repository.UserRepository;
 import org.workshop.microphoneschedulerapi.service.ActorService;
@@ -48,6 +46,17 @@ public class ActorController {
             return ResponseEntity.badRequest().build();
         }
 
+    }
+
+    @GetMapping("/otherActorScenes")
+    public ResponseEntity<ActorOwnSceneCustomListDTO> getOtherActorScenes(@RequestBody GetOtherActorsScenesDTOForm form) {
+        try{
+            User user = actorService.getUserByUserId(form.userId());
+            ActorOwnSceneCustomListDTO list = actorService.getActorOwnSceneCustomListDTO(user, form.playName());
+            return new ResponseEntity<>(list, HttpStatus.OK);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @GetMapping("/getUsers")

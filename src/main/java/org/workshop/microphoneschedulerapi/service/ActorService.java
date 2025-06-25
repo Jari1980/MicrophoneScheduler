@@ -107,4 +107,8 @@ public class ActorService {
 
         return customUserList;
     }
+
+    public User getUserByUserId(Long userId) {
+        return userRepository.findById(userId).orElse(null);
+    }
 }
