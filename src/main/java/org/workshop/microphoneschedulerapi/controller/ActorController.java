@@ -48,7 +48,7 @@ public class ActorController {
 
     }
 
-    @GetMapping("/otherActorScenes")
+    @PostMapping("/otherActorScenes")
     public ResponseEntity<ActorOwnSceneCustomListDTO> getOtherActorScenes(@RequestBody GetOtherActorsScenesDTOForm form) {
         try{
             User user = actorService.getUserByUserId(form.userId());
