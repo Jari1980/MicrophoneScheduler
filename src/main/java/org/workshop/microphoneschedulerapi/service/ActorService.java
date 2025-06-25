@@ -33,61 +33,48 @@ public class ActorService {
 
     public ActorOwnSceneCustomListDTO getActorOwnSceneCustomListDTO(User user, String playName) {
 
-        List<Personage> allPersonage = personageRepository.findAll();
+        //List<Personage> allPersonage = personageRepository.findAll();
         List<Scene_character> allSceneCharacter = scene_characterRepository.findAll();
 
-        //Filtering by username
-        List<Personage> allFoundPersonageMatchingUser = new ArrayList<>();
-        for (Personage personage : allPersonage) {
-            if(personage.getActor().getUser().getUsername().equals(user.getUsername())) {
-                allFoundPersonageMatchingUser.add(personage);
-            }
-        }
+        List<Scene_character> sceneCharactersWithUser = new ArrayList<>();
 
-        //Filtering by playName
-        List<Personage> allMatchingPersonage = new ArrayList<>();
-        for(Personage personage : allFoundPersonageMatchingUser) {
-            for(Scene_character scene_character : allSceneCharacter) {
-                if(scene_character.getPersonage().getPersonageId() == personage.getPersonageId()) {
-                    if(scene_character.getScene().getPlay().getPlayName().equals(playName)) {
-                        allMatchingPersonage.add(personage);
-                    }
-                }
+        for(Scene_character sc : allSceneCharacter) {
+            if(sc.getPersonage().getActor().getUser().equals(user)) {
+                sceneCharactersWithUser.add(sc);
             }
         }
 
         List<ActorOwnSceneCustom> customList = new ArrayList<>();
-        for(Personage personage : allMatchingPersonage) {
-            for(Scene_character scene_character : allSceneCharacter) {
-                if(scene_character.getPersonage().getPersonageId() == personage.getPersonageId() && scene_character.getScene().getPlay().getPlayName().equals(playName)) {
-                    if(scene_character.getMicrophone() != null) {
-                        ActorOwnSceneCustom actorOwnSceneCustom = ActorOwnSceneCustom.builder()
-                                .sceneId(scene_character.getScene().getSceneId())
-                                .actNumber(scene_character.getScene().getActNumber())
-                                .sceneNumber(scene_character.getScene().getSceneNumber())
-                                .sceneName(scene_character.getScene().getSceneName())
-                                .personageName(scene_character.getPersonage().getPersonageName())
-                                .microphoneId(scene_character.getMicrophone().getMicrophoneId())
-                                .microphoneName(scene_character.getMicrophone().getMicrophoneName())
-                                .build();
-                        customList.add(actorOwnSceneCustom);
-                    }
-                    else{
-                        ActorOwnSceneCustom actorOwnSceneCustom = ActorOwnSceneCustom.builder()
-                                .sceneId(scene_character.getScene().getSceneId())
-                                .actNumber(scene_character.getScene().getActNumber())
-                                .sceneNumber(scene_character.getScene().getSceneNumber())
-                                .sceneName(scene_character.getScene().getSceneName())
-                                .personageName(scene_character.getPersonage().getPersonageName())
-                                //.microphoneId(scene_character.getMicrophone().getMicrophoneId())
-                                //.microphoneName(scene_character.getMicrophone().getMicrophoneName())
-                                .build();
-                        customList.add(actorOwnSceneCustom);
-                    }
+
+        for(Scene_character scene_character : sceneCharactersWithUser) {
+            if(scene_character.getPersonage().getActor().getUser().equals(user) && scene_character.getScene().getPlay().getPlayName().equals(playName)) {
+                if(scene_character.getMicrophone() != null) {
+                    ActorOwnSceneCustom actorOwnSceneCustom = ActorOwnSceneCustom.builder()
+                            .sceneId(scene_character.getScene().getSceneId())
+                            .actNumber(scene_character.getScene().getActNumber())
+                            .sceneNumber(scene_character.getScene().getSceneNumber())
+                            .sceneName(scene_character.getScene().getSceneName())
+                            .personageName(scene_character.getPersonage().getPersonageName())
+                            .microphoneId(scene_character.getMicrophone().getMicrophoneId())
+                            .microphoneName(scene_character.getMicrophone().getMicrophoneName())
+                            .build();
+                    customList.add(actorOwnSceneCustom);
+                }
+                else{
+                    ActorOwnSceneCustom actorOwnSceneCustom = ActorOwnSceneCustom.builder()
+                            .sceneId(scene_character.getScene().getSceneId())
+                            .actNumber(scene_character.getScene().getActNumber())
+                            .sceneNumber(scene_character.getScene().getSceneNumber())
+                            .sceneName(scene_character.getScene().getSceneName())
+                            .personageName(scene_character.getPersonage().getPersonageName())
+                            //.microphoneId(scene_character.getMicrophone().getMicrophoneId())
+                            //.microphoneName(scene_character.getMicrophone().getMicrophoneName())
+                            .build();
+                    customList.add(actorOwnSceneCustom);
                 }
             }
-            break;
         }
+
         ActorOwnSceneCustomListDTO actorOwnSceneCustomListDTO = new ActorOwnSceneCustomListDTO();
         actorOwnSceneCustomListDTO.setActorScenes(customList);
 
