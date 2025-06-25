@@ -10,10 +10,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.workshop.microphoneschedulerapi.domain.dto.ActorOwnSceneCustomListDTO;
+import org.workshop.microphoneschedulerapi.domain.dto.CustomUser;
 import org.workshop.microphoneschedulerapi.domain.entity.User;
 import org.workshop.microphoneschedulerapi.repository.UserRepository;
 import org.workshop.microphoneschedulerapi.service.ActorService;
 
+import java.util.List;
 import java.util.Optional;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*", allowCredentials = "", allowPrivateNetwork = "")
@@ -46,6 +48,16 @@ public class ActorController {
             return ResponseEntity.badRequest().build();
         }
 
+    }
+
+    @GetMapping("/getUsers")
+    public ResponseEntity<List<CustomUser>> getUsers() {
+        try{
+            List<CustomUser> customUsers = actorService.getAllUsers();
+            return new ResponseEntity<>(customUsers, HttpStatus.OK);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
 }

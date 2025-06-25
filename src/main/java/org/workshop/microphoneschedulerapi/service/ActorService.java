@@ -4,13 +4,14 @@ package org.workshop.microphoneschedulerapi.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.workshop.microphoneschedulerapi.domain.dto.ActorOwnSceneCustomListDTO;
+import org.workshop.microphoneschedulerapi.domain.dto.CustomUser;
 import org.workshop.microphoneschedulerapi.domain.entity.Personage;
 import org.workshop.microphoneschedulerapi.domain.entity.Scene_character;
 import org.workshop.microphoneschedulerapi.domain.entity.User;
 import org.workshop.microphoneschedulerapi.domain.model.ActorOwnSceneCustom;
 import org.workshop.microphoneschedulerapi.repository.PersonageRepository;
-import org.workshop.microphoneschedulerapi.repository.SceneRepository;
 import org.workshop.microphoneschedulerapi.repository.Scene_characterRepository;
+import org.workshop.microphoneschedulerapi.repository.UserRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,11 +21,14 @@ public class ActorService {
 
     private PersonageRepository personageRepository;
     private Scene_characterRepository scene_characterRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    public ActorService(PersonageRepository personageRepository, Scene_characterRepository scene_characterRepository) {
+    public ActorService(PersonageRepository personageRepository, Scene_characterRepository scene_characterRepository,
+                        UserRepository userRepository) {
         this.personageRepository = personageRepository;
         this.scene_characterRepository = scene_characterRepository;
+        this.userRepository = userRepository;
     }
 
     public ActorOwnSceneCustomListDTO getActorOwnSceneCustomListDTO(User user, String playName) {
@@ -88,5 +92,19 @@ public class ActorService {
         actorOwnSceneCustomListDTO.setActorScenes(customList);
 
         return actorOwnSceneCustomListDTO;
+    }
+
+    public List<CustomUser> getAllUsers(){
+        List<CustomUser> customUserList = new ArrayList<>();
+        List<User> userList = userRepository.findAll();
+        for(User user : userList) {
+            CustomUser customUser = CustomUser.builder()
+                    .userId(user.getUserId())
+                    .userName(user.getUsername())
+                    .build();
+            customUserList.add(customUser);
+        }
+
+        return customUserList;
     }
 }
