@@ -154,9 +154,7 @@ public class AdminService {
         List<Scene_character> scene_characters = scene_characterRepository.findScene_charactersByPersonage(personageRepository.getReferenceById(personageId));
         for (Scene_character scene_character : scene_characters) {
             if(scene_character.getScene().getSceneId() == sceneId) {
-                scene_character.setPersonage(null);
-                scene_character.setMicrophone(null);
-                scene_characterRepository.save(scene_character);
+                scene_characterRepository.delete(scene_character);
             }
         }
     }
