@@ -16,4 +16,6 @@ public interface PlayRepository extends JpaRepository<Play, String> {
     @Modifying
     @Query("UPDATE Play p SET p.premiereDate = :newDate, p.description = :newDescription WHERE p.playName = :playName")
     void updatePlay(String playName, LocalDate newDate, String newDescription);
+
+
 }

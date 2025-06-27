@@ -2,9 +2,14 @@ package org.workshop.microphoneschedulerapi.service;
 
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
+import org.apache.coyote.BadRequestException;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.info.ProjectInfoProperties;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpStatusCodeException;
 import org.workshop.microphoneschedulerapi.domain.dto.*;
 import org.workshop.microphoneschedulerapi.domain.entity.*;
 import org.workshop.microphoneschedulerapi.domain.model.PersonageCustom;
@@ -105,7 +110,16 @@ public class AdminService {
         sceneRepository.save(newScene);
     }
 
-    public void updateScene(UpdateSceneDTOForm form) {
+    public void updateScene(UpdateSceneDTOForm form) throws Exception {
+
+        Play play = sceneRepository.findSceneBySceneId(form.sceneId()).getPlay();
+        List<Scene> scenes = sceneRepository.findAllByPlay(play);
+        for(Scene scene : scenes) {
+            if(scene.getSceneNumber() == form.sceneNumber() && scene.getActNumber() == form.actNumber()) {
+                throw new Exception("Scene already exists");
+            }
+        }
+
         sceneRepository.updateScene(form.sceneId(), form.sceneName(), form.actNumber(), form.sceneNumber());
     }
 
