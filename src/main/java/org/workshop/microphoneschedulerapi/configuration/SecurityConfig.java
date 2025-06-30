@@ -90,7 +90,6 @@ public class SecurityConfig {
                                 "api/v1/admin/assignActorToPersonage",
                                 "api/v1/admin/createPersonage",
                                 "api/v1/admin/getAllPersonageInPlay",
-                                "api/v1/admin/getAllPersonageInDb",
                                 "api/v1/admin/getAllPersonageInScene",
                                 "api/v1/admin/suggestMicrophoneSchedule",
                                 "api/v1/admin/getusersandroles",
@@ -98,7 +97,6 @@ public class SecurityConfig {
                                 "api/v1/admin/deleteuser",
                                 "api/v1/admin/editPersonage",
                                 "api/v1/admin/deletePersonage",
-                                "api/v1/admin/getActorsConnectedToUsers",
                                 "api/v1/admin/getCustomSceneList",
                                 "api/v1/admin/addAct",
                                 "api/v1/microphone/createMicrophone",
@@ -127,7 +125,9 @@ public class SecurityConfig {
                                 "api/v1/admin/addMicrophone",
                                 "api/v1/admin/removeMicrophone",
                                 "api/v1/microphone/getMicrophones",
-                                "api/v1/admin/getCustomMicrophoneList"
+                                "api/v1/admin/getCustomMicrophoneList",
+                                "api/v1/admin/getAllPersonageInDb",
+                                "api/v1/admin/getActorsConnectedToUsers"
                         ).hasAnyRole(ADMINISTRATOR.name(), DIRECTOR.name()))
 
 
