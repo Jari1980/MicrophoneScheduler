@@ -111,7 +111,8 @@ public class SecurityConfig {
                         registry.requestMatchers(
                                 "/api/v1/admin/listAllPlay",
                                 "/api/v1/actor/getUsers",
-                                "/api/v1/actor/otherActorScenes"
+                                "/api/v1/actor/otherActorScenes",
+                                "api/v1/actor/comment"
                         ).hasAnyRole(ADMINISTRATOR.name(), DIRECTOR.name(), ACTOR.name()))
 
 

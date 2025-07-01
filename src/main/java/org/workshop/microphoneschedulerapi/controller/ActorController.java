@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import org.workshop.microphoneschedulerapi.domain.dto.ActorComment;
 import org.workshop.microphoneschedulerapi.domain.dto.ActorOwnSceneCustomListDTO;
 import org.workshop.microphoneschedulerapi.domain.dto.CustomUser;
 import org.workshop.microphoneschedulerapi.domain.dto.GetOtherActorsScenesDTOForm;
@@ -65,6 +66,16 @@ public class ActorController {
             List<CustomUser> customUsers = actorService.getAllUsers();
             return new ResponseEntity<>(customUsers, HttpStatus.OK);
         } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @PutMapping("/comment")
+    public ResponseEntity<String> actorComment(@RequestBody ActorComment form){
+        try{
+            String comment = actorService.comment(form.id(), form.comment());
+            return new ResponseEntity<>(comment, HttpStatus.OK);
+        }catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
     }

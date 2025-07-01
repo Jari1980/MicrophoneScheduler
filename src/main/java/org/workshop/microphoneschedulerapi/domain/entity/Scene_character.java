@@ -38,4 +38,6 @@ public class Scene_character {
     @OnDelete(action = OnDeleteAction.SET_NULL)
     @JoinColumn(name = "microphone_id")
     private Microphone microphone;
+
+    private String comment;
 }
