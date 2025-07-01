@@ -19,5 +19,7 @@ public class ActorOwnSceneCustom {
     private String personageName;
     private int microphoneId;
     private String microphoneName;
+    private String comment;
+    private Long sceneCharacterId;
 
 }

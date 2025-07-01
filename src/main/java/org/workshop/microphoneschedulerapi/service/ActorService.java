@@ -1,6 +1,7 @@
 package org.workshop.microphoneschedulerapi.service;
 
 
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.workshop.microphoneschedulerapi.domain.dto.ActorOwnSceneCustomListDTO;
@@ -57,6 +58,8 @@ public class ActorService {
                             .personageName(scene_character.getPersonage().getPersonageName())
                             .microphoneId(scene_character.getMicrophone().getMicrophoneId())
                             .microphoneName(scene_character.getMicrophone().getMicrophoneName())
+                            .comment(scene_character.getComment())
+                            .sceneCharacterId(scene_character.getScene_character_id())
                             .build();
                     customList.add(actorOwnSceneCustom);
                 }
@@ -67,6 +70,8 @@ public class ActorService {
                             .sceneNumber(scene_character.getScene().getSceneNumber())
                             .sceneName(scene_character.getScene().getSceneName())
                             .personageName(scene_character.getPersonage().getPersonageName())
+                            .comment(scene_character.getComment())
+                            .sceneCharacterId(scene_character.getScene_character_id())
                             //.microphoneId(scene_character.getMicrophone().getMicrophoneId())
                             //.microphoneName(scene_character.getMicrophone().getMicrophoneName())
                             .build();
@@ -97,5 +102,19 @@ public class ActorService {
 
     public User getUserByUserId(Long userId) {
         return userRepository.findById(userId).orElse(null);
+    }
+
+    @Transactional
+    public String comment(Long id, String comment) {
+        Scene_character scene_character = scene_characterRepository.findById(id).orElse(null);
+        if(comment != null) {
+            scene_character.setComment(comment);
+        }
+        else{
+            scene_character.setComment("");
+        }
+        scene_characterRepository.save(scene_character);
+
+        return comment;
     }
 }
