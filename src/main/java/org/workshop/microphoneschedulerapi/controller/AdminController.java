@@ -116,6 +116,12 @@ public class AdminController {
             adminService.addPersonageToScene(form.sceneId(), form.personageId());
             return ResponseEntity.ok().build();
         }catch (Exception e) {
+            if(e.getMessage().equals("Character already in scene")) {
+                return ResponseEntity.status(HttpStatusCode.valueOf(493)).build();
+            }
+            if(e.getMessage().equals("Actor already in scene")) {
+                return ResponseEntity.status(HttpStatusCode.valueOf(494)).build();
+            }
             return ResponseEntity.badRequest().build();
         }
     }

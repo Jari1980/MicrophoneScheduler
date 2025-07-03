@@ -134,9 +134,19 @@ public class AdminService {
     }
 
     @Transactional
-    public void addPersonageToScene(int sceneId, int personageId) {
+    public void addPersonageToScene(int sceneId, int personageId) throws Exception {
         Scene scene = sceneRepository.findSceneBySceneId(sceneId);
         List<Scene_character> sceneCharacters = scene.getScene_characters();
+        Personage character = personageRepository.findById(personageId).orElseThrow();
+
+        for(Scene_character scene_character : sceneCharacters) {
+            if(scene_character.getPersonage().getPersonageId() == personageId) {
+                throw new Exception("Character already in scene");
+            }
+            if(scene_character.getPersonage().getActor().getActorId() == character.getActor().getActorId()) {
+                throw new Exception("Actor already in scene");
+            }
+        }
 
         Scene_character scene_character = Scene_character.builder()
                 .scene(scene)
@@ -374,6 +384,7 @@ public class AdminService {
                     char_scenes.add(scenePersonageMicrophoneCustom1.getId());
                 }
             }
+            //Number of scenes in act in loop
             int numberOfChar_scenes = char_scenes.size(); //char_scenes.stream().distinct().toList().size();
 
             for (int scene = 1; scene <= numberOfChar_scenes; scene++) {
