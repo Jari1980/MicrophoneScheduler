@@ -13,6 +13,7 @@ import lombok.*;
 public class ScenePersonageMicrophoneCustom {
 
     private int id;
+    private Long scenePersonageId;
     private int microphoneId;
     private int sceneId;
     private int actNumber;

@@ -17,6 +17,7 @@ import org.workshop.microphoneschedulerapi.domain.model.ScenePersonageMicrophone
 import org.workshop.microphoneschedulerapi.domain.model.UserRole;
 import org.workshop.microphoneschedulerapi.repository.*;
 
+import javax.lang.model.element.Element;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -345,6 +346,7 @@ public class AdminService {
         for (Scene_character scene_character : scene_charactersInPlay) {
             ScenePersonageMicrophoneCustom scenePersonageMicrophoneCustom = ScenePersonageMicrophoneCustom.builder()
                     .id(id)
+                    .scenePersonageId(scene_character.getScene_character_id())
                     .userId(scene_character.getPersonage().getActor().getUser().getUserId())
                     .userName(scene_character.getPersonage().getActor().getUser().getUsername())
                     .sceneId(scene_character.getScene().getSceneId())
@@ -735,5 +737,20 @@ public class AdminService {
         Scene_character scene_character = scene_characterRepository.getReferenceById(scene_characterId);
         scene_character.setMicrophone(null);
         scene_characterRepository.save(scene_character);
+    }
+
+    @Transactional
+    public void addSuggestedMicrophones(AddSuggestedMicrophonesDTOForm form) throws Exception {
+        List<Microphone> microphones = microphoneRepository.findAll();
+        int microphonesCount = microphones.size();
+
+        for(ScenePersonageMicrophoneCustom element : form.getMicrophoneList()){
+            Scene_character sc = scene_characterRepository.findById(element.getScenePersonageId()).orElseThrow();
+            if(element.getMicrophoneId() > microphonesCount){
+                throw new Exception("Not enough microphones in database");
+            }
+            sc.setMicrophone(microphoneRepository.getReferenceById(element.getMicrophoneId()));
+            scene_characterRepository.save(sc);
+        }
     }
 }
