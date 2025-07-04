@@ -100,7 +100,8 @@ public class SecurityConfig {
                                 "api/v1/admin/getCustomSceneList",
                                 "api/v1/admin/addAct",
                                 "api/v1/microphone/createMicrophone",
-                                "api/v1/microphone/updateMicrophone"
+                                "api/v1/microphone/updateMicrophone",
+                                "api/v1/admin/addSuggestedMicrophones"
 
                                 //"api/v1/microphone/createMicrophone",
 

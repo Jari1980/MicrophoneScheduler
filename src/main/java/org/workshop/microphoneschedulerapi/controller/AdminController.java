@@ -308,4 +308,17 @@ public class AdminController {
             return ResponseEntity.badRequest().build();
         }
     }
+
+    @PutMapping("addSuggestedMicrophones")
+    public ResponseEntity<Void> addSuggestedMicrophones(@RequestBody AddSuggestedMicrophonesDTOForm form){
+        try{
+            adminService.addSuggestedMicrophones(form);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            if(e.getMessage().equals("Not enough microphones in database")) {
+                return ResponseEntity.status(HttpStatusCode.valueOf(495)).build();
+            }
+            return ResponseEntity.badRequest().build();
+        }
+    }
 }
