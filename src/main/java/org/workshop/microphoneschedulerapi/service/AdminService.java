@@ -650,7 +650,7 @@ public class AdminService {
                        }
 
                    } else {
-                       if(scene_character.getPersonage().getActor().getUser() != null) {
+                       if(scene_character.getPersonage().getActor() != null) {
                            CustomMicrophoneListDTO customMicrophoneListDTO = CustomMicrophoneListDTO.builder()
                                    .scene_characterId(scene_character.getScene_character_id())
                                    .sceneId(scene_character.getScene().getSceneId())
@@ -665,7 +665,7 @@ public class AdminService {
                            customMicrophoneListDTOs.add(customMicrophoneListDTO);
                        }
                        else{
-                           /*
+
                            CustomMicrophoneListDTO customMicrophoneListDTO = CustomMicrophoneListDTO.builder()
                                    .scene_characterId(scene_character.getScene_character_id())
                                    .sceneId(scene_character.getScene().getSceneId())
@@ -679,7 +679,7 @@ public class AdminService {
                                    .build();
                            customMicrophoneListDTOs.add(customMicrophoneListDTO);
 
-                            */
+
                        }
 
                    }
