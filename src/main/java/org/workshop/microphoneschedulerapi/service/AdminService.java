@@ -344,18 +344,35 @@ public class AdminService {
         int id= 1;
 
         for (Scene_character scene_character : scene_charactersInPlay) {
-            ScenePersonageMicrophoneCustom scenePersonageMicrophoneCustom = ScenePersonageMicrophoneCustom.builder()
-                    .id(id)
-                    .scenePersonageId(scene_character.getScene_character_id())
-                    .userId(scene_character.getPersonage().getActor().getUser().getUserId())
-                    .userName(scene_character.getPersonage().getActor().getUser().getUsername())
-                    .sceneId(scene_character.getScene().getSceneId())
-                    .sceneName(scene_character.getScene().getSceneName())
-                    .actNumber(scene_character.getScene().getActNumber())
-                    .personageName(scene_character.getPersonage().getPersonageName())
-                    .build();
-            customList.add(scenePersonageMicrophoneCustom);
-            id++;
+            if(scene_character.getPersonage().getActor() != null){
+                ScenePersonageMicrophoneCustom scenePersonageMicrophoneCustom = ScenePersonageMicrophoneCustom.builder()
+                        .id(id)
+                        .scenePersonageId(scene_character.getScene_character_id())
+                        .userId(scene_character.getPersonage().getActor().getUser().getUserId())
+                        .userName(scene_character.getPersonage().getActor().getUser().getUsername())
+                        .sceneId(scene_character.getScene().getSceneId())
+                        .sceneName(scene_character.getScene().getSceneName())
+                        .actNumber(scene_character.getScene().getActNumber())
+                        .personageName(scene_character.getPersonage().getPersonageName())
+                        .build();
+                customList.add(scenePersonageMicrophoneCustom);
+                id++;
+            }
+            else{
+                ScenePersonageMicrophoneCustom scenePersonageMicrophoneCustom = ScenePersonageMicrophoneCustom.builder()
+                        .id(id)
+                        .scenePersonageId(scene_character.getScene_character_id())
+                        .userId(null)
+                        .userName(null)
+                        .sceneId(scene_character.getScene().getSceneId())
+                        .sceneName(scene_character.getScene().getSceneName())
+                        .actNumber(scene_character.getScene().getActNumber())
+                        .personageName(scene_character.getPersonage().getPersonageName())
+                        .build();
+                customList.add(scenePersonageMicrophoneCustom);
+                id++;
+            }
+
         }
         customList.sort(Comparator.comparing(ScenePersonageMicrophoneCustom::getActNumber));
 
