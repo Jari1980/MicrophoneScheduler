@@ -140,12 +140,26 @@ public class AdminService {
         List<Scene_character> sceneCharacters = scene.getScene_characters();
         Personage character = personageRepository.findById(personageId).orElseThrow();
 
+        if(personageRepository.findById(personageId).isPresent()) {
+            Personage personage = personageRepository.findById(personageId).get();
+            if(!personage.getScene_characters().isEmpty()) {
+                if(personage.getScene_characters().get(0).getScene() != null) {
+                    Play play = playRepository.getReferenceById(sceneRepository.findSceneBySceneId(sceneId).getPlay().getPlayName());
+                    if(!personage.getScene_characters().get(0).getScene().getPlay().equals(play)) {
+                        throw new Exception("Character used in other production already");
+                    }
+                }
+            }
+        }
+
         for(Scene_character scene_character : sceneCharacters) {
             if(scene_character.getPersonage().getPersonageId() == personageId) {
                 throw new Exception("Character already in scene");
             }
-            if(scene_character.getPersonage().getActor().getActorId() == character.getActor().getActorId()) {
-                throw new Exception("Actor already in scene");
+            if(scene_character.getPersonage().getActor() != null && character.getActor() != null) {
+                if(scene_character.getPersonage().getActor().getActorId() == character.getActor().getActorId()) {
+                    throw new Exception("Actor already in scene");
+                }
             }
         }
 
