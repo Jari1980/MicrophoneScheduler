@@ -122,6 +122,9 @@ public class AdminController {
             if(e.getMessage().equals("Actor already in scene")) {
                 return ResponseEntity.status(HttpStatusCode.valueOf(494)).build();
             }
+            if(e.getMessage().equals("Character used in other production already")) {
+                return ResponseEntity.status(HttpStatusCode.valueOf(496)).build();
+            }
             return ResponseEntity.badRequest().build();
         }
     }
