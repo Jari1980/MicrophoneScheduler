@@ -51,7 +51,14 @@ public class PlayGround implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
+        User superAdmin = User.builder()
+                .userName("superAdmin")
+                .password(customPasswordEncoder.encode("1234"))
+                .userRole(UserRole.ADMINISTRATOR)
+                .build();
+        userRepository.save(superAdmin);
 
+        /*
         Microphone microphone1 = Microphone.builder()
                 .microphoneName("Very first Microphone")
                 .build();
@@ -182,13 +189,13 @@ public class PlayGround implements CommandLineRunner {
         sceneRepository.save(scene5);
 
         System.out.println("-----------------------");
-        /*
+
         System.out.println("Looking for all characters in scene1:");
         List<Personage> characters = sceneRepository.findById(1).orElseThrow().getCharacters();
         for (Personage character : characters) {
             System.out.println(character.getMicrophoneId());
         }
-         */
+
         System.out.println("------------------------");
         System.out.println("---------Checking encoded password-----------");
         System.out.println(userRepository.findByUserName("user1").orElseThrow().getPassword());
@@ -237,5 +244,7 @@ public class PlayGround implements CommandLineRunner {
                 .build();
         scene_characterRepository.save(test5);
 
+
+         */
     }
 }
