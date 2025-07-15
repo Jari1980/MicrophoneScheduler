@@ -5,7 +5,5 @@ Users can have any of three roles, Admin create and manage theater productions, 
 
 Application will seed a superAdmin user with password 1234. For first time use, create a new admin user, log in as superAdmin and promote the new user to admin whereafter the seeded superAdmin can be deleted.
 
-In order to run this you need to create environment variable
-name it JWT_SECRET and set a password which will be used for token.
-
-Application is configured for mySql.
+In order to run this you need to create environment variable name it JWT_SECRET and set a password (sha256) which will be used for token. This project use Lombok and the annotation processor should be obtained from project classpath (if you face error here the processor path is most likely set and you need to check "Obtain processors from project classpath" instead)
+Application is configured for mySql and this need to be configured for your settings aswell.
