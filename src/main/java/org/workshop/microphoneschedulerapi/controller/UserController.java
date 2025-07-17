@@ -47,6 +47,7 @@ public class UserController {
 
     /**
      * When user registers, actor is created and user is assigned to this
+     * Used in Register.jsx
      * @param user
      * @return
      */
@@ -74,6 +75,7 @@ public class UserController {
     /**
      * Login method authenticates the user with given credentials, if authenticated the method will return a valid
      * Jwt token, userName and userRole. If authentication fails the method will return unauthorized.
+     * Used in Register.jsx and Login.jsx
      *
      * @param user
      * @return
@@ -96,16 +98,20 @@ public class UserController {
     }
 
     //In order to reach this endpoint user needs to be authenticated with bearer token (Jwt token) working
+    /*
     @GetMapping("/loggedTest")
     public ResponseEntity<String> loggTest() {
         return ResponseEntity.ok("Test logged");
     }
+    */
 
     //More testing, working with token
+    /*
     @GetMapping("/userInfo")
     public ResponseEntity<UserDetails> userInfo(@PathParam("userName") String userName) {
         UserDetails userDetails = customUserDetailService.loadUserByUsername(userName);
         return ResponseEntity.ok(userDetails);
     }
+    */
 
 }

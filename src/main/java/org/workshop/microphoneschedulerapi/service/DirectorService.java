@@ -25,6 +25,7 @@ public class DirectorService {
         this.sceneRepository = sceneRepository;
     }
 
+    /*
     public DirectorOverviewDTO getOverview( String playName) {
 
         List<Scene> allScenesInPlay = sceneRepository.findAllByPlay(playRepository.getReferenceById(playName));
@@ -75,6 +76,7 @@ public class DirectorService {
 
         return directorOverviewDTO;
     }
+    */
 
 
 }
