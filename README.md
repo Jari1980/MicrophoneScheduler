@@ -3,6 +3,8 @@ The main goal of this application is to provide a easy to use microphone schedul
 
 Users can have any of three roles, Admin create and manage theater productions, users and roles. Director overview of productions and ability to make modifications. Actor get microphoneschedule for production, ability to comment any scene which can be seen by director and admin, also ability to check fellow actors schedules.
 
+Comments added to respective controller, what endpoints do and where they are used in frontend.
+
 Application will seed a superAdmin user with password 1234. For first time use, create a new admin user, log in as superAdmin and promote the new user to admin whereafter the seeded superAdmin can be deleted.
 Access to all http endpoint is set in SecurityConfig.java, with all acces or actor/director/administrator specific or combination of these roles.
 
