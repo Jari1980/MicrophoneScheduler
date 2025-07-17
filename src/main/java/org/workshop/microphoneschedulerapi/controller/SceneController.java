@@ -27,12 +27,15 @@ public class SceneController {
         this.sceneService = sceneService;
     }
 
+    //This controller is not in use
+    /*
     @GetMapping("/completePlay{title}")
     public ResponseEntity<List<Scene>> getCompletePlay(@PathParam("title") String title) {
         List<Scene> scenes = sceneService.getAllScenes(title);
 
         return new ResponseEntity<>(scenes, HttpStatus.OK);
     }
+    */
 
     /*
     @GetMapping("/microphonesInScene{id}")

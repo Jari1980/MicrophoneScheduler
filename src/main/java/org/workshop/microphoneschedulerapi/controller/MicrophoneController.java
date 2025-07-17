@@ -25,6 +25,10 @@ public class MicrophoneController {
         this.microphoneService = microphoneService;
     }
 
+    /**
+     * Method for creating microphone
+     * Used in Microphone.jsx
+     */
     @PostMapping("/createMicrophone")
     public ResponseEntity<Void> createMicrophone(String microphoneName) {
         if(microphoneName.isEmpty()|| microphoneName.isBlank()){
@@ -38,6 +42,10 @@ public class MicrophoneController {
         }
     }
 
+    /**
+     * Method for deleting microphone
+     * Used in Microphone.jsx
+     */
     @DeleteMapping("/deleteMicrophone{microphoneName}")
     public ResponseEntity<Void> deleteMicrophone(@PathParam("microphoneName") String microphoneName) {
         try {
@@ -48,6 +56,10 @@ public class MicrophoneController {
         }
     }
 
+    /**
+     * Method for updating microphone
+     * Used in Microphone.jsx
+     */
     @PutMapping("/updateMicrophone")
     public ResponseEntity<Void> updateMicrophone(@RequestBody MicrophoneUpdateDTOForm form) {
         try{
@@ -58,6 +70,10 @@ public class MicrophoneController {
         }
     }
 
+    /**
+     * Method for getting all microphones
+     * Used in Microphone.jsx
+     */
     @GetMapping("/getMicrophones")
     public ResponseEntity<List<Microphone>> getMicrophones() {
         try{

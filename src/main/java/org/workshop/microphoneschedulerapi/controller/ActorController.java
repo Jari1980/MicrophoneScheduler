@@ -31,6 +31,11 @@ public class ActorController {
         this.userRepository = userRepository;
     }
 
+    /**
+     * Method for getting all scenes belonging to a actor from specific theater production
+     * Used in ActorScene.jsx
+     * 
+     */
     @GetMapping("/actorScenes")
     public ResponseEntity<ActorOwnSceneCustomListDTO> getActorScenes(@PathParam("playName") String playName) {
         try{
@@ -49,6 +54,11 @@ public class ActorController {
 
     }
 
+    /**
+     * Method for getting all scenes belonging to a another actor from specific theater production
+     * Used in ActorScene.jsx
+     * 
+     */
     @PostMapping("/otherActorScenes")
     public ResponseEntity<ActorOwnSceneCustomListDTO> getOtherActorScenes(@RequestBody GetOtherActorsScenesDTOForm form) {
         try{
@@ -60,6 +70,11 @@ public class ActorController {
         }
     }
 
+    /**
+     * Method for getting a list of actors.
+     * Used for selection in ActorScene.jsx
+     * 
+     */
     @GetMapping("/getUsers")
     public ResponseEntity<List<CustomUser>> getUsers() {
         try{
@@ -70,6 +85,11 @@ public class ActorController {
         }
     }
 
+    /**
+     * Method for editing actor/director/admin comment.
+     * Used in ActorScene.jsx
+     * 
+     */
     @PutMapping("/comment")
     public ResponseEntity<String> actorComment(@RequestBody ActorComment form){
         try{

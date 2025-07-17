@@ -24,6 +24,9 @@ public class DirectorController {
     }
 
 
+    //This controller is not in use, instead director is granted access to admin specific
+    //endpoints in SecurityConfig.java
+    /*
     @GetMapping("/getoverview")
     public ResponseEntity<DirectorOverviewDTO> getOverview(@PathParam("playName") String playName) {
         try{
@@ -35,7 +38,7 @@ public class DirectorController {
         }
 
     }
-
+*/
 
 
 

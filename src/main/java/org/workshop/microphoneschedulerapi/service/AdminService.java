@@ -101,6 +101,7 @@ public class AdminService {
         return sceneCustomListDTO;
     }
 
+    /*
     public void createScene(CreateSceneDTOForm form) {
         Scene newScene = Scene.builder()
                 .play(playRepository.getReferenceById(form.playName()))
@@ -110,6 +111,7 @@ public class AdminService {
                 .build();
         sceneRepository.save(newScene);
     }
+    */
 
     public void updateScene(UpdateSceneDTOForm form) throws Exception {
 
@@ -198,6 +200,7 @@ public class AdminService {
         }
     }
 
+    /*
     @Transactional
     public void assignActorToPersonage(int actorId, int personageId) {
         Personage personage = personageRepository.findById(personageId).orElseThrow();
@@ -207,6 +210,7 @@ public class AdminService {
             personage.setActor(null);
         }
     }
+    */
 
     public void createPersonage(CreatePersonageDTOForm form) {
         Personage newPersonage = Personage.builder()
@@ -300,6 +304,7 @@ public class AdminService {
         return personageInDbCustomDTO;
     }
 
+    /*
     public PersonageInDbCustomDTO getAllPersonagesInPlay(String playName) {
         PersonageInDbCustomDTO personageInDbCustomDTO = new PersonageInDbCustomDTO();
         List<PersonageCustom> customList = new ArrayList<>();
@@ -314,7 +319,9 @@ public class AdminService {
 
         return personageInDbCustomDTO;
     }
+    */
 
+    /*
     public PersonageInDbCustomDTO getAllPersonagesInScene(int sceneId) {
         PersonageInDbCustomDTO personageInDbCustomDTO = new PersonageInDbCustomDTO();
         List<PersonageCustom> customList = new ArrayList<>();
@@ -331,6 +338,7 @@ public class AdminService {
 
         return personageInDbCustomDTO;
     }
+    */
 
     public MicrophoneScheduleSuggestedDTO suggestMicrophoneSchedule(String playName) {
 

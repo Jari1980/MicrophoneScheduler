@@ -24,11 +24,12 @@ public class AdminController {
     }
 
 
-    @GetMapping("/hello")
-    public ResponseEntity<String> hello() {
-        return ResponseEntity.ok("Hello World");
-    }
-
+    /**
+     * Method for getting all theater production
+     * Used in ActorScene.jsx, CharacterScene.jsx, ManageProductionHome.jsx,
+     * MicrophoneProduction.jsx and Scene.jsx
+     * 
+     */
     @GetMapping("/listAllPlay")
     public ResponseEntity<List<Play>> listAllPlay() {
         List<Play> plays = adminService.getAllPlays();
@@ -36,6 +37,11 @@ public class AdminController {
         return ResponseEntity.ok(plays);
     }
 
+    /**
+     * Method for creating a theater production
+     * Used in ManageProductionHome.jsx
+     * 
+     */
     @PostMapping("/createPlay")
     public ResponseEntity<Play> createPlay(@RequestBody Play play) {
         try {
@@ -46,6 +52,11 @@ public class AdminController {
         }
     }
 
+    /**
+     * Method for deleting a theater production
+     * Used in ManageProductionHome.jsx
+     * 
+     */
     @DeleteMapping("/deletePlay")
     public ResponseEntity<Void> deletePlay(@PathParam("playName") String playName) {
         try {
@@ -56,6 +67,11 @@ public class AdminController {
         }
     }
 
+    /**
+     * Method for updating a theater production
+     * Used in ManageProductionHome.jsx
+     * 
+     */
     @PutMapping("/updatePlay")
     public ResponseEntity<Void> updatePlay(@RequestBody Play play) {
         try {
@@ -67,6 +83,11 @@ public class AdminController {
     }
 
 
+    /**
+     * Method for getting all scenes in a specific theater production
+     * Used in Scene.jsx
+     * 
+     */
     @GetMapping("/allScenesInPlay")
     public ResponseEntity<SceneCustomListDTO> allScenesInPlay(@PathParam("playName") String playName) {
         try {
@@ -77,6 +98,13 @@ public class AdminController {
         }
     }
 
+    /**
+     * Method for creating custom scene in a specific theater production
+     * Not in use
+     * Could be used in Scene.jsx
+     * 
+     */
+    /*
     @PostMapping("/createScene")
     public ResponseEntity<Void> createScene(@RequestBody CreateSceneDTOForm form) {
         try{
@@ -86,7 +114,13 @@ public class AdminController {
             return ResponseEntity.badRequest().build();
         }
     }
+    */
 
+    /**
+     * Method for editing scene in a specific theater production
+     * Used in Scene.jsx
+     * 
+     */
     @PutMapping("/editScene")
     public ResponseEntity<Void> editScene(@RequestBody UpdateSceneDTOForm form) {
         try{
@@ -100,6 +134,11 @@ public class AdminController {
         }
     }
 
+    /**
+     * Method for getting deleting scene in a specific theater production
+     * Used in Scene.jsx
+     * 
+     */
     @DeleteMapping("/deleteScene")
     public ResponseEntity<Void> deleteScene(@PathParam("sceneId") int sceneId) {
         try{
@@ -110,6 +149,11 @@ public class AdminController {
         }
     }
 
+    /**
+     * Method for adding a character to specific scene
+     * Used in CharacterScene.jsx
+     * 
+     */
     @PutMapping("/addPersonageToScene")
     public ResponseEntity<Void> addPersonageToScene(@RequestBody ManagePersonageToScene form){
         try{
@@ -129,6 +173,11 @@ public class AdminController {
         }
     }
 
+    /**
+     * Method for removing a character from specific scene
+     * Used in CharacterScene.jsx
+     * 
+     */
     @PutMapping("/removePersonageFromScene")
     public ResponseEntity<Void> removePersonageFromScene(@RequestBody ManagePersonageToScene form){
         try{
@@ -139,6 +188,12 @@ public class AdminController {
         }
     }
 
+    /**
+     * Method for assigning actor to a character
+     * Not in use, new method created for this
+     * 
+     */
+    /*
     @PutMapping("/assignActorToPersonage")
     public ResponseEntity<Void> assignActorToPersonage(@RequestBody ManageActorToPersonage form){
         try{
@@ -148,7 +203,13 @@ public class AdminController {
             return ResponseEntity.badRequest().build();
         }
     }
+    */
 
+    /**
+     * Method for creating a character from specific scene
+     * Used in Character.jsx
+     * 
+     */
     @PostMapping("/createPersonage")
     public ResponseEntity<Void>  createPersonage(@RequestBody CreatePersonageDTOForm form){
         try{
@@ -159,6 +220,11 @@ public class AdminController {
         }
     }
 
+    /**
+     * Method for editing a character from specific scene
+     * Used in Character.jsx
+     * 
+     */
     @PutMapping("/editPersonage")
     public ResponseEntity<Void> editPersonage(@RequestBody EditPersonageDTO form){
         try{
@@ -169,6 +235,11 @@ public class AdminController {
         }
     }
 
+    /**
+     * Method for deleting a character from specific scene
+     * Used in Character.jsx
+     * 
+     */
     @DeleteMapping("/deletePersonage")
     public ResponseEntity<Void> deletePersonage(@PathParam("personageId") int personageId) {
         try{
@@ -179,6 +250,11 @@ public class AdminController {
         }
     }
 
+    /**
+     * Method for getting all characters
+     * Used in Character.jsx and CharacterScene.jsx
+     * 
+     */
     @GetMapping("getAllPersonageInDb")
     public ResponseEntity<PersonageInDbCustomDTO> getAllPersonageInDb() {
         try{
@@ -190,6 +266,12 @@ public class AdminController {
         }
     }
 
+    /**
+     * Method for getting all characters in Play
+     * Not in use
+     * 
+     */
+    /*
     @GetMapping("/getAllPersonageInPlay")
     public ResponseEntity<PersonageInDbCustomDTO> getAllPersonageInPlay(@PathParam("playName") String playName) {
         try{
@@ -199,7 +281,14 @@ public class AdminController {
             return ResponseEntity.badRequest().build();
         }
     }
+    */
 
+    /**
+     * Method for getting all characters scene
+     * Not in use
+     * 
+     */
+    /*
     @GetMapping("/getAllPersonageInScene")
     public ResponseEntity<PersonageInDbCustomDTO> getAllPersonageInScene(@PathParam("sceneId") int sceneId) {
         try{
@@ -209,7 +298,13 @@ public class AdminController {
             return ResponseEntity.badRequest().build();
         }
     }
+    */
 
+    /**
+     * Method for getting suggested microphonelist
+     * Used in MicrophoneProduction.jsx
+     * 
+     */
     @GetMapping("/suggestMicrophoneSchedule")
     public ResponseEntity<MicrophoneScheduleSuggestedDTO> suggestMicrophoneSchedule(@PathParam("playName") String playName){
         try{
@@ -221,6 +316,11 @@ public class AdminController {
         }
     }
 
+    /**
+     * Method for getting users and roles
+     * Used in UserService.jsx
+     * 
+     */
     @GetMapping("/getusersandroles")
     public ResponseEntity<List<UsersAndRolesDTO>> getUsersAndRoles(){
         try{
@@ -231,6 +331,11 @@ public class AdminController {
         }
     }
 
+    /**
+     * Method for setting a new role to user
+     * Used in UserService.jsx
+     * 
+     */
     @PostMapping("/setuserrole")
     public ResponseEntity<Void> setUserRole(@RequestBody SetUserRoleDTOForm form){
         try{
@@ -241,6 +346,11 @@ public class AdminController {
         }
     }
 
+    /**
+     * Method for deleting a user
+     * Used in UserService.jsx
+     * 
+     */
     @DeleteMapping("/deleteuser")
     public ResponseEntity<Void> deleteUser(@PathParam("userId") Long userId){
         try{
@@ -251,6 +361,11 @@ public class AdminController {
         }
     }
 
+    /**
+     * Method for getting actors connected to users
+     * Used in Character.jsx
+     * 
+     */
     @GetMapping("/getActorsConnectedToUsers")
     public ResponseEntity<List<ActorsConnectedToUsersDTO>> getActorsConnectedToUsers() {
         try{
@@ -262,6 +377,11 @@ public class AdminController {
         }
     }
 
+    /**
+     * Method for getting custom scenelist
+     * Used in CharacterScene.jsx
+     * 
+     */
     @GetMapping("/getCustomSceneList")
     public ResponseEntity<List<CustomScenePersonageDTO>> getCustomSceneList(@PathParam("playName") String playName){
         try{
@@ -272,6 +392,11 @@ public class AdminController {
         }
     }
 
+    /**
+     * Method for adding act
+     * Used in Scene.jsx
+     * 
+     */
     @PostMapping("/addAct")
     public ResponseEntity<Void> addAct(@RequestBody addActDTOForm form){
         try{
@@ -282,6 +407,11 @@ public class AdminController {
         }
     }
 
+    /**
+     * Method for getting custom microphone list
+     * Used in MicrophoneProduction.jsx
+     * 
+     */
     @GetMapping("/getCustomMicrophoneList")
     public ResponseEntity<List<CustomMicrophoneListDTO>> getCustomMicrophoneList(@PathParam("playName") String playName){
         try{
@@ -292,6 +422,11 @@ public class AdminController {
         }
     }
 
+    /**
+     * Method for adding microphone
+     * Used in MicrophoneProduction.jsx
+     * 
+     */
     @PutMapping("/addMicrophone")
     public ResponseEntity<Void> addMicrophone(@RequestBody AddMicrophoneDTOForm form){
         try{
@@ -302,6 +437,11 @@ public class AdminController {
         }
     }
 
+    /**
+     * Method for removing microphone
+     * Used in MicrophoneProduction.jsx
+     * 
+     */
     @PutMapping("/removeMicrophone{scene_characterId}")
     public ResponseEntity<Void> removeMicrophone(@PathParam("scene_characterId") Long scene_characterId){
         try{
@@ -312,6 +452,11 @@ public class AdminController {
         }
     }
 
+    /**
+     * Method for applying suggested microphone list
+     * Used in MicrophoneProduction.jsx
+     * 
+     */
     @PutMapping("addSuggestedMicrophones")
     public ResponseEntity<Void> addSuggestedMicrophones(@RequestBody AddSuggestedMicrophonesDTOForm form){
         try{
