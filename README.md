@@ -9,7 +9,7 @@ API endpoints are divided in three controllers, ActorController, AdminController
 Custom exception handling is done with start of error 490 which are passed and used in frontend.
 All repositories extends JpaRepository.
 
-Application will seed a superAdmin user with password 1234, this is done from PlayGround.java which extends CommandLineRunner. For first time use, create a new admin user, log in as superAdmin and promote the new user to admin whereafter the seeded superAdmin can be deleted.
+Application will seed a superAdmin user with password 1234, this is done from PlayGround.java which implements CommandLineRunner. For first time use, create a new admin user, log in as superAdmin and promote the new user to admin whereafter the seeded superAdmin can be deleted.
 Access to all http endpoint is set in SecurityConfig.java, with all acces or actor/director/administrator specific or combination of these roles.
 
 In order to run this you need to create environment variable name it JWT_SECRET and set a password (sha256) which will be used for token. JWT token is set to expire in (1000 * 60 * 60 * 12) 12 hours, this is set it JwtUtil.java. 
