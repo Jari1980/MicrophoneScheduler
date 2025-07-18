@@ -1,9 +1,13 @@
-This application is created for Teaterstickorna as a part of Lexicon Växjö fullstackdeveloper course.
-The main goal of this application is to provide a easy to use microphone scheduler.
+<h1>MicrophoneScheduler - Backend</h1>
+
+<i>This application is created for Teaterstickorna as a part of Lexicon Växjö fullstackdeveloper course.
+The main goal of this application is to provide a easy to use microphone scheduler.</i>
 
 Users can have any of three roles, Admin create and manage theater productions, users and roles. Director overview of productions and ability to make modifications. Actor get microphoneschedule for production, ability to comment any scene which can be seen by director and admin, also ability to check fellow actors schedules.
 
-Comments added to respective controller, what endpoints do and where they are used in frontend.
+API endpoints are divided in three controllers, ActorController, AdminController and UserController. Each method in controller have a brief comment what they do and where they are used in frontend. Logic for the methods are mainly done in respective service with use of DTO's.
+Custom exception handling is done with start of error 490 which are passed and used in frontend.
+All repositories extends JpaRepository.
 
 Application will seed a superAdmin user with password 1234. For first time use, create a new admin user, log in as superAdmin and promote the new user to admin whereafter the seeded superAdmin can be deleted.
 Access to all http endpoint is set in SecurityConfig.java, with all acces or actor/director/administrator specific or combination of these roles.
